@@ -8,17 +8,17 @@ Still in Beta
 
 Still Working on GUI...
 
-## ToDo
+## To-Do
 
 - [X] Read / Parse Log File
 - [X] Update GUI with data from log file
 - [ ] Finish GUI
-- [ ] Detect When Loggedin
+- [ ] Detect When Logged in
 - [ ] Detect when game Closed / Not in server
 - [ ] Add Settings Page
 - [ ] Add About Page
 - [ ] Send Toasts
-- [ ] Intagrate With Discord Webhooks
+- [ ] Integrate With Discord Webhooks
 - [ ] Emails?
-- [ ] Push Notafactions?
+- [ ] Push Notifications?
 - [ ] **M O R E**
