@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -56,16 +57,20 @@ namespace _2B2T_Queue_Notifier
 
         private void start_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            foreach (int working in dataGet.DataGet.getGameTime(path))
+            {
+                MessageBox.Show(working.ToString());
+            }
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            MainTime.Text = dataGet.DataGet.getIndex(path, chat).ToString();
+            //MainTime.Text = dataGet.DataGet.getIndex(path, chat).ToString();
         }
 
         private void Grid_Initialized(object sender, EventArgs e)
         {
-            MainTime.Text = dataGet.DataGet.getIndex(path, chat).ToString();
+            //MainTime.Text = dataGet.DataGet.getIndex(path, chat).ToString();
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
