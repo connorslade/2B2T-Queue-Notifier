@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:_2B2T_Queue_Notifier"
         mc:Ignorable="d"
         Title="Simga's 2B Notifier" Height="450" Width="800" Background="#FC2E3440" Visibility="Visible" ResizeMode="CanMinimize" Opacity="1" AllowsTransparency="True" WindowStyle="None">
-    <Grid>
+    <Grid Initialized="Grid_Initialized">
         <!--TopBar-->
         <Rectangle HorizontalAlignment="Center" Height="30" VerticalAlignment="Top" Width="800" Fill="#FF292E39" MouseDown="Rectangle_MouseDown"/>
         <Rectangle x:Name="Exit" HorizontalAlignment="Left" Height="22" Margin="770,4,0,0" VerticalAlignment="Top" Width="22" Cursor="Hand" MouseDown="Exit_MouseDown" Fill="#FF292E39"/>
@@ -51,7 +51,7 @@
         <TextBlock x:Name="MainTime" HorizontalAlignment="Center" Height="179" TextWrapping="Wrap" VerticalAlignment="Top" Width="566" Foreground="#FFECEFF4" FontSize="150" TextAlignment="Center" Margin="0,64,0,0">
             <TextBlock.Effect>
                 <DropShadowEffect/>
-            </TextBlock.Effect><Run Text="126"/><LineBreak/><Run/></TextBlock>
+            </TextBlock.Effect><Run Text="000"/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
         <TextBlock x:Name="MainTime_Copy" HorizontalAlignment="Left" Height="91" TextWrapping="Wrap" VerticalAlignment="Top" Width="414" Foreground="#FFECEFF4" FontSize="72" TextAlignment="Center" Margin="10,10,0,0">
             <TextBlock.Effect>
                 <DropShadowEffect/>
