@@ -6,7 +6,7 @@
 
 Contact me on Discord at `Sigma#8214`<br>
 
-![Image](https://i.imgur.com/j6lstsL.png)
+![Image](https://i.imgur.com/pKdqUnm.png)
 
 Still Working on GUI...
 
