@@ -15,6 +15,9 @@ namespace _2B2T_Queue_Notifier
         private DispatcherTimer dispatcherTimer;
         public Color BkHv = Color.FromRgb(67, 76, 94);
         public Color BkLv = Color.FromRgb(45, 51, 63);
+        public Color TCL = Color.FromRgb(163, 190, 140);
+        public Color TCM = Color.FromRgb(235, 203, 139);
+        public Color TCF = Color.FromRgb(191, 97, 106);
         private string path = Environment.ExpandEnvironmentVariables(@"%AppData%\.minecraft\logs\latest.log");
         private string chat = "Position in queue: ";
 
@@ -43,6 +46,19 @@ namespace _2B2T_Queue_Notifier
                 WindowState = WindowState.Minimized;
         }
 
+        private void Pin_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (FullPin.Visibility == Visibility.Hidden)
+            {
+                FullPin.Visibility = Visibility.Visible;
+                this.Topmost = true;
+            }
+            else
+            {
+                FullPin.Visibility = Visibility.Hidden;
+                this.Topmost = false;
+            }
+        }
         #endregion TopBar
 
         private void start_MouseEnter(object sender, MouseEventArgs e)
@@ -65,12 +81,25 @@ namespace _2B2T_Queue_Notifier
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            //MainTime.Text = dataGet.DataGet.getIndex(path, chat).ToString();
+            int index = dataGet.DataGet.getIndex(path, chat);
+            MainTime.Text = index.ToString();
+            if (index < 500)
+            {
+                MainTime.Foreground = new SolidColorBrush(TCF);
+            }
+            else if (index > 250 && index < 500)
+            {
+                MainTime.Foreground = new SolidColorBrush(TCM);
+            }
+            else if (index > 0 && index < 250)
+            {
+                MainTime.Foreground = new SolidColorBrush(TCL);
+            }
         }
 
         private void Grid_Initialized(object sender, EventArgs e)
         {
-            //MainTime.Text = dataGet.DataGet.getIndex(path, chat).ToString();
+            MainTime.Text = dataGet.DataGet.getIndex(path, chat).ToString();
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
