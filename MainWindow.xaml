@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_2B2T_Queue_Notifier"
         mc:Ignorable="d"
-        Title="Simga's 2B Notifier" Height="450" Width="800" Background="#FC2E3440" Visibility="Visible" ResizeMode="CanMinimize" Opacity="1" AllowsTransparency="True" WindowStyle="None">
+        Title="Simga's 2B Notifier" Height="450" Width="800" Background="#FC2E3440" Visibility="Visible" ResizeMode="CanResizeWithGrip" Opacity="1" AllowsTransparency="True" WindowStyle="None">
     <Grid Initialized="Grid_Initialized">
         <!--TopBar-->
-        <Rectangle HorizontalAlignment="Center" Height="30" VerticalAlignment="Top" Width="800" Fill="#FF292E39" MouseDown="Rectangle_MouseDown"/>
-        <Rectangle x:Name="Exit" HorizontalAlignment="Left" Height="22" Margin="770,4,0,0" VerticalAlignment="Top" Width="22" Cursor="Hand" MouseDown="Exit_MouseDown" Fill="#FF292E39"/>
-        <Rectangle HorizontalAlignment="Left" Height="28" Margin="780,1,0,0" Stroke="#FFBF616A" VerticalAlignment="Top" Width="2" RenderTransformOrigin="0.5,0.5" RadiusX="0.5" RadiusY="0.5" Cursor="Hand" MouseDown="Exit_MouseDown">
+        <Rectangle Height="30" VerticalAlignment="Top" Fill="#FF292E39" MouseDown="Rectangle_MouseDown"/>
+        <Rectangle x:Name="Exit" Height="22" Margin="0,4,8,0" VerticalAlignment="Top" Cursor="Hand" MouseDown="Exit_MouseDown" Fill="#FF292E39" HorizontalAlignment="Right" Width="22"/>
+        <Rectangle Height="28" Margin="0,1,18,0" Stroke="#FFBF616A" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" RadiusX="0.5" RadiusY="0.5" Cursor="Hand" MouseDown="Exit_MouseDown" HorizontalAlignment="Right" Width="2">
             <Rectangle.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -20,7 +20,7 @@
                 </TransformGroup>
             </Rectangle.RenderTransform>
         </Rectangle>
-        <Rectangle HorizontalAlignment="Left" Height="28" Margin="780,1,0,0" Stroke="#FFBF616A" VerticalAlignment="Top" Width="2" RadiusX="0.5" RadiusY="0.5" RenderTransformOrigin="0.5,0.5" Cursor="Hand" MouseDown="Exit_MouseDown">
+        <Rectangle Height="28" Margin="0,1,18,0" Stroke="#FFBF616A" VerticalAlignment="Top" RadiusX="0.5" RadiusY="0.5" RenderTransformOrigin="0.5,0.5" Cursor="Hand" MouseDown="Exit_MouseDown" HorizontalAlignment="Right" Width="2">
             <Rectangle.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -30,8 +30,8 @@
                 </TransformGroup>
             </Rectangle.RenderTransform>
         </Rectangle>
-        <Rectangle x:Name="Mini" HorizontalAlignment="Left" Height="22" Margin="727,4,0,0" VerticalAlignment="Top" Width="26" Cursor="Hand" MouseDown="Mini_MouseDown" Fill="#FF292E39"/>
-        <Rectangle HorizontalAlignment="Left" Height="25" Margin="739,3,0,0" Stroke="#FFECEFF4" VerticalAlignment="Top" Width="2" RadiusX="0.5" RadiusY="0.5" RenderTransformOrigin="0.5,0.5" Cursor="Hand" MouseDown="Mini_MouseDown">
+        <Rectangle x:Name="Mini" Margin="0,4,76,0" Cursor="Hand" MouseDown="Mini_MouseDown" Fill="#FF292E39" HorizontalAlignment="Right" Width="26" Height="22" VerticalAlignment="Top"/>
+        <Rectangle Height="25" Margin="0,3,88,0" Stroke="#FFECEFF4" VerticalAlignment="Top" RadiusX="0.5" RadiusY="0.5" RenderTransformOrigin="0.5,0.5" Cursor="Hand" MouseDown="Mini_MouseDown" HorizontalAlignment="Right" Width="2">
             <Rectangle.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -41,20 +41,39 @@
                 </TransformGroup>
             </Rectangle.RenderTransform>
         </Rectangle>
+        <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform" Margin="0,3,40,0" HorizontalAlignment="Right" Width="25" Height="24" VerticalAlignment="Top">
+            <Canvas Name="svg10" Width="36" Height="36">
+                <Canvas.RenderTransform>
+                    <TranslateTransform X="0" Y="0"/>
+                </Canvas.RenderTransform>
+                <Canvas.Resources/>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path4" Fill="#FF7589FF" Stroke="#FF7589FF">
+                    <Path.Data>
+                        <PathGeometry Figures="M33 16.59a1 1 0 0 1-.71-.29L19.7 3.71a1 1 0 0 1 1.41-1.41L33.71 14.89A1 1 0 0 1 33 16.59Z" FillRule="NonZero"/>
+                    </Path.Data>
+                </Path>
+                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path6" Fill="#FF7589FF" Stroke="#FF7589FF">
+                    <Path.Data>
+                        <!--<PathGeometry Figures="M28.52 15.56l-1.41-1.41-7.2 7.2a1 1 0 0 0-.25 1 9 9 0 0 1-1.53 8.09L5.58 17.87a9 9 0 0 1 8.09-1.53 1 1 0 0 0 1-.25l7.2-7.2L20.44 7.48l-6.79 6.79A10.94 10.94 0 0 0 3.41 17.11a1 1 0 0 0 0 1.42l6.33 6.33L2.29 32.29a1 1 0 1 0 1.41 1.41l7.44-7.44 6.33 6.33a1 1 0 0 0 .71.29h0a1 1 0 0 0 .71-.3 11 11 0 0 0 2.84-10.24Z" FillRule="Nonzero"/>-->
+                        <PathGeometry Figures="M28.52 15.56l-1.41-1.41-7.2 7.2a1 1 0 0 0-.25 1 9 9 0 0 1-1.53 8.09L5.58 17.87a9 9 0 0 1 8.09-1.53 1 1 0 0 0 1-.25l7.2-7.2L20.44 7.48l-6.79 6.79A10.94 10.94 0 0 0 3.41 17.11a1 1 0 0 0 0 1.42l6.33 6.33L2.29 32.29a1 1 0 1 0 1.41 1.41l7.44-7.44 6.33 6.33a1 1 0 0 0 .71.29h0a1 1 0 0 0 .71-.3 11 11 0 0 0 2.84-10.24Z" FillRule="Nonzero"/>
+                    </Path.Data>
+                </Path>
+                <Path x:Name="FullPin" Data="M22.632972,9.3416628 L29.524919,16.367048 22.038526,25.039944 18.121155,34.230392 2.7131979,18.647461 10.213497,17.040039 z" Fill="#FF7589FF" Height="23" Canvas.Left="3.517" Stretch="Fill" Canvas.Top="8.414" Width="25" Visibility="Hidden"/>
+            </Canvas>
+        </Viewbox>
         <!--TopBar END-->
+        <!--Buttions-->
         <Ellipse x:Name="start" Height="100" Stroke="#FFECEFF4" Width="100" VerticalAlignment="Top" Margin="0,282,0,0" HorizontalAlignment="Center" StrokeThickness="5" Fill="#FF2D333F" Cursor="Hand" MouseEnter="start_MouseEnter" MouseLeave="start_MouseLeave" MouseDown="start_MouseDown">
             <Ellipse.Effect>
                 <DropShadowEffect/>
             </Ellipse.Effect>
         </Ellipse>
         <!--TEXT-->
-        <TextBlock x:Name="MainTime" HorizontalAlignment="Center" Height="179" TextWrapping="Wrap" VerticalAlignment="Top" Width="566" Foreground="#FFECEFF4" FontSize="150" TextAlignment="Center" Margin="0,64,0,0">
+        <TextBlock x:Name="MainTime" HorizontalAlignment="Center" Height="179" TextWrapping="Wrap" VerticalAlignment="Top" Width="566" Foreground="#FFBF616A" FontSize="150" TextAlignment="Center" Margin="0,64,0,0">
             <TextBlock.Effect>
                 <DropShadowEffect/>
             </TextBlock.Effect><Run Text="000"/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
-        <TextBlock x:Name="MainTime_Copy" HorizontalAlignment="Left" Height="91" TextWrapping="Wrap" VerticalAlignment="Top" Width="414" Foreground="#FFECEFF4" FontSize="72" TextAlignment="Center" Margin="10,10,0,0">
-            <TextBlock.Effect>
-                <DropShadowEffect/>
-            </TextBlock.Effect><Run Text="2B2T Queue:"/><LineBreak/><Run/></TextBlock>
+        <TextBlock x:Name="MainTime_Copy" HorizontalAlignment="Left" Height="91" TextWrapping="Wrap" VerticalAlignment="Top" Width="414" Foreground="#FFECEFF4" FontSize="72" TextAlignment="Center" Margin="10,10,0,0" Visibility="Hidden"><Run Text="2B2T Queue:"/><LineBreak/><Run/></TextBlock>
+        <Rectangle x:Name="Mini_Copy" Height="23" Margin="0,4,41,0" VerticalAlignment="Top" Cursor="Hand" MouseDown="Pin_MouseDown" Fill="#FF7589FF" Opacity="0" Stroke="#FF7589FF" HorizontalAlignment="Right" Width="23"/>
     </Grid>
 </Window>
