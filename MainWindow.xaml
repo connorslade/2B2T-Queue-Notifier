@@ -1,0 +1,60 @@
+﻿<Window x:Class="_2B2T_Queue_Notifier.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_2B2T_Queue_Notifier"
+        mc:Ignorable="d"
+        Title="Simga's 2B Notifier" Height="450" Width="800" Background="#FC2E3440" Visibility="Visible" ResizeMode="CanMinimize" Opacity="1" AllowsTransparency="True" WindowStyle="None">
+    <Grid>
+        <!--TopBar-->
+        <Rectangle HorizontalAlignment="Center" Height="30" VerticalAlignment="Top" Width="800" Fill="#FF292E39" MouseDown="Rectangle_MouseDown"/>
+        <Rectangle x:Name="Exit" HorizontalAlignment="Left" Height="22" Margin="770,4,0,0" VerticalAlignment="Top" Width="22" Cursor="Hand" MouseDown="Exit_MouseDown" Fill="#FF292E39"/>
+        <Rectangle HorizontalAlignment="Left" Height="28" Margin="780,1,0,0" Stroke="#FFBF616A" VerticalAlignment="Top" Width="2" RenderTransformOrigin="0.5,0.5" RadiusX="0.5" RadiusY="0.5" Cursor="Hand" MouseDown="Exit_MouseDown">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="135"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle HorizontalAlignment="Left" Height="28" Margin="780,1,0,0" Stroke="#FFBF616A" VerticalAlignment="Top" Width="2" RadiusX="0.5" RadiusY="0.5" RenderTransformOrigin="0.5,0.5" Cursor="Hand" MouseDown="Exit_MouseDown">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="45"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle x:Name="Mini" HorizontalAlignment="Left" Height="22" Margin="727,4,0,0" VerticalAlignment="Top" Width="26" Cursor="Hand" MouseDown="Mini_MouseDown" Fill="#FF292E39"/>
+        <Rectangle HorizontalAlignment="Left" Height="25" Margin="739,3,0,0" Stroke="#FFECEFF4" VerticalAlignment="Top" Width="2" RadiusX="0.5" RadiusY="0.5" RenderTransformOrigin="0.5,0.5" Cursor="Hand" MouseDown="Mini_MouseDown">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <!--TopBar END-->
+        <Ellipse x:Name="start" Height="100" Stroke="#FFECEFF4" Width="100" VerticalAlignment="Top" Margin="0,282,0,0" HorizontalAlignment="Center" StrokeThickness="5" Fill="#FF2D333F" Cursor="Hand" MouseEnter="start_MouseEnter" MouseLeave="start_MouseLeave" MouseDown="start_MouseDown">
+            <Ellipse.Effect>
+                <DropShadowEffect/>
+            </Ellipse.Effect>
+        </Ellipse>
+        <!--TEXT-->
+        <TextBlock x:Name="MainTime" HorizontalAlignment="Center" Height="179" TextWrapping="Wrap" VerticalAlignment="Top" Width="566" Foreground="#FFECEFF4" FontSize="150" TextAlignment="Center" Margin="0,64,0,0">
+            <TextBlock.Effect>
+                <DropShadowEffect/>
+            </TextBlock.Effect><Run Text="126"/><LineBreak/><Run/></TextBlock>
+        <TextBlock x:Name="MainTime_Copy" HorizontalAlignment="Left" Height="91" TextWrapping="Wrap" VerticalAlignment="Top" Width="414" Foreground="#FFECEFF4" FontSize="72" TextAlignment="Center" Margin="10,10,0,0">
+            <TextBlock.Effect>
+                <DropShadowEffect/>
+            </TextBlock.Effect><Run Text="2B2T Queue:"/><LineBreak/><Run/></TextBlock>
+    </Grid>
+</Window>

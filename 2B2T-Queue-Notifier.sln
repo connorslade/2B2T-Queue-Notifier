@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2B2T-Queue-Notifier", "2B2T-Queue-Notifier.csproj", "{80512D4C-837D-4ACD-9E17-72ECFF66553C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{80512D4C-837D-4ACD-9E17-72ECFF66553C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80512D4C-837D-4ACD-9E17-72ECFF66553C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80512D4C-837D-4ACD-9E17-72ECFF66553C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80512D4C-837D-4ACD-9E17-72ECFF66553C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {80035892-A772-4323-A062-8900C8CD5910}
+	EndGlobalSection
+EndGlobal
