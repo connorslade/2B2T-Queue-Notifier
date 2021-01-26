@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Net.Http;
+using System.Net;
 using System.Windows;
 
 namespace dataGet
@@ -47,9 +51,14 @@ namespace dataGet
 
             while (text.Read(b, 0, b.Length) > 0)
             {
-                allText = data.GetString(b);
-                string[] textArray = allText.Split("\n");
-                foreach (string textIndex in textArray)
+                allText = allText + data.GetString(b);
+                
+            }
+
+            string[] textArray = allText.Split("\n");
+            foreach (string textIndex in textArray)
+            {
+                try
                 {
                     string time = textIndex.Substring(1, 8);
                     foreach (string working in time.Split(":"))
@@ -59,6 +68,7 @@ namespace dataGet
                     }
                     allInt.Add(allWorking);
                 }
+                catch { }
             }
 
             foreach (int num in allInt[allInt.Count - 1])
@@ -78,6 +88,31 @@ namespace dataGet
             }
 
             return Output;
+        }
+
+        static public void discordWebHook(String WebHook, String Queue, int Cach)
+        {
+            if (int.Parse(Queue) != Cach)
+            {
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(WebHook);
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    string json = "{\"content\":null,\"embeds\":[{\"title\":\"Σ's 2B2T Queue Notifier\",\"description\":\"**Queue Posision:** `" + Queue.ToString()
+                        + "`\",\"url\":\"https://github.com/Basicprogrammer10/2B2T-Queue-Notifier\",\"color\":12542314,\"footer\": {\"text\": \"10:49 • 01/25/2021\"},\"thumbnail\":{\"url\":\"https://i.imgur.com/K1KWFjR.png\"}}]}";
+                    MessageBox.Show(json);
+
+                    streamWriter.Write(json);
+                }
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                }
+            }
         }
     }
 }
