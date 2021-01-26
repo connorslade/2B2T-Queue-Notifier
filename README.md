@@ -17,12 +17,12 @@ Still Working on GUI...
 - [X] Read / Parse Log File
 - [X] Update GUI with data from log file
 - [ ] Finish GUI
-- [ ] Detect When Logged in
-- [ ] Detect when game Closed / Not in server
-- [ ] Add Settings Page
+- [X] Detect When Logged in
+- [X] Detect when game Closed / Not in server
+- [X] Add Settings Page
 - [ ] Add About Page
 - [ ] Send Toasts
-- [ ] Integrate With Discord Webhooks
+- [X] Integrate With Discord Webhooks
 - [ ] Emails?
 - [ ] Push Notifications?
 - [ ] **M O R E**
