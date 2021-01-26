@@ -8,6 +8,8 @@ Contact me on Discord at `Sigma#8214`<br>
 
 ![Image](https://i.imgur.com/pKdqUnm.png)
 
+![Discord](https://i.imgur.com/VcLeG0n.png)
+
 Still Working on GUI...
 
 ## To-Do
