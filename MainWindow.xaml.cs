@@ -77,34 +77,38 @@ namespace _2B2T_Queue_Notifier
 
         private void start_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            //var lastLine = File.ReadLines(path).Last();
-            foreach (int working in dataGet.DataGet.getGameTime(path))
-            {
-                MessageBox.Show(working.ToString());
-            }
+            // foreach (int working in dataGet.DataGet.getGameTime(path))
+            // {
+            //    MessageBox.Show(working.ToString());
+            //}
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            int index = dataGet.DataGet.getIndex(path, chat);
-            MainTime.Text = index.ToString();
-            if (index > 500)
+            List<int> FULL = dataGet.DataGet.getIndex(path, chat);
+            int index = FULL[0];
+            if (FULL[1] != indexCach)
             {
-                MainTime.Foreground = new SolidColorBrush(TCF);
-                dataGet.DataGet.discordWebHook(webHook, index.ToString(), indexCach);
-                indexCach = index;
-            }
-            else if (index > 250 && index < 500)
-            {
-                MainTime.Foreground = new SolidColorBrush(TCM);
-                dataGet.DataGet.discordWebHook(webHook, index.ToString(), indexCach);
-                indexCach = index;
-            }
-            else if (index > 0 && index < 250)
-            {
-                MainTime.Foreground = new SolidColorBrush(TCL);
-                dataGet.DataGet.discordWebHook(webHook, index.ToString(), indexCach);
-                indexCach = index;
+                MainTime.Text = index.ToString();
+                if (index > 500)
+                {
+                    MainTime.Foreground = new SolidColorBrush(TCF);
+                    dataGet.DataGet.discordWebHook(webHook, index.ToString(), indexCach, "12542314");
+                    indexCach = index;
+                }
+                else if (index > 250 && index < 500)
+                {
+                    MainTime.Foreground = new SolidColorBrush(TCM);
+                    dataGet.DataGet.discordWebHook(webHook, index.ToString(), indexCach, "15453067");
+                    indexCach = index;
+                }
+                else if (index > 0 && index < 250)
+                {
+                    MainTime.Foreground = new SolidColorBrush(TCL);
+                    dataGet.DataGet.discordWebHook(webHook, index.ToString(), indexCach, "10731148");
+                    indexCach = index;
+                }
+                indexCach = FULL[1];
             }
         }
 

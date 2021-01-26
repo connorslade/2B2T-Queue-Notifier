@@ -1,18 +1,16 @@
-﻿using Microsoft.Toolkit.Uwp.Notifications;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Net.Http;
-using System.Net;
 using System.Windows;
 
 namespace dataGet
 {
     internal class DataGet
     {
-        static public int getIndex(string path, string chat)
+        static public List<int> getIndex(string path, string chat)
         {
             var text = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             UTF8Encoding data = new UTF8Encoding(true);
@@ -20,6 +18,8 @@ namespace dataGet
             List<int> allInt = new List<int>();
             byte[] b = new byte[64000];
             string allText = "";
+            List<int> allTimeList = new List<int>();
+            int totalTime;
 
             while (text.Read(b, 0, b.Length) > 0)
             {
@@ -31,66 +31,22 @@ namespace dataGet
                     if (match.Success)
                     {
                         allInt.Add(int.Parse(textIndex.Split(chat)[1]));
+                        totalTime = 0;
+                        string[] textSub = textIndex.Substring(1, 8).Split(':');
+                        totalTime += int.Parse(textSub[0]) * 60 * 60;
+                        totalTime += int.Parse(textSub[1]) * 60;
+                        totalTime += int.Parse(textSub[2]);
+                        allTimeList.Add(totalTime);
                     }
                 }
             }
-            return allInt[allInt.Count - 1];
-        }
-
-        static public List<int> getGameTime(string path)
-        {
-            var text = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            List<List<int>> allInt = new List<List<int>>();
-            UTF8Encoding data = new UTF8Encoding(true);
-            List<int> workingList = new List<int>();
-            List<int> allWorking = new List<int>();
             List<int> Output = new List<int>();
-            byte[] b = new byte[64000];
-            string allText = "";
-            int index = 0;
-
-            while (text.Read(b, 0, b.Length) > 0)
-            {
-                allText = allText + data.GetString(b);
-                
-            }
-
-            string[] textArray = allText.Split("\n");
-            foreach (string textIndex in textArray)
-            {
-                try
-                {
-                    string time = textIndex.Substring(1, 8);
-                    foreach (string working in time.Split(":"))
-                    {
-                        try { allWorking.Add(int.Parse(working)); }
-                        catch { }
-                    }
-                    allInt.Add(allWorking);
-                }
-                catch { }
-            }
-
-            foreach (int num in allInt[allInt.Count - 1])
-            {
-                if (index >= 3)
-                {
-                    workingList = new List<int>();
-                    index = 0;
-                }
-                workingList.Add(num);
-                index++;
-            }
-
-            foreach (int print in workingList)
-            {
-                Output.Add(print);
-            }
-
+            Output.Add(allInt[allInt.Count - 1]);
+            Output.Add(allTimeList[allTimeList.Count - 1]);;
             return Output;
         }
 
-        static public void discordWebHook(String WebHook, String Queue, int Cach)
+        static public void discordWebHook(String WebHook, String Queue, int Cach, String Color)
         {
             if (int.Parse(Queue) != Cach)
             {
@@ -101,7 +57,8 @@ namespace dataGet
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
                     string json = "{\"content\":null,\"embeds\":[{\"title\":\"Σ's 2B2T Queue Notifier\",\"description\":\"**Queue Posision:** `" + Queue.ToString()
-                        + "`\",\"url\":\"https://github.com/Basicprogrammer10/2B2T-Queue-Notifier\",\"color\":12542314,\"footer\": {\"text\": \"10:49 • 01/25/2021\"},\"thumbnail\":{\"url\":\"https://i.imgur.com/K1KWFjR.png\"}}]}";
+                        + "`\",\"url\":\"https://github.com/Basicprogrammer10/2B2T-Queue-Notifier\",\"color\":"+Color
+                        +",\"footer\": {\"text\": \"10:49 • 01/25/2021\"},\"thumbnail\":{\"url\":\"https://i.imgur.com/K1KWFjR.png\"}}]}";
                     MessageBox.Show(json);
 
                     streamWriter.Write(json);
