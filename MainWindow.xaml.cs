@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -18,8 +20,10 @@ namespace _2B2T_Queue_Notifier
         public Color TCL = Color.FromRgb(163, 190, 140);
         public Color TCM = Color.FromRgb(235, 203, 139);
         public Color TCF = Color.FromRgb(191, 97, 106);
+        private string webHook = "";
         private string path = Environment.ExpandEnvironmentVariables(@"%AppData%\.minecraft\logs\latest.log");
         private string chat = "Position in queue: ";
+        private int indexCach;
 
         public MainWindow()
         {
@@ -73,6 +77,7 @@ namespace _2B2T_Queue_Notifier
 
         private void start_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            //var lastLine = File.ReadLines(path).Last();
             foreach (int working in dataGet.DataGet.getGameTime(path))
             {
                 MessageBox.Show(working.ToString());
@@ -83,17 +88,23 @@ namespace _2B2T_Queue_Notifier
         {
             int index = dataGet.DataGet.getIndex(path, chat);
             MainTime.Text = index.ToString();
-            if (index < 500)
+            if (index > 500)
             {
                 MainTime.Foreground = new SolidColorBrush(TCF);
+                dataGet.DataGet.discordWebHook(webHook, index.ToString(), indexCach);
+                indexCach = index;
             }
             else if (index > 250 && index < 500)
             {
                 MainTime.Foreground = new SolidColorBrush(TCM);
+                dataGet.DataGet.discordWebHook(webHook, index.ToString(), indexCach);
+                indexCach = index;
             }
             else if (index > 0 && index < 250)
             {
                 MainTime.Foreground = new SolidColorBrush(TCL);
+                dataGet.DataGet.discordWebHook(webHook, index.ToString(), indexCach);
+                indexCach = index;
             }
         }
 
