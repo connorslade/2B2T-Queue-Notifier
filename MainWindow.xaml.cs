@@ -56,19 +56,7 @@ namespace _2B2T_Queue_Notifier
             }
             else
             {
-                chat = config.Read("chat");
-                timeout = int.Parse(config.Read("timeout"));
-                tickdelay = int.Parse(config.Read("tickdelay"));
-                try { doWebHook = bool.Parse(config.Read("tickdelay")); } catch { doWebHook = false;  }
-                path = Environment.ExpandEnvironmentVariables(config.Read("logpath"));
-
-                try { doWebHook = bool.Parse(config.Read("dowebhook")); } catch { doWebHook = false; }
-                //TO  IMP
-                try { hooklogin = bool.Parse(config.Read("hooklogin")); } catch { hooklogin = false; }
-                try { hooklogout = bool.Parse(config.Read("hooklogout")); } catch { hooklogout = false; }
-                try { hookpoz = bool.Parse(config.Read("hookpoz")); } catch { hookpoz = false; }
-                //END IMP
-                webHook = config.Read("hookuri");
+                UpdateConfigVars();
             }
         }
 
@@ -108,6 +96,23 @@ namespace _2B2T_Queue_Notifier
 
         #endregion TopBar
 
+        private void UpdateConfigVars()
+        {
+            chat = config.Read("chat");
+            timeout = int.Parse(config.Read("timeout"));
+            tickdelay = int.Parse(config.Read("tickdelay"));
+            try { doWebHook = bool.Parse(config.Read("tickdelay")); } catch { doWebHook = false; }
+            path = Environment.ExpandEnvironmentVariables(config.Read("logpath"));
+
+            try { doWebHook = bool.Parse(config.Read("dowebhook")); } catch { doWebHook = false; }
+            try { hookpoz = bool.Parse(config.Read("hookpoz")); } catch { hookpoz = false; }
+            //TO  IMP
+            try { hooklogin = bool.Parse(config.Read("hooklogin")); } catch { hooklogin = false; }
+            try { hooklogout = bool.Parse(config.Read("hooklogout")); } catch { hooklogout = false; }
+            //END IMP
+            webHook = config.Read("hookuri");
+        }
+
         private void start_MouseEnter(object sender, MouseEventArgs e)
         {
             start.Fill = new SolidColorBrush(BkHv);
@@ -138,19 +143,22 @@ namespace _2B2T_Queue_Notifier
                     if (index > 500)
                     {
                         MainTime.Foreground = new SolidColorBrush(TCF);
-                        DataGet.discordWebHook(webHook, index.ToString(), indexCach, "12542314", doWebHook);
+                        if (hookpoz)
+                            DataGet.discordWebHook(webHook, index.ToString(), indexCach, "12542314", doWebHook);
                         indexCach = index;
                     }
                     else if (index > 250 && index < 500)
                     {
                         MainTime.Foreground = new SolidColorBrush(TCM);
-                        DataGet.discordWebHook(webHook, index.ToString(), indexCach, "15453067", doWebHook);
+                        if (hookpoz) 
+                            DataGet.discordWebHook(webHook, index.ToString(), indexCach, "15453067", doWebHook);
                         indexCach = index;
                     }
                     else if (index > 0 && index < 250)
                     {
                         MainTime.Foreground = new SolidColorBrush(TCL);
-                        DataGet.discordWebHook(webHook, index.ToString(), indexCach, "10731148", doWebHook);
+                        if (hookpoz) 
+                            DataGet.discordWebHook(webHook, index.ToString(), indexCach, "10731148", doWebHook);
                         indexCach = index;
                     }
                     indexCach = FULL[1];
@@ -159,6 +167,8 @@ namespace _2B2T_Queue_Notifier
                 {
                     MainTime.Text = "Online!";
                     MainTime.Foreground = new SolidColorBrush(TCL);
+                    if (hooklogin)
+                            DataGet.discordWebHook(webHook, "LogIn", indexCach, "10731148", doWebHook); //Spesialize for Login...
                 }
                 else
                 {
@@ -168,6 +178,8 @@ namespace _2B2T_Queue_Notifier
                         EqFr = 0;
                         MainTime.Text = "…";
                         MainTime.Foreground = new SolidColorBrush(TCF);
+                        if (hooklogin)
+                            DataGet.discordWebHook(webHook, "LogOut", indexCach, "10731148", doWebHook); //Spesialize for LogOut...
                     }
                 }
 
