@@ -38,3 +38,19 @@ You can get to this page with the settings button (CH1-2)
 |2|TickDelay|Time between Updates or delay between when it checks for changes in Queue|
 |3|Log File|Location of your Minecraft log file (That is how it knows what queue poz you are in)|
 |4|Chat Regex|The String of text before the number in the Chat Message|
+
+## CH4: Discord Settings
+
+![Discord Settings](https://i.imgur.com/0qU08rX.png)
+
+|#|Info|Description|
+|---|---|---|
+|1|Webhooks|Enables / Disables Webhooks|
+|2|Hook URI|Discord Webhook URI|
+|3|Send Webhook on Login|Sends a webhook when you successfully log in to a server|
+|4|Send Webhook on Logout|Sends a webhook when you log out / are kicked from server|
+|5|Send Webhook on Position|Sends a webhook when you advance in Queue|
+|6|Adds a Mention on Login|Adds a Mention for Login Webhooks|
+|7|Adds a Mention on Logout|Adds a Mention for Logout Webhooks|
+|8|Adds a Mention on Position|Adds a Mention for Position Webhooks|
+|9|Mention|What to Mention|
