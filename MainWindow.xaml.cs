@@ -22,13 +22,11 @@ namespace _2B2T_Queue_Notifier
         public Color TCM = Color.FromRgb(235, 203, 139);
         public Color TCF = Color.FromRgb(191, 97, 106);
         public Color TCN = Color.FromRgb(94, 129, 172);
-
-        private string webHook = "";
-        private bool doWebHook = false;
-        private bool hooklogin = true;
-        private bool hooklogout = true;
-        private bool hookpoz = true;
-
+        private string webHook;
+        private bool doWebHook;
+        private bool hooklogin;
+        private bool hooklogout;
+        private bool hookpoz;
         private string path = Environment.ExpandEnvironmentVariables(@"%AppData%\.minecraft\logs\latest.log");
         private string chat = "Position in queue: ";
         private int timeout = 30;

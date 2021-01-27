@@ -25,6 +25,8 @@ namespace _2B2T_Queue_Notifier
         int TickDelayValue = 1;
         string LogPath = @"%AppData%\.minecraft\logs\latest.log";
         private string chat = "Position in queue: ";
+        bool doWebHooks = false;
+        string webHook = "";
 
         public Settings()
         {
@@ -38,6 +40,13 @@ namespace _2B2T_Queue_Notifier
             TimeoutLabel.Content = timeOutValue;
             TickLabel.Content = TickDelayValue;
             ChatRegex.Text = chat;
+            //DISCORD
+            try { doWebHooks = bool.Parse(config.Read("dowebhook")); } catch { doWebHooks = false; }
+            webHook = config.Read("hookuri");
+
+
+            webHooksCheck.IsChecked = doWebHooks;
+            WebHookUri.Text = webHook;
         }
 
         private void PlusTimeout(object sender, RoutedEventArgs e)
@@ -90,8 +99,8 @@ namespace _2B2T_Queue_Notifier
             config.Write("tickdelay", TickDelayValue.ToString());
             config.Write("logpath", LogPathFeild.Text);
             config.Write("chat", ChatRegex.Text);
+            config.Write("dowebhook", webHooksCheck.IsChecked.ToString());
             this.Close();
-            //config.Write("chat", "Position in queue: ");
         }
 
         private void Reset(object sender, RoutedEventArgs e)
@@ -101,6 +110,11 @@ namespace _2B2T_Queue_Notifier
             config.Write("tickdelay", "1");
             config.Write("chat", "Position in queue: ");
             config.Write("logpath", @"%AppData%\.minecraft\logs\latest.log");
+            config.Write("dowebhook", "false");
+            config.Write("hooklogin", "true");
+            config.Write("hooklogout", "true");
+            config.Write("hookpoz", "true");
+            config.Write("hookuri", "");
             this.Close();
         }
 

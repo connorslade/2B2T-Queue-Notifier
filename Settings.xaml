@@ -46,18 +46,18 @@
             </TabItem>
             <TabItem Header="Discord">
                 <Grid Background="#FFE5E5E5">
-                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,84,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76" Text="Login"/>
-                    <CheckBox Content="" HorizontalAlignment="Left" Height="15" Margin="91,85,0,0" VerticalAlignment="Top" Width="15"/>
-                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76" Text="Logout"/>
-                    <CheckBox Content="" HorizontalAlignment="Left" Height="15" Margin="91,103,0,0" VerticalAlignment="Top" Width="15"/>
-                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,124,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76" Text="Position "/>
+                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76" Text="Login"/>
+                    <CheckBox Content="" HorizontalAlignment="Left" Height="15" Margin="91,105,0,0" VerticalAlignment="Top" Width="15"/>
+                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,124,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76" Text="Logout"/>
                     <CheckBox Content="" HorizontalAlignment="Left" Height="15" Margin="91,123,0,0" VerticalAlignment="Top" Width="15"/>
-                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="112" Text="Send Webhook On" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,144,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76" Text="Position "/>
+                    <CheckBox Content="" HorizontalAlignment="Left" Height="15" Margin="91,143,0,0" VerticalAlignment="Top" Width="15"/>
+                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="112" Text="Send Webhook On" FontWeight="Bold"/>
                     <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76" Text="Webhooks"/>
-                    <CheckBox Content="" HorizontalAlignment="Left" Height="15" Margin="91,19,0,0" VerticalAlignment="Top" Width="15"/>
-                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76" Text="Hook Uri"/>
-                    <TextBox HorizontalAlignment="Left" Height="20" Margin="91,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="306"/>
-                    <Image HorizontalAlignment="Left" Height="150" Margin="634,10,0,0" VerticalAlignment="Top" Width="150" Source="/DiscordIcon.png"/>
+                    <CheckBox x:Name="webHooksCheck" Content="" HorizontalAlignment="Left" Height="15" Margin="91,19,0,0" VerticalAlignment="Top" Width="15"/>
+                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76" Text="Hook Uri"/>
+                    <TextBox x:Name="WebHookUri" HorizontalAlignment="Left" Height="37" Margin="91,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="424"/>
+                    <Image HorizontalAlignment="Left" Height="150" Margin="630,10,0,0" VerticalAlignment="Top" Width="150" Source="/DiscordIcon.png"/>
                     <Button Content="Ok" HorizontalAlignment="Left" Height="23" Margin="694,345,0,0" VerticalAlignment="Top" Width="70" Click="Save"/>
                     <Button x:Name="Exit_Copy3" Content="Cancel" HorizontalAlignment="Left" Height="23" Margin="619,345,0,0" VerticalAlignment="Top" Width="70" Click="Exit_Click"/>
                     <Button x:Name="Exit_Copy4" Content="Reset" HorizontalAlignment="Left" Height="23" Margin="544,345,0,0" VerticalAlignment="Top" Width="70" Click="Reset"/>
