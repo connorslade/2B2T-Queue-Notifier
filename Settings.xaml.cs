@@ -27,6 +27,9 @@ namespace _2B2T_Queue_Notifier
         private string chat = "Position in queue: ";
         bool doWebHooks = false;
         string webHook = "";
+        bool hooklogin;
+        bool hooklogout;
+        bool hookpoz;
 
         public Settings()
         {
@@ -43,10 +46,16 @@ namespace _2B2T_Queue_Notifier
             //DISCORD
             try { doWebHooks = bool.Parse(config.Read("dowebhook")); } catch { doWebHooks = false; }
             webHook = config.Read("hookuri");
+            try { hookpoz = bool.Parse(config.Read("hookpoz")); } catch { hookpoz = false; }
+            try { hooklogin = bool.Parse(config.Read("hooklogin")); } catch { hooklogin = false; }
+            try { hooklogout = bool.Parse(config.Read("hooklogout")); } catch { hooklogout = false; }
 
 
             webHooksCheck.IsChecked = doWebHooks;
             WebHookUri.Text = webHook;
+            LoginBox.IsChecked = hooklogin;
+            LogoutBox.IsChecked = hooklogout;
+            PozBox.IsChecked = hookpoz;
         }
 
         private void PlusTimeout(object sender, RoutedEventArgs e)
@@ -101,6 +110,9 @@ namespace _2B2T_Queue_Notifier
             config.Write("chat", ChatRegex.Text);
             config.Write("dowebhook", webHooksCheck.IsChecked.ToString());
             config.Write("hookuri", WebHookUri.Text);
+            config.Write("hooklogin", LoginBox.IsChecked.ToString());
+            config.Write("hooklogout", LogoutBox.IsChecked.ToString());
+            config.Write("hookpoz", PozBox.IsChecked.ToString());
             this.Close();
         }
 

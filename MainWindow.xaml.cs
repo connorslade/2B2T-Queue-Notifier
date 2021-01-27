@@ -181,7 +181,7 @@ namespace _2B2T_Queue_Notifier
                         EqFr = 0;
                         MainTime.Text = "…";
                         MainTime.Foreground = new SolidColorBrush(TCF);
-                        if (hooklogin && isIn)
+                        if (hooklogout && isIn)
                             DataGet.DiscordMessage(webHook, "**Logged Out **", "12150125", doWebHook);
                         isIn = false;
                         isLogin = false;
