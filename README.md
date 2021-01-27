@@ -6,6 +6,8 @@
 
 **Still in Beta**
 
+If you need help Setting this up or Want to know what all the settings do then check ![this](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/blob/master/Settings.md) out!
+
 Contact me on Discord at `Sigma#8214`<br>
 
 ![Image](https://i.imgur.com/pKdqUnm.png)
