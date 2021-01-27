@@ -1,5 +1,7 @@
 # **2B2T-Queue-Notifier:** Help
 
+This is some Documentation on how to use my 2B2T Queue Notifier thing...<br/>If you are still confused or need to help settings it up / troubleshooting after looking through this document then you can dm me on Discord at `Sigma#8214`. (Good Luck)
+
 ## CH1: The main Window
 
 ![MainWindow](https://i.imgur.com/bC0zdMB.png)
@@ -36,7 +38,7 @@ You can get to this page with the settings button (CH1-2)
 |---|---|---|
 |1|Timeout|Determines how long a state (In Queue, Online, Offline) must in active for the GUI / webhooks to update with it|
 |2|TickDelay|Time between Updates or delay between when it checks for changes in Queue|
-|3|Log File|Location of your Minecraft log file (That is how it knows what queue poz you are in)|
+|3|Log File|Location of your Minecraft log file (That is how it knows what queue pos you are in)|
 |4|Chat Regex|The String of text before the number in the Chat Message|
 
 ## CH4: Discord Settings
@@ -54,3 +56,11 @@ You can get to this page with the settings button (CH1-2)
 |7|Adds a Mention on Logout|Adds a Mention for Logout Webhooks|
 |8|Adds a Mention on Position|Adds a Mention for Position Webhooks|
 |9|Mention|What to Mention|
+
+## CH5: Extra Stuff
+
+![Need Help Making a Discord Webhook?](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks)
+
+![Not Sure Where your MC Log file is?](https://help.minecraft.net/hc/en-us/articles/360035131551-Where-are-Minecraft-files-stored-)
+
+If you think I missed something / should add more detail then you can create a GitHub issue.
