@@ -35,6 +35,10 @@ namespace _2B2T_Queue_Notifier
         private bool isIn = true;
         private bool isLogin = true;
         private int EqFr;
+        private bool mntlogin;
+        private bool mntlogout;
+        private bool mntpoz;
+        private string whomnt;
 
         public MainWindow()
         {
@@ -53,6 +57,12 @@ namespace _2B2T_Queue_Notifier
                 config.Write("hooklogout", "true");
                 config.Write("hookpoz", "true");
                 config.Write("hookuri", "");
+
+                config.Write("mntlogin", "false");
+                config.Write("mntlogout", "false");
+                config.Write("mntpoz", "false");
+                config.Write("whomnt", "@everyone");
+
             }
             else
             {
@@ -107,7 +117,12 @@ namespace _2B2T_Queue_Notifier
             try { hookpoz = bool.Parse(config.Read("hookpoz")); } catch { hookpoz = false; }
             try { hooklogin = bool.Parse(config.Read("hooklogin")); } catch { hooklogin = false; }
             try { hooklogout = bool.Parse(config.Read("hooklogout")); } catch { hooklogout = false; }
+            try { mntlogin = bool.Parse(config.Read("mntlogin")); } catch { mntlogin = false; }
+            try { mntlogout = bool.Parse(config.Read("mntlogout")); } catch { mntlogout = false; }
+            try { mntpoz = bool.Parse(config.Read("mntpoz")); } catch { mntpoz = false; }
+            whomnt = config.Read("whomnt");
             webHook = config.Read("hookuri");
+
         }
 
         private void start_MouseEnter(object sender, MouseEventArgs e)
@@ -143,21 +158,21 @@ namespace _2B2T_Queue_Notifier
                     {
                         MainTime.Foreground = new SolidColorBrush(TCF);
                         if (hookpoz)
-                            DataGet.discordWebHook(webHook, index.ToString(), indexCach, "12542314", doWebHook);
+                            DataGet.discordWebHook(webHook, index.ToString(), indexCach, "12542314", doWebHook, mntpoz, whomnt);
                         indexCach = index;
                     }
                     else if (index > 250 && index < 500)
                     {
                         MainTime.Foreground = new SolidColorBrush(TCM);
                         if (hookpoz)
-                            DataGet.discordWebHook(webHook, index.ToString(), indexCach, "15453067", doWebHook);
+                            DataGet.discordWebHook(webHook, index.ToString(), indexCach, "15453067", doWebHook, mntpoz, whomnt);
                         indexCach = index;
                     }
                     else if (index > 0 && index < 250)
                     {
                         MainTime.Foreground = new SolidColorBrush(TCL);
                         if (hookpoz)
-                            DataGet.discordWebHook(webHook, index.ToString(), indexCach, "10731148", doWebHook);
+                            DataGet.discordWebHook(webHook, index.ToString(), indexCach, "10731148", doWebHook, mntpoz, whomnt);
                         indexCach = index;
                     }
                     indexCach = FULL[0];
@@ -169,7 +184,7 @@ namespace _2B2T_Queue_Notifier
                     MainTime.Text = "Online!";
                     MainTime.Foreground = new SolidColorBrush(TCL);
                     if (hooklogin && isLogin)
-                        DataGet.DiscordMessage(webHook, "**Logged In!** :grin:", "9419928", doWebHook);
+                        DataGet.DiscordMessage(webHook, "**Logged In!** :grin:", "9419928", doWebHook, mntlogin, whomnt);
                     isIn = true;
                     isLogin = false;
                 }
@@ -182,13 +197,14 @@ namespace _2B2T_Queue_Notifier
                         MainTime.Text = "…";
                         MainTime.Foreground = new SolidColorBrush(TCF);
                         if (hooklogout && isIn)
-                            DataGet.DiscordMessage(webHook, "**Logged Out **", "12150125", doWebHook);
+                            DataGet.DiscordMessage(webHook, "**Logged Out **", "12150125", doWebHook, mntlogout, whomnt);
                         isIn = false;
                         isLogin = false;
                     }
                 }
             }
-            catch { MainTime.Text = "…"; }
+            catch { MainTime.Foreground = new SolidColorBrush(TCF);
+                    MainTime.Text = "…"; }
         }
 
         private void Grid_Initialized(object sender, EventArgs e)

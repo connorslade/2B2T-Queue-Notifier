@@ -61,6 +61,15 @@
                     <Button Content="Ok" HorizontalAlignment="Left" Height="23" Margin="694,345,0,0" VerticalAlignment="Top" Width="70" Click="Save"/>
                     <Button x:Name="Exit_Copy3" Content="Cancel" HorizontalAlignment="Left" Height="23" Margin="619,345,0,0" VerticalAlignment="Top" Width="70" Click="Exit_Click"/>
                     <Button x:Name="Exit_Copy4" Content="Reset" HorizontalAlignment="Left" Height="23" Margin="544,345,0,0" VerticalAlignment="Top" Width="70" Click="Reset"/>
+                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="112" Text="Send Mentions On" FontWeight="Bold"/>
+                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="11,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" Text="Login"/>
+                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,213,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="87" Text="Logout"/>
+                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="92" Text="Position"/>
+                    <CheckBox x:Name="LoginBox_Copy" Content="" HorizontalAlignment="Left" Height="15" Margin="91,192,0,0" VerticalAlignment="Top" Width="15"/>
+                    <CheckBox x:Name="LoginBox_Copy1" Content="" HorizontalAlignment="Left" Height="15" Margin="91,214,0,0" VerticalAlignment="Top" Width="15"/>
+                    <CheckBox x:Name="LoginBox_Copy2" Content="" HorizontalAlignment="Left" Height="15" Margin="91,236,0,0" VerticalAlignment="Top" Width="15"/>
+                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,259,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="92" Text="Mention"/>
+                    <TextBox x:Name="MntFeild" HorizontalAlignment="Left" Height="20" Margin="91,259,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="306"/>
                 </Grid>
 
             </TabItem>

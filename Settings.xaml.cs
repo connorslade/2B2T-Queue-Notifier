@@ -30,6 +30,10 @@ namespace _2B2T_Queue_Notifier
         bool hooklogin;
         bool hooklogout;
         bool hookpoz;
+        private bool mntlogin;
+        private bool mntlogout;
+        private bool mntpoz;
+        private string whomnt;
 
         public Settings()
         {
@@ -44,18 +48,25 @@ namespace _2B2T_Queue_Notifier
             TickLabel.Content = TickDelayValue;
             ChatRegex.Text = chat;
             //DISCORD
-            try { doWebHooks = bool.Parse(config.Read("dowebhook")); } catch { doWebHooks = false; }
             webHook = config.Read("hookuri");
+            whomnt = config.Read("whomnt");
+            try { doWebHooks = bool.Parse(config.Read("dowebhook")); } catch { doWebHooks = false; }
             try { hookpoz = bool.Parse(config.Read("hookpoz")); } catch { hookpoz = false; }
             try { hooklogin = bool.Parse(config.Read("hooklogin")); } catch { hooklogin = false; }
             try { hooklogout = bool.Parse(config.Read("hooklogout")); } catch { hooklogout = false; }
-
+            try { mntlogin = bool.Parse(config.Read("mntlogin")); } catch { mntlogin = false; }
+            try { mntlogout = bool.Parse(config.Read("mntlogout")); } catch { mntlogout = false; }
+            try { mntpoz = bool.Parse(config.Read("mntpoz")); } catch { mntpoz = false; }
 
             webHooksCheck.IsChecked = doWebHooks;
             WebHookUri.Text = webHook;
             LoginBox.IsChecked = hooklogin;
             LogoutBox.IsChecked = hooklogout;
             PozBox.IsChecked = hookpoz;
+            LoginBox_Copy.IsChecked = mntlogin;
+            LoginBox_Copy1.IsChecked = mntlogout;
+            LoginBox_Copy2.IsChecked = mntpoz;
+            MntFeild.Text = whomnt;
         }
 
         private void PlusTimeout(object sender, RoutedEventArgs e)
@@ -113,6 +124,10 @@ namespace _2B2T_Queue_Notifier
             config.Write("hooklogin", LoginBox.IsChecked.ToString());
             config.Write("hooklogout", LogoutBox.IsChecked.ToString());
             config.Write("hookpoz", PozBox.IsChecked.ToString());
+            config.Write("mntlogin", LoginBox_Copy.IsChecked.ToString());
+            config.Write("mntlogout", LoginBox_Copy1.IsChecked.ToString());
+            config.Write("mntpoz", LoginBox_Copy2.IsChecked.ToString());
+            config.Write("whomnt", MntFeild.Text);
             this.Close();
         }
 
@@ -128,6 +143,10 @@ namespace _2B2T_Queue_Notifier
             config.Write("hooklogout", "true");
             config.Write("hookpoz", "true");
             config.Write("hookuri", "");
+            config.Write("mntlogin", "false");
+            config.Write("mntlogout", "false");
+            config.Write("mntpoz", "false");
+            config.Write("whomnt", "@everyone");
             this.Close();
         }
 

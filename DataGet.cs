@@ -93,12 +93,15 @@ namespace dataGet
             return totalTime;
         }
 
-        static public void discordWebHook(String WebHook, String Queue, int Cach, String Color, bool enabled)
+        static public void discordWebHook(String WebHook, String Queue, int Cach, String Color, bool enabled, bool doMention, string whomnt)
         {
             if (int.Parse(Queue) != Cach && enabled)
             {
                 try
                 {
+                    string mnt = "";
+                    if (doMention)
+                        mnt = whomnt;
                     string time = DateTime.Now.ToString("HH:mm:ss • MM/dd/yy");
                     var httpWebRequest = (HttpWebRequest)WebRequest.Create(WebHook);
                     httpWebRequest.ContentType = "application/json";
@@ -107,7 +110,7 @@ namespace dataGet
                     using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                     {
                         string json = "{\"content\":null,\"embeds\":[{\"title\":\"Σ's 2B2T Queue Notifier\",\"description\":\"**Queue Posision:** `" + Queue.ToString()
-                            + "`\",\"url\":\"https://github.com/Basicprogrammer10/2B2T-Queue-Notifier\",\"color\":" + Color
+                             + "`\\n" + mnt + "\",\"url\":\"https://github.com/Basicprogrammer10/2B2T-Queue-Notifier\",\"color\":" + Color
                             + ",\"footer\": {\"text\": \"" + time + "\"},\"thumbnail\":{\"url\":\"https://i.imgur.com/K1KWFjR.png\"}}]}";
                         streamWriter.Write(json);
                     }
@@ -118,14 +121,17 @@ namespace dataGet
                         var result = streamReader.ReadToEnd();
                     }
                 }
-                catch { }
+                catch { MessageBox.Show(":\\"); }
             }
         }
 
-        static public void DiscordMessage(String WebHook, String text, String Color, bool enabled)
+        static public void DiscordMessage(String WebHook, String text, String Color, bool enabled, bool doMention, string whomnt)
         {
             if (enabled)
             {
+                string mnt = "";
+                if (doMention)
+                    mnt = whomnt;
                 string time = DateTime.Now.ToString("HH:mm:ss • MM/dd/yy");
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(WebHook);
                 httpWebRequest.ContentType = "application/json";
@@ -134,7 +140,7 @@ namespace dataGet
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
                     string json = "{\"content\":null,\"embeds\":[{\"title\":\"Σ's 2B2T Queue Notifier\",\"description\":\"" + text.ToString()
-                        + "\",\"url\":\"https://github.com/Basicprogrammer10/2B2T-Queue-Notifier\",\"color\":" + Color
+                        + "\\n" + mnt + "\",\"url\":\"https://github.com/Basicprogrammer10/2B2T-Queue-Notifier\",\"color\":" + Color
                         + ",\"footer\": {\"text\": \"" + time + "\"},\"thumbnail\":{\"url\":\"https://i.imgur.com/K1KWFjR.png\"}}]}";
                     streamWriter.Write(json);
                 }
