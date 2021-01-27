@@ -22,7 +22,13 @@ namespace _2B2T_Queue_Notifier
         public Color TCM = Color.FromRgb(235, 203, 139);
         public Color TCF = Color.FromRgb(191, 97, 106);
         public Color TCN = Color.FromRgb(94, 129, 172);
+        
         private string webHook = "";
+        private bool doWebHook = false;
+        private bool hooklogin = true;
+        private bool hooklogout = true;
+        private bool hookpoz = true;
+
         private string path = Environment.ExpandEnvironmentVariables(@"%AppData%\.minecraft\logs\latest.log");
         private string chat = "Position in queue: ";
         private int timeout = 30;
@@ -41,13 +47,28 @@ namespace _2B2T_Queue_Notifier
                 config.Write("tickdelay","1");
                 config.Write("chat", "Position in queue: ");
                 config.Write("logpath", @"%AppData%\.minecraft\logs\latest.log");
+                ///// ----- D I S C O R D ----- \\\\\
+                config.Write("dowebhook", "false");
+                config.Write("hooklogin", "true");
+                config.Write("hooklogout", "true");
+                config.Write("hookpoz", "true");
+                config.Write("hookuri", "");
             }
             else
             {
                 chat = config.Read("chat");
                 timeout = int.Parse(config.Read("timeout"));
                 tickdelay = int.Parse(config.Read("tickdelay"));
+                try { doWebHook = bool.Parse(config.Read("tickdelay")); } catch { doWebHook = false;  }
                 path = Environment.ExpandEnvironmentVariables(config.Read("logpath"));
+
+                try { doWebHook = bool.Parse(config.Read("dowebhook")); } catch { doWebHook = false; }
+                //TO  IMP
+                try { hooklogin = bool.Parse(config.Read("hooklogin")); } catch { hooklogin = false; }
+                try { hooklogout = bool.Parse(config.Read("hooklogout")); } catch { hooklogout = false; }
+                try { hookpoz = bool.Parse(config.Read("hookpoz")); } catch { hookpoz = false; }
+                //END IMP
+                webHook = config.Read("hookuri");
             }
         }
 
@@ -110,7 +131,6 @@ namespace _2B2T_Queue_Notifier
                 List<int> FULL = dataGet.DataGet.getIndex(path, chat);
                 int lastChatEvent = dataGet.DataGet.ChatTime(path);
                 int index = FULL[0];
-                //MessageBox.Show(index.ToString());
                 if (index != indexCach && FULL[1] > dataGet.DataGet.NowTime() - timeout)
                 {
                     EqFr = 0;
@@ -118,19 +138,19 @@ namespace _2B2T_Queue_Notifier
                     if (index > 500)
                     {
                         MainTime.Foreground = new SolidColorBrush(TCF);
-                        //discordWebHook(webHook, index.ToString(), indexCach, "12542314");
+                        DataGet.discordWebHook(webHook, index.ToString(), indexCach, "12542314", doWebHook);
                         indexCach = index;
                     }
                     else if (index > 250 && index < 500)
                     {
                         MainTime.Foreground = new SolidColorBrush(TCM);
-                        //discordWebHook(webHook, index.ToString(), indexCach, "15453067");
+                        DataGet.discordWebHook(webHook, index.ToString(), indexCach, "15453067", doWebHook);
                         indexCach = index;
                     }
                     else if (index > 0 && index < 250)
                     {
                         MainTime.Foreground = new SolidColorBrush(TCL);
-                        //discordWebHook(webHook, index.ToString(), indexCach, "10731148");
+                        DataGet.discordWebHook(webHook, index.ToString(), indexCach, "10731148", doWebHook);
                         indexCach = index;
                     }
                     indexCach = FULL[1];

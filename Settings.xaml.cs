@@ -24,6 +24,7 @@ namespace _2B2T_Queue_Notifier
         int timeOutValue = 30;
         int TickDelayValue = 1;
         string LogPath = @"%AppData%\.minecraft\logs\latest.log";
+        private string chat = "Position in queue: ";
 
         public Settings()
         {
@@ -31,10 +32,12 @@ namespace _2B2T_Queue_Notifier
             timeOutValue = int.Parse(config.Read("timeout"));
             TickDelayValue = int.Parse(config.Read("tickdelay"));
             LogPath = config.Read("logpath");
+            chat = config.Read("chat");
 
             LogPathFeild.Text = LogPath;
             TimeoutLabel.Content = timeOutValue;
             TickLabel.Content = TickDelayValue;
+            ChatRegex.Text = chat;
         }
 
         private void PlusTimeout(object sender, RoutedEventArgs e)
@@ -86,6 +89,7 @@ namespace _2B2T_Queue_Notifier
             config.Write("timeout", timeOutValue.ToString());
             config.Write("tickdelay", TickDelayValue.ToString());
             config.Write("logpath", LogPathFeild.Text);
+            config.Write("chat", ChatRegex.Text);
             this.Close();
             //config.Write("chat", "Position in queue: ");
         }
@@ -98,6 +102,16 @@ namespace _2B2T_Queue_Notifier
             config.Write("chat", "Position in queue: ");
             config.Write("logpath", @"%AppData%\.minecraft\logs\latest.log");
             this.Close();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            var psi = new ProcessStartInfo
+            {
+                FileName = "https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/blob/master/Settings.md",
+                UseShellExecute = true
+            };
+            Process.Start(psi);
         }
     }
 }

@@ -95,7 +95,7 @@ namespace dataGet
 
         static public void discordWebHook(String WebHook, String Queue, int Cach, String Color, bool enabled)
         {
-            if (int.Parse(Queue) != Cach)
+            if (int.Parse(Queue) != Cach && enabled)
             {
                 string time = DateTime.Now.ToString("HH:mm:ss • MM/dd/yy");
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(WebHook);

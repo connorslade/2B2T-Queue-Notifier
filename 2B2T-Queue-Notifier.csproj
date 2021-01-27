@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="DiscordIcon.png" />
     <None Remove="SigmaLogo.png" />
   </ItemGroup>
 
@@ -16,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="DiscordIcon.png" />
     <Resource Include="SigmaLogo.png" />
   </ItemGroup>
 
