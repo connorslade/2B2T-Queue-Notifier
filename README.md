@@ -20,7 +20,7 @@ Still Working on GUI...
 
 - [X] Read / Parse Log File
 - [X] Update GUI with data from log file
-- [ ] Finish GUI
+- [X] Finish GUI
 - [X] Detect When Logged in
 - [X] Detect when game Closed / Not in server
 - [X] Add Settings Page
@@ -28,7 +28,7 @@ Still Working on GUI...
 - [ ] Send Toasts
 - [X] Integrate With Discord Webhooks
 - [X] Finish About Page
-- [ ] Finish Settings Page
+- [X] Finish Settings Page
 - [X] Save Settings
 - [ ] Emails?
 - [ ] Push Notifications?
