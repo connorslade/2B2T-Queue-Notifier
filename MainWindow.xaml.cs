@@ -1,5 +1,7 @@
-﻿using System;
+﻿using dataGet;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -12,6 +14,7 @@ namespace _2B2T_Queue_Notifier
     /// </summary>
     public partial class MainWindow : Window
     {
+        private IniFile config = new IniFile(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\connorcode\2B2T-Queue-Notifier\settings.ini");
         private DispatcherTimer dispatcherTimer;
         public Color BkHv = Color.FromRgb(67, 76, 94);
         public Color BkLv = Color.FromRgb(45, 51, 63);
@@ -23,12 +26,29 @@ namespace _2B2T_Queue_Notifier
         private string path = Environment.ExpandEnvironmentVariables(@"%AppData%\.minecraft\logs\latest.log");
         private string chat = "Position in queue: ";
         private int timeout = 30;
-        private int indexCach;
+        private int tickdelay;
+        private int indexCach = 0;
         private int EqFr;
 
         public MainWindow()
         {
             InitializeComponent();
+            if (!config.KeyExists("setup"))
+            {
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\connorcode\2B2T-Queue-Notifier\");
+                config.Write("setup","true");
+                config.Write("timeout","30");
+                config.Write("tickdelay","1");
+                config.Write("chat", "Position in queue: ");
+                config.Write("logpath", @"%AppData%\.minecraft\logs\latest.log");
+            }
+            else
+            {
+                chat = config.Read("chat");
+                timeout = int.Parse(config.Read("timeout"));
+                tickdelay = int.Parse(config.Read("tickdelay"));
+                path = Environment.ExpandEnvironmentVariables(config.Read("logpath"));
+            }
         }
 
         #region TopBar
@@ -79,11 +99,9 @@ namespace _2B2T_Queue_Notifier
 
         private void start_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            // foreach (int working in dataGet.DataGet.getGameTime(path))
-            // {
-            //    MessageBox.Show(working.ToString());
-            //}
-        }
+            Settings win2 = new Settings();
+            win2.Show();
+    }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
@@ -92,26 +110,27 @@ namespace _2B2T_Queue_Notifier
                 List<int> FULL = dataGet.DataGet.getIndex(path, chat);
                 int lastChatEvent = dataGet.DataGet.ChatTime(path);
                 int index = FULL[0];
-                if (FULL[1] != indexCach && FULL[1] > dataGet.DataGet.NowTime() - timeout)
+                //MessageBox.Show(index.ToString());
+                if (index != indexCach && FULL[1] > dataGet.DataGet.NowTime() - timeout)
                 {
                     EqFr = 0;
                     MainTime.Text = index.ToString();
                     if (index > 500)
                     {
                         MainTime.Foreground = new SolidColorBrush(TCF);
-                        dataGet.DataGet.discordWebHook(webHook, index.ToString(), indexCach, "12542314");
+                        //discordWebHook(webHook, index.ToString(), indexCach, "12542314");
                         indexCach = index;
                     }
                     else if (index > 250 && index < 500)
                     {
                         MainTime.Foreground = new SolidColorBrush(TCM);
-                        dataGet.DataGet.discordWebHook(webHook, index.ToString(), indexCach, "15453067");
+                        //discordWebHook(webHook, index.ToString(), indexCach, "15453067");
                         indexCach = index;
                     }
                     else if (index > 0 && index < 250)
                     {
                         MainTime.Foreground = new SolidColorBrush(TCL);
-                        dataGet.DataGet.discordWebHook(webHook, index.ToString(), indexCach, "10731148");
+                        //discordWebHook(webHook, index.ToString(), indexCach, "10731148");
                         indexCach = index;
                     }
                     indexCach = FULL[1];
@@ -138,11 +157,10 @@ namespace _2B2T_Queue_Notifier
 
         private void Grid_Initialized(object sender, EventArgs e)
         {
-            //MainTime.Text = dataGet.DataGet.getIndex(path, chat)[0].ToString();
             MainTime.Text = "…";
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1); //1-5?
+            dispatcherTimer.Interval = new TimeSpan(0, 0, tickdelay);
             dispatcherTimer.Start();
         }
     }

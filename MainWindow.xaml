@@ -7,10 +7,6 @@
         mc:Ignorable="d"
         Title="Simga's 2B Notifier" Height="450" Width="800" Background="#FC2E3440" Visibility="Visible" ResizeMode="CanResizeWithGrip" Opacity="1" AllowsTransparency="True" WindowStyle="None">
     <Grid Initialized="Grid_Initialized">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="188*"/>
-            <RowDefinition Height="37*"/>
-        </Grid.RowDefinitions>
         <!--TopBar-->
         <Rectangle Height="30" VerticalAlignment="Top" Fill="#FF292E39" MouseDown="Rectangle_MouseDown"/>
         <Rectangle x:Name="Exit" Height="22" Margin="0,4,8,0" VerticalAlignment="Top" Cursor="Hand" MouseDown="Exit_MouseDown" Fill="#FF292E39" HorizontalAlignment="Right" Width="22"/>
@@ -58,6 +54,7 @@
                 </Path>
                 <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path6" Fill="#FF7589FF" Stroke="#FF7589FF">
                     <Path.Data>
+                        <!--<PathGeometry Figures="M28.52 15.56l-1.41-1.41-7.2 7.2a1 1 0 0 0-.25 1 9 9 0 0 1-1.53 8.09L5.58 17.87a9 9 0 0 1 8.09-1.53 1 1 0 0 0 1-.25l7.2-7.2L20.44 7.48l-6.79 6.79A10.94 10.94 0 0 0 3.41 17.11a1 1 0 0 0 0 1.42l6.33 6.33L2.29 32.29a1 1 0 1 0 1.41 1.41l7.44-7.44 6.33 6.33a1 1 0 0 0 .71.29h0a1 1 0 0 0 .71-.3 11 11 0 0 0 2.84-10.24Z" FillRule="Nonzero"/>-->
                         <PathGeometry Figures="M28.52 15.56l-1.41-1.41-7.2 7.2a1 1 0 0 0-.25 1 9 9 0 0 1-1.53 8.09L5.58 17.87a9 9 0 0 1 8.09-1.53 1 1 0 0 0 1-.25l7.2-7.2L20.44 7.48l-6.79 6.79A10.94 10.94 0 0 0 3.41 17.11a1 1 0 0 0 0 1.42l6.33 6.33L2.29 32.29a1 1 0 1 0 1.41 1.41l7.44-7.44 6.33 6.33a1 1 0 0 0 .71.29h0a1 1 0 0 0 .71-.3 11 11 0 0 0 2.84-10.24Z" FillRule="Nonzero"/>
                     </Path.Data>
                 </Path>
@@ -66,7 +63,7 @@
         </Viewbox>
         <!--TopBar END-->
         <!--Buttions-->
-        <Ellipse x:Name="start" Height="100" Stroke="#FFECEFF4" Width="100" VerticalAlignment="Top" Margin="0,282,0,0" HorizontalAlignment="Center" StrokeThickness="5" Fill="#FF2D333F" Cursor="Hand" MouseEnter="start_MouseEnter" MouseLeave="start_MouseLeave" MouseDown="start_MouseDown" Grid.RowSpan="2">
+        <Ellipse x:Name="start" Height="100" Stroke="#FFECEFF4" Width="100" VerticalAlignment="Top" Margin="0,282,0,0" HorizontalAlignment="Center" StrokeThickness="5" Fill="#FF2D333F" Cursor="Hand" MouseEnter="start_MouseEnter" MouseLeave="start_MouseLeave" MouseDown="start_MouseDown">
             <Ellipse.Effect>
                 <DropShadowEffect/>
             </Ellipse.Effect>
