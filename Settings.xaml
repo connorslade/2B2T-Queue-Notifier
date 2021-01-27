@@ -1,0 +1,46 @@
+﻿<Window x:Class="_2B2T_Queue_Notifier.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_2B2T_Queue_Notifier"
+        mc:Ignorable="d"
+        Title="Settings" Height="450" Width="800" ResizeMode="NoResize">
+    <Grid>
+        <TabControl>
+            <TabItem Header="About">
+                <Grid Background="#FFE5E5E5">
+                    <Image HorizontalAlignment="Left" Height="150" Margin="10,10,0,0" VerticalAlignment="Top" Width="150" Source="/SigmaLogo.png"/>
+                    <TextBlock HorizontalAlignment="Left" Height="124" Margin="174,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="620" FontSize="36"><Run Text="Sigma's 2B2T-Queue-Notifier"/><LineBreak/><Run Text="V0.0 - BETA"/></TextBlock>
+                    <Button Content="Ok" HorizontalAlignment="Left" Height="23" Margin="694,345,0,0" VerticalAlignment="Top" Width="70" Click="Save"/>
+                    <Button x:Name="Exit_Copy" Content="Cancel" HorizontalAlignment="Left" Height="23" Margin="619,345,0,0" VerticalAlignment="Top" Width="70" Click="Exit_Click"/>
+                    <TextBlock HorizontalAlignment="Left" Height="174" Margin="21,166,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="763" FontSize="16"><Run Text="Report any bugs"/><LineBreak/><Run Text="Contact me on Discord at Sigma#8214"/><LineBreak/><Run/><LineBreak/><Run Text="Go to General tab to change some Important settings."/><LineBreak/><Run Text="Go to Discord tab to set up Webhooks."/></TextBlock>
+                    <Button Content="here." HorizontalAlignment="Left" Margin="141,164,0,0" VerticalAlignment="Top" Background="#FFE5E5E5" BorderBrush="#FFE5E5E5" Foreground="#FF3EA6FD" Cursor="Hand" Click="Button_Click" FontSize="16"/>
+                    <Button x:Name="Exit_Copy1" Content="Reset" HorizontalAlignment="Left" Height="23" Margin="544,345,0,0" VerticalAlignment="Top" Width="70" Click="Reset"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="General">
+                <Grid Background="#FFE5E5E5">
+                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,10,0,0" Text="Timeout (SEC)" TextWrapping="Wrap" VerticalAlignment="Top" Width="76"/>
+                    <Label x:Name="TimeoutLabel" Content="30&#xD;&#xA;" HorizontalAlignment="Left" Height="25" Margin="141,6,0,0" VerticalAlignment="Top" Width="40"/>
+                    <Button Content="+&#xD;&#xA;" HorizontalAlignment="Left" Height="20" Margin="91,8,0,0" VerticalAlignment="Top" Width="20" Click="PlusTimeout"/>
+                    <Button Content="-" HorizontalAlignment="Left" Height="20" Margin="116,8,0,0" VerticalAlignment="Top" Width="20" Click="LessTimeout"/>
+                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76"><Run Text="Log File Path"/><LineBreak/><Run/></TextBlock>
+                    <TextBox x:Name="LogPathFeild" HorizontalAlignment="Left" Height="20" Margin="91,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="306"/>
+                    <Button Content="Ok" HorizontalAlignment="Left" Height="23" Margin="694,345,0,0" VerticalAlignment="Top" Width="70" Click="Save"/>
+                    <Button x:Name="Exit" Content="Cancel" HorizontalAlignment="Left" Height="23" Margin="619,345,0,0" VerticalAlignment="Top" Width="70" Click="Exit_Click"/>
+                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76" Text="Tick Delay"/>
+                    <Label x:Name="TickLabel" Content="1&#xA;" HorizontalAlignment="Left" Height="25" Margin="141,31,0,0" VerticalAlignment="Top" Width="40"/>
+                    <Button Content="+&#xA;" HorizontalAlignment="Left" Height="20" Margin="91,33,0,0" VerticalAlignment="Top" Width="20" Click="PlusTick"/>
+                    <Button Content="-" HorizontalAlignment="Left" Height="20" Margin="116,33,0,0" VerticalAlignment="Top" Width="20" Click="LessTick"/>
+                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76" Text="Chat Regex"/>
+                    <TextBox HorizontalAlignment="Left" Height="20" Margin="91,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="306"/>
+                    <Button x:Name="Exit_Copy2" Content="Reset" HorizontalAlignment="Left" Height="23" Margin="544,345,0,0" VerticalAlignment="Top" Width="70" Click="Reset"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Discord">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
