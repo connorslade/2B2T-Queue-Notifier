@@ -57,7 +57,6 @@ namespace _2B2T_Queue_Notifier
                 config.Write("hooklogout", "true");
                 config.Write("hookpoz", "true");
                 config.Write("hookuri", "");
-
                 config.Write("mntlogin", "false");
                 config.Write("mntlogout", "false");
                 config.Write("mntpoz", "false");
@@ -188,18 +187,19 @@ namespace _2B2T_Queue_Notifier
                     isIn = true;
                     isLogin = false;
                 }
+                else if (index == indexCach && FULL[1] > dataGet.DataGet.NowTime() - timeout) { }
                 else
                 {
                     EqFr += tickdelay;
                     if (EqFr > timeout)
                     {
-                        EqFr = 0;
                         MainTime.Text = "…";
                         MainTime.Foreground = new SolidColorBrush(TCF);
                         if (hooklogout && isIn)
                             DataGet.DiscordMessage(webHook, "**Logged Out **", "12150125", doWebHook, mntlogout, whomnt);
                         isIn = false;
                         isLogin = false;
+                        EqFr = 0;
                     }
                 }
             }
