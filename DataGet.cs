@@ -93,7 +93,7 @@ namespace dataGet
             return totalTime;
         }
 
-        static public void discordWebHook(String WebHook, String Queue, int Cach, String Color, bool enabled, bool doMention, string whomnt)
+        static public bool discordWebHook(String WebHook, String Queue, int Cach, String Color, bool enabled, bool doMention, string whomnt)
         {
             if (int.Parse(Queue) != Cach && enabled)
             {
@@ -120,36 +120,50 @@ namespace dataGet
                     {
                         var result = streamReader.ReadToEnd();
                     }
+                    return true;
                 }
-                catch { MessageBox.Show(":\\"); }
+                catch { return false; }
+            }
+            else
+            {
+                return true;
             }
         }
 
-        static public void DiscordMessage(String WebHook, String text, String Color, bool enabled, bool doMention, string whomnt)
+        static public bool DiscordMessage(String WebHook, String text, String Color, bool enabled, bool doMention, string whomnt)
         {
             if (enabled)
             {
-                string mnt = "";
-                if (doMention)
-                    mnt = whomnt;
-                string time = DateTime.Now.ToString("HH:mm:ss • MM/dd/yy");
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(WebHook);
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = "POST";
-
-                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                try
                 {
-                    string json = "{\"content\":null,\"embeds\":[{\"title\":\"Σ's 2B2T Queue Notifier\",\"description\":\"" + text.ToString()
-                        + "\\n" + mnt + "\",\"url\":\"https://github.com/Basicprogrammer10/2B2T-Queue-Notifier\",\"color\":" + Color
-                        + ",\"footer\": {\"text\": \"" + time + "\"},\"thumbnail\":{\"url\":\"https://i.imgur.com/K1KWFjR.png\"}}]}";
-                    streamWriter.Write(json);
-                }
+                    string mnt = "";
+                    if (doMention)
+                        mnt = whomnt;
+                    string time = DateTime.Now.ToString("HH:mm:ss • MM/dd/yy");
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(WebHook);
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = "POST";
 
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    {
+                        string json = "{\"content\":null,\"embeds\":[{\"title\":\"Σ's 2B2T Queue Notifier\",\"description\":\"" + text.ToString()
+                            + "\\n" + mnt + "\",\"url\":\"https://github.com/Basicprogrammer10/2B2T-Queue-Notifier\",\"color\":" + Color
+                            + ",\"footer\": {\"text\": \"" + time + "\"},\"thumbnail\":{\"url\":\"https://i.imgur.com/K1KWFjR.png\"}}]}";
+                        streamWriter.Write(json);
+                    }
+                    
+                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        var result = streamReader.ReadToEnd();
+                    }
+                    return true;
                 }
+                catch { return false; }
+            }
+            else
+            {
+                return true;
             }
 
         }
