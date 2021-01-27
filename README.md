@@ -23,9 +23,9 @@ Still Working on GUI...
 - [X] Add About Page
 - [ ] Send Toasts
 - [X] Integrate With Discord Webhooks
-- [ ] Finish About Page
+- [X] Finish About Page
 - [ ] Finish Settings Page
-- [ ] Save Settings
+- [X] Save Settings
 - [ ] Emails?
 - [ ] Push Notifications?
 - [ ] **M O R E**
