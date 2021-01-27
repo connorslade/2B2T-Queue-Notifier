@@ -22,7 +22,7 @@ namespace _2B2T_Queue_Notifier
         public Color TCM = Color.FromRgb(235, 203, 139);
         public Color TCF = Color.FromRgb(191, 97, 106);
         public Color TCN = Color.FromRgb(94, 129, 172);
-        
+
         private string webHook = "";
         private bool doWebHook = false;
         private bool hooklogin = true;
@@ -32,8 +32,10 @@ namespace _2B2T_Queue_Notifier
         private string path = Environment.ExpandEnvironmentVariables(@"%AppData%\.minecraft\logs\latest.log");
         private string chat = "Position in queue: ";
         private int timeout = 30;
-        private int tickdelay;
+        private int tickdelay = 10;
         private int indexCach = 0;
+        private bool isIn = true;
+        private bool isLogin = true;
         private int EqFr;
 
         public MainWindow()
@@ -42,9 +44,9 @@ namespace _2B2T_Queue_Notifier
             if (!config.KeyExists("setup"))
             {
                 Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\connorcode\2B2T-Queue-Notifier\");
-                config.Write("setup","true");
-                config.Write("timeout","30");
-                config.Write("tickdelay","1");
+                config.Write("setup", "true");
+                config.Write("timeout", "30");
+                config.Write("tickdelay", "10");
                 config.Write("chat", "Position in queue: ");
                 config.Write("logpath", @"%AppData%\.minecraft\logs\latest.log");
                 ///// ----- D I S C O R D ----- \\\\\
@@ -56,7 +58,7 @@ namespace _2B2T_Queue_Notifier
             }
             else
             {
-                UpdateConfigVars();
+                updateVars();
             }
         }
 
@@ -96,20 +98,17 @@ namespace _2B2T_Queue_Notifier
 
         #endregion TopBar
 
-        private void UpdateConfigVars()
+        private void updateVars()
         {
             chat = config.Read("chat");
             timeout = int.Parse(config.Read("timeout"));
-            tickdelay = int.Parse(config.Read("tickdelay"));
             try { doWebHook = bool.Parse(config.Read("tickdelay")); } catch { doWebHook = false; }
+            tickdelay = int.Parse(config.Read("tickdelay"));
             path = Environment.ExpandEnvironmentVariables(config.Read("logpath"));
-
             try { doWebHook = bool.Parse(config.Read("dowebhook")); } catch { doWebHook = false; }
             try { hookpoz = bool.Parse(config.Read("hookpoz")); } catch { hookpoz = false; }
-            //TO  IMP
             try { hooklogin = bool.Parse(config.Read("hooklogin")); } catch { hooklogin = false; }
             try { hooklogout = bool.Parse(config.Read("hooklogout")); } catch { hooklogout = false; }
-            //END IMP
             webHook = config.Read("hookuri");
         }
 
@@ -127,12 +126,14 @@ namespace _2B2T_Queue_Notifier
         {
             Settings win2 = new Settings();
             win2.Show();
-    }
+        }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             try
             {
+                updateVars();
+
                 List<int> FULL = dataGet.DataGet.getIndex(path, chat);
                 int lastChatEvent = dataGet.DataGet.ChatTime(path);
                 int index = FULL[0];
@@ -150,45 +151,51 @@ namespace _2B2T_Queue_Notifier
                     else if (index > 250 && index < 500)
                     {
                         MainTime.Foreground = new SolidColorBrush(TCM);
-                        if (hookpoz) 
+                        if (hookpoz)
                             DataGet.discordWebHook(webHook, index.ToString(), indexCach, "15453067", doWebHook);
                         indexCach = index;
                     }
                     else if (index > 0 && index < 250)
                     {
                         MainTime.Foreground = new SolidColorBrush(TCL);
-                        if (hookpoz) 
+                        if (hookpoz)
                             DataGet.discordWebHook(webHook, index.ToString(), indexCach, "10731148", doWebHook);
                         indexCach = index;
                     }
-                    indexCach = FULL[1];
+                    indexCach = FULL[0];
+                    isIn = true;
+                    isLogin = true;
                 }
                 else if (FULL[1] != lastChatEvent && lastChatEvent > dataGet.DataGet.NowTime() - timeout)
                 {
                     MainTime.Text = "Online!";
                     MainTime.Foreground = new SolidColorBrush(TCL);
-                    if (hooklogin)
-                            DataGet.discordWebHook(webHook, "LogIn", indexCach, "10731148", doWebHook); //Spesialize for Login...
+                    if (hooklogin && isLogin)
+                        DataGet.DiscordMessage(webHook, "**Logged In!** :grin:", "9419928", doWebHook);
+                    isIn = true;
+                    isLogin = false;
                 }
                 else
                 {
-                    EqFr++;
+                    EqFr += tickdelay;
                     if (EqFr > timeout)
                     {
                         EqFr = 0;
                         MainTime.Text = "…";
                         MainTime.Foreground = new SolidColorBrush(TCF);
-                        if (hooklogin)
-                            DataGet.discordWebHook(webHook, "LogOut", indexCach, "10731148", doWebHook); //Spesialize for LogOut...
+                        if (hooklogin && isIn)
+                            DataGet.DiscordMessage(webHook, "**Logged Out **", "12150125", doWebHook);
+                        isIn = false;
+                        isLogin = false;
                     }
                 }
-
             }
             catch { MainTime.Text = "…"; }
         }
 
         private void Grid_Initialized(object sender, EventArgs e)
         {
+            updateVars();
             MainTime.Text = "…";
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
