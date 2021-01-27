@@ -100,6 +100,7 @@ namespace _2B2T_Queue_Notifier
             config.Write("logpath", LogPathFeild.Text);
             config.Write("chat", ChatRegex.Text);
             config.Write("dowebhook", webHooksCheck.IsChecked.ToString());
+            config.Write("hookuri", WebHookUri.Text);
             this.Close();
         }
 

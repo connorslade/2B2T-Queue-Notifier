@@ -97,24 +97,28 @@ namespace dataGet
         {
             if (int.Parse(Queue) != Cach && enabled)
             {
-                string time = DateTime.Now.ToString("HH:mm:ss • MM/dd/yy");
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(WebHook);
-                httpWebRequest.ContentType = "application/json";
-                httpWebRequest.Method = "POST";
-
-                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                try
                 {
-                    string json = "{\"content\":null,\"embeds\":[{\"title\":\"Σ's 2B2T Queue Notifier\",\"description\":\"**Queue Posision:** `" + Queue.ToString()
-                        + "`\",\"url\":\"https://github.com/Basicprogrammer10/2B2T-Queue-Notifier\",\"color\":"+Color
-                        +",\"footer\": {\"text\": \""+time+"\"},\"thumbnail\":{\"url\":\"https://i.imgur.com/K1KWFjR.png\"}}]}";
-                    streamWriter.Write(json);
-                }
+                    string time = DateTime.Now.ToString("HH:mm:ss • MM/dd/yy");
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(WebHook);
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = "POST";
 
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    {
+                        string json = "{\"content\":null,\"embeds\":[{\"title\":\"Σ's 2B2T Queue Notifier\",\"description\":\"**Queue Posision:** `" + Queue.ToString()
+                            + "`\",\"url\":\"https://github.com/Basicprogrammer10/2B2T-Queue-Notifier\",\"color\":" + Color
+                            + ",\"footer\": {\"text\": \"" + time + "\"},\"thumbnail\":{\"url\":\"https://i.imgur.com/K1KWFjR.png\"}}]}";
+                        streamWriter.Write(json);
+                    }
+
+                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        var result = streamReader.ReadToEnd();
+                    }
                 }
+                catch { }
             }
         }
 
