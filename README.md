@@ -6,15 +6,15 @@
 
 **Still in Beta**
 
-If you need help Setting this up or Want to know what all the settings do then check ![this](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/blob/master/Settings.md) out!
+A Program I made to display my 2b2t queue ontop of other windows and to notify me whan I get loged In.<br/>If you want to use it also you can download the newest relese by clicking the "Download" icon above this text. Want to make sure its safe? You can check the Virus total for the portable version [here](https://www.virustotal.com/gui/file/65637ec39a54bef2c195a6e392c10dce2810fc9e4580ff901ce804c7fb072488/detection), you can also check the sorce code if you really want.
 
-Contact me on Discord at `Sigma#8214`<br>
+If you need help Setting this up or Want to know what all the settings do then check ![this](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/blob/master/Settings.md) out! 
 
-![Image](https://i.imgur.com/pKdqUnm.png)
+**Contact me** on Discord at `Sigma#8214`<br>
+
+![Image](https://i.imgur.com/zDyJ1O6.png)
 
 ![Discord](https://i.imgur.com/VcLeG0n.png)
-
-Still Working on GUI...
 
 ## To-Do
 
