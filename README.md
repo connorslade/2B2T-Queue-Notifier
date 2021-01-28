@@ -84,7 +84,7 @@ To get a local copy up and running follow these simple steps.
 
 ### Installation
 
-0.  Want to make sure its safe? You can check the Virus total [here](https://www.virustotal.com/gui/file/65637ec39a54bef2c195a6e392c10dce2810fc9e4580ff901ce804c7fb072488/detection), you can also check the sorce code if you really want.
+0.  Want to make sure its safe? You can check the Virus total [here](https://www.virustotal.com/gui/file/65637ec39a54bef2c195a6e392c10dce2810fc9e4580ff901ce804c7fb072488/detection), you can also check the sorce code.
 1. Install [.NET Core](https://dotnet.microsoft.com/)
 2. Download the Latest version of 2B2T-Queue-Notifier
 3. Run It!
