@@ -45,7 +45,6 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
@@ -55,6 +54,8 @@
 ## About The Project
 
 [![Screen Shot](https://i.imgur.com/zDyJ1O6.png)](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier)
+
+A Program I made to display my 2b2t queue ontop of other windows and to notify me whan I get loged In.
 
 ### Built With
 
@@ -78,6 +79,7 @@ To get a local copy up and running follow these simple steps.
 
 ### Installation
 
+0.  Want to make sure its safe? You can check the Virus total [here](https://www.virustotal.com/gui/file/65637ec39a54bef2c195a6e392c10dce2810fc9e4580ff901ce804c7fb072488/detection), you can also check the sorce code if you really want.
 1. Install [.NET Core](https://dotnet.microsoft.com/)
 2. Download the Latest version of 2B2T-Queue-Notifier
 3. Run It!
@@ -85,9 +87,9 @@ To get a local copy up and running follow these simple steps.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+If you need help Setting this up or Want to know what all the settings do then check ![this](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/blob/master/Settings.md) out! **(Highly Recommended)**
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+**Contact me** on Discord at `Sigma#8214` if you still need help.
 
 
 
@@ -114,54 +116,18 @@ Contributions are what make the open source community such an amazing place to b
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the GNU General Public License v3.0. See [`LICENSE`](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/blob/master/LICENSE) for more information.
 
 
 
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email
+Discord - `Sigma#8214`
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Email - `connor@connorcode.com`
 
-
-
-<!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
-
-* []()
-* []()
-* []()
-
-
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo.svg?style=for-the-badge
-[contributors-url]: https://github.com/github_username/repo/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/github_username/repo.svg?style=for-the-badge
-[forks-url]: https://github.com/github_username/repo/network/members
-[stars-shield]: https://img.shields.io/github/stars/github_username/repo.svg?style=for-the-badge
-[stars-url]: https://github.com/github_username/repo/stargazers
-[issues-shield]: https://img.shields.io/github/issues/github_username/repo.svg?style=for-the-badge
-[issues-url]: https://github.com/github_username/repo/issues
-[license-shield]: https://img.shields.io/github/license/github_username/repo.svg?style=for-the-badge
-[license-url]: https://github.com/github_username/repo/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/github_username
-
-A Program I made to display my 2b2t queue ontop of other windows and to notify me whan I get loged In.<br/>If you want to use it also you can download the newest relese by clicking the "Download" icon above this text. Want to make sure its safe? You can check the Virus total for the portable version [here](https://www.virustotal.com/gui/file/65637ec39a54bef2c195a6e392c10dce2810fc9e4580ff901ce804c7fb072488/detection), you can also check the sorce code if you really want.
-
-If you need help Setting this up or Want to know what all the settings do then check ![this](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/blob/master/Settings.md) out! **(Highly Recommended)**
-
-**Contact me** on Discord at `Sigma#8214`<br>
-
-![Image](https://i.imgur.com/zDyJ1O6.png)
-
-![Discord](https://i.imgur.com/VcLeG0n.png)
+Project Link: [https://github.com/Basicprogrammer10/2B2T-Queue-Notifier](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier)
 
 ## To-Do
 
@@ -180,3 +146,16 @@ If you need help Setting this up or Want to know what all the settings do then c
 - [ ] Emails?
 - [ ] Push Notifications?
 - [ ] **M O R E**
+
+[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo.svg?style=for-the-badge
+[contributors-url]: https://github.com/github_username/repo/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/github_username/repo.svg?style=for-the-badge
+[forks-url]: https://github.com/github_username/repo/network/members
+[stars-shield]: https://img.shields.io/github/stars/github_username/repo.svg?style=for-the-badge
+[stars-url]: https://github.com/github_username/repo/stargazers
+[issues-shield]: https://img.shields.io/github/issues/github_username/repo.svg?style=for-the-badge
+[issues-url]: https://github.com/github_username/repo/issues
+[license-shield]: https://img.shields.io/github/license/github_username/repo.svg?style=for-the-badge
+[license-url]: https://github.com/github_username/repo/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/github_username
