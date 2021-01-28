@@ -61,6 +61,7 @@
 * [C#](https://docs.microsoft.com/en-us/dotnet/csharp/)
 * [.NET Core](https://dotnet.microsoft.com/)
 * [Visual Studio](https://visualstudio.microsoft.com/)
+* [Too Much Time](http://no-life.urbanup.com/12088813)
 
 
 
@@ -71,12 +72,15 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
-* [.NET Core](https://dotnet.microsoft.com/)
-* [Visual Studio](https://visualstudio.microsoft.com/)
+* [Minecraft](https://www.minecraft.net/en-us/) (Very Good Game)
+* [.NET Core](https://dotnet.microsoft.com/) (To run the Program)
+* [Visual Studio](https://visualstudio.microsoft.com/) (If you want to Edit / Mode the Code)
 
 ### Installation
 
-1. Download the Latest version of 2B2T-Queue-Notifier
+1. Install [.NET Core](https://dotnet.microsoft.com/)
+2. Download the Latest version of 2B2T-Queue-Notifier
+3. Run It!
 
 <!-- USAGE EXAMPLES -->
 ## Usage
