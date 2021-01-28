@@ -7,7 +7,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="https://raw.githubusercontent.com/Basicprogrammer10/2B2T-Queue-Notifier/master/2b2t.png" alt="Logo" width="80" height="80">
+    <img src="https://b2t-queue.web.app/assets/images/2b2t.png" alt="Logo" width="30%" />
   </a>
 
   <h3 align="center">2B2T-Queue-Notifier</h3>
