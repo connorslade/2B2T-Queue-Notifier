@@ -106,20 +106,40 @@ namespace _2B2T_Queue_Notifier
 
         private void updateVars()
         {
-            chat = config.Read("chat");
-            timeout = int.Parse(config.Read("timeout"));
-            try { doWebHook = bool.Parse(config.Read("tickdelay")); } catch { doWebHook = false; }
-            tickdelay = int.Parse(config.Read("tickdelay"));
-            path = Environment.ExpandEnvironmentVariables(config.Read("logpath"));
-            try { doWebHook = bool.Parse(config.Read("dowebhook")); } catch { doWebHook = false; }
-            try { hookpoz = bool.Parse(config.Read("hookpoz")); } catch { hookpoz = false; }
-            try { hooklogin = bool.Parse(config.Read("hooklogin")); } catch { hooklogin = false; }
-            try { hooklogout = bool.Parse(config.Read("hooklogout")); } catch { hooklogout = false; }
-            try { mntlogin = bool.Parse(config.Read("mntlogin")); } catch { mntlogin = false; }
-            try { mntlogout = bool.Parse(config.Read("mntlogout")); } catch { mntlogout = false; }
-            try { mntpoz = bool.Parse(config.Read("mntpoz")); } catch { mntpoz = false; }
-            whomnt = config.Read("whomnt");
-            webHook = config.Read("hookuri");
+            try {
+                chat = config.Read("chat");
+                timeout = int.Parse(config.Read("timeout"));
+                try { doWebHook = bool.Parse(config.Read("tickdelay")); } catch { doWebHook = false; }
+                tickdelay = int.Parse(config.Read("tickdelay"));
+                path = Environment.ExpandEnvironmentVariables(config.Read("logpath"));
+                try { doWebHook = bool.Parse(config.Read("dowebhook")); } catch { doWebHook = false; }
+                try { hookpoz = bool.Parse(config.Read("hookpoz")); } catch { hookpoz = false; }
+                try { hooklogin = bool.Parse(config.Read("hooklogin")); } catch { hooklogin = false; }
+                try { hooklogout = bool.Parse(config.Read("hooklogout")); } catch { hooklogout = false; }
+                try { mntlogin = bool.Parse(config.Read("mntlogin")); } catch { mntlogin = false; }
+                try { mntlogout = bool.Parse(config.Read("mntlogout")); } catch { mntlogout = false; }
+                try { mntpoz = bool.Parse(config.Read("mntpoz")); } catch { mntpoz = false; }
+                whomnt = config.Read("whomnt");
+                webHook = config.Read("hookuri");
+            }
+            catch { MessageBox.Show("ERR reading Config File...");
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\connorcode\2B2T-Queue-Notifier\");
+                config.Write("setup", "true");
+                config.Write("timeout", "30");
+                config.Write("tickdelay", "10");
+                config.Write("chat", "Position in queue: ");
+                config.Write("logpath", @"%AppData%\.minecraft\logs\latest.log");
+                ///// ----- D I S C O R D ----- \\\\\
+                config.Write("dowebhook", "false");
+                config.Write("hooklogin", "true");
+                config.Write("hooklogout", "true");
+                config.Write("hookpoz", "true");
+                config.Write("hookuri", "");
+                config.Write("mntlogin", "false");
+                config.Write("mntlogout", "false");
+                config.Write("mntpoz", "false");
+                config.Write("whomnt", "@everyone");
+            }
         }
 
         private void start_MouseEnter(object sender, MouseEventArgs e)

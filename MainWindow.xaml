@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_2B2T_Queue_Notifier"
         mc:Ignorable="d"
-        Title="Simga's 2B Notifier" Height="450" Width="800" Background="#FC2E3440" Visibility="Visible" ResizeMode="CanResizeWithGrip" Opacity="1" AllowsTransparency="True" WindowStyle="None">
+        Title="Simga's 2B Notifier" Height="450" Width="800" Background="#FC2E3440" Visibility="Visible" ResizeMode="CanResizeWithGrip" Opacity="1" AllowsTransparency="True" WindowStyle="None" Icon="/2b2t.png">
     <Grid Initialized="Grid_Initialized">
         <!--TopBar-->
         <Rectangle Height="30" VerticalAlignment="Top" Fill="#FF292E39" MouseDown="Rectangle_MouseDown"/>

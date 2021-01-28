@@ -5,9 +5,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>_2B2T_Queue_Notifier</RootNamespace>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>2b2t.ico</ApplicationIcon>
+    <StartupObject>_2B2T_Queue_Notifier.App</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="2b2t.png" />
     <None Remove="DiscordIcon.png" />
     <None Remove="SigmaLogo.png" />
   </ItemGroup>
@@ -17,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="2b2t.png" />
     <Resource Include="DiscordIcon.png" />
     <Resource Include="SigmaLogo.png" />
   </ItemGroup>

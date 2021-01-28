@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_2B2T_Queue_Notifier"
         mc:Ignorable="d"
-        Title="Settings" Height="450" Width="800" ResizeMode="NoResize">
+        Title="Settings" Height="450" Width="800" ResizeMode="NoResize" Icon="/2b2t.png">
     <Grid>
         <TabControl>
             <TabItem Header="About">

@@ -14,70 +14,89 @@ namespace dataGet
     {
         static public List<int> getIndex(string path, string chat)
         {
-            var text = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            UTF8Encoding data = new UTF8Encoding(true);
-            Regex rg = new Regex(@"\[CHAT\] " + chat);
-            List<int> allInt = new List<int>();
-            byte[] b = new byte[640000];
-            string allText = "";
-            List<int> allTimeList = new List<int>();
-            int totalTime;
-
-            while (text.Read(b, 0, b.Length) > 0)
-            {
-                allText = data.GetString(b);
-                string[] textArray = allText.Split("\n");
-                foreach (string textIndex in textArray)
-                {
-                    Match match = rg.Match(textIndex);
-                    if (match.Success)
-                    {
-                        allInt.Add(int.Parse(textIndex.Split(chat)[1]));
-                        totalTime = 0;
-                        string[] textSub = textIndex.Substring(1, 8).Split(':');
-                        totalTime += int.Parse(textSub[0]) * 60 * 60;
-                        totalTime += int.Parse(textSub[1]) * 60;
-                        totalTime += int.Parse(textSub[2]);
-                        allTimeList.Add(totalTime);
-                    }
-                }
-            }
-            List<int> Output = new List<int>();
             try
             {
-                Output.Add(allInt[allInt.Count - 1]);
-                Output.Add(allTimeList[allTimeList.Count - 1]);
-            } catch { }
-            return Output;
+                var text = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                UTF8Encoding data = new UTF8Encoding(true);
+                Regex rg = new Regex(@"\[CHAT\] " + chat);
+                List<int> allInt = new List<int>();
+                byte[] b = new byte[640000];
+                string allText = "";
+                List<int> allTimeList = new List<int>();
+                int totalTime;
+
+                while (text.Read(b, 0, b.Length) > 0)
+                {
+                    allText = data.GetString(b);
+                    string[] textArray = allText.Split("\n");
+                    foreach (string textIndex in textArray)
+                    {
+                        Match match = rg.Match(textIndex);
+                        if (match.Success)
+                        {
+                            allInt.Add(int.Parse(textIndex.Split(chat)[1]));
+                            totalTime = 0;
+                            string[] textSub = textIndex.Substring(1, 8).Split(':');
+                            totalTime += int.Parse(textSub[0]) * 60 * 60;
+                            totalTime += int.Parse(textSub[1]) * 60;
+                            totalTime += int.Parse(textSub[2]);
+                            allTimeList.Add(totalTime);
+                        }
+                    }
+                }
+                List<int> Output = new List<int>();
+                try
+                {
+                    Output.Add(allInt[allInt.Count - 1]);
+                    Output.Add(allTimeList[allTimeList.Count - 1]);
+                }
+                catch { }
+                return Output;
+            }
+            catch 
+            { 
+                List<int> Output = new List<int>();
+                Output.Add(0);
+                Output.Add(0);
+                return Output;
+            }
         }
 
         static public int ChatTime(string path)
         {
-            var text = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            UTF8Encoding data = new UTF8Encoding(true);
-            Regex rg = new Regex(@"\[CHAT\] ");
-            byte[] b = new byte[640000];
-            string allText = "";
-            int totalTime = 0;
-
-            while (text.Read(b, 0, b.Length) > 0)
+            try
             {
-                allText = data.GetString(b);
-                string[] textArray = allText.Split("\n");
-                foreach (string textIndex in textArray)
+                var text = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                UTF8Encoding data = new UTF8Encoding(true);
+                Regex rg = new Regex(@"\[CHAT\] ");
+                byte[] b = new byte[640000];
+                string allText = "";
+                int totalTime = 0;
+
+                while (text.Read(b, 0, b.Length) > 0)
                 {
-                    Match match = rg.Match(textIndex);
-                    if (match.Success)
+                    allText = data.GetString(b);
+                    string[] textArray = allText.Split("\n");
+                    foreach (string textIndex in textArray)
                     {
-                        totalTime = 0;
-                        string[] textSub = textIndex.Substring(1, 8).Split(':');
-                        totalTime += int.Parse(textSub[0]) * 60 * 60;
-                        totalTime += int.Parse(textSub[1]) * 60;
-                        totalTime += int.Parse(textSub[2]);
+                        Match match = rg.Match(textIndex);
+                        if (match.Success)
+                        {
+                            totalTime = 0;
+                            string[] textSub = textIndex.Substring(1, 8).Split(':');
+                            totalTime += int.Parse(textSub[0]) * 60 * 60;
+                            totalTime += int.Parse(textSub[1]) * 60;
+                            totalTime += int.Parse(textSub[2]);
+                        }
                     }
                 }
+                return totalTime;
             }
-            return totalTime;
+            catch
+            {
+                return 0;
+            }
+            
         }
 
         static public int NowTime()
