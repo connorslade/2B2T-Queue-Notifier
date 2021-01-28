@@ -13,7 +13,7 @@
   <h3 align="center">2B2T-Queue-Notifier</h3>
 
   <p align="center">
-    An Easy way to moniter your spot in queue!
+    An Easy way to monitor your spot in queue!
     <br />
     <a href="https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/blob/master/Settings.md"><strong>Explore the docs »</strong></a>
     <br />
@@ -60,7 +60,7 @@
 
 [![Screen Shot](https://i.imgur.com/zDyJ1O6.png)](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier)
 
-A Program I made to display my 2b2t queue ontop of other windows and to notify me whan I get loged In.<br/>
+A Program I made to display my 2b2t queue on top of other windows and to notify me when I get logged In.<br/>
 It can also interface with Discord Webhooks.
 
 ### Built With
@@ -85,7 +85,7 @@ To get a local copy up and running follow these simple steps.
 
 ### Installation
 
-0.  Want to make sure its safe? You can check the Virus total [here](https://www.virustotal.com/gui/file/65637ec39a54bef2c195a6e392c10dce2810fc9e4580ff901ce804c7fb072488/detection), you can also check the sorce code.
+0.  Want to make sure it's safe? You can check the Virus total [here](https://www.virustotal.com/gui/file/65637ec39a54bef2c195a6e392c10dce2810fc9e4580ff901ce804c7fb072488/detection), you can also check the source code.
 1. Install [.NET Core](https://dotnet.microsoft.com/)
 2. Download the Latest version of 2B2T-Queue-Notifier
 3. Run It!
@@ -93,7 +93,7 @@ To get a local copy up and running follow these simple steps.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-If you need help Setting this up or Want to know what all the settings do then check **![this](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/blob/master/Settings.md)** out! **(Highly Recommended)**
+If you need help setting this up or want to know what all the settings do then check **![this](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/blob/master/Settings.md)** out! **(Highly Recommended)**
 
 **Contact me** on Discord at `Sigma#8214` if you still need help.
 
@@ -109,7 +109,7 @@ See the [open issues](https://github.com/github_username/repo_name/issues) for a
 <!-- CONTRIBUTING -->
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**. You can read the Code of Conduct [here](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/blob/master/CODE_OF_CONDUCT.md)
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**. You can read the Code of Conduct [here](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/blob/master/CODE_OF_CONDUCT.md)
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
@@ -165,3 +165,4 @@ Project Link: [https://github.com/Basicprogrammer10/2B2T-Queue-Notifier](https:/
 [license-url]: https://github.com/github_username/repo/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/github_username
+
