@@ -133,6 +133,8 @@ Discord - `Sigma#8214`
 
 Email - `connor@connorcode.com`
 
+Project Website: [https://2b2t-queue.connorcode.com](https://2b2t-queue.connorcode.com/)
+
 Project Link: [https://github.com/Basicprogrammer10/2B2T-Queue-Notifier](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier)
 
 ## To-Do
