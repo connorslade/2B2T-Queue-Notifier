@@ -6,7 +6,7 @@
 
 <br />
 <p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://2b2t-queue.connorcode.com/">
     <img src="https://b2t-queue.web.app/assets/images/2b2t.png" alt="Logo" width="30%" />
   </a>
 
@@ -18,8 +18,8 @@
     <a href="https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/blob/master/Settings.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <!--<a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
-    ·-->
+    <a href="https://2b2t-queue.connorcode.com/">Website</a>
+    ·
     <a href="https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/issues">Report Bug</a>
     ·
     <a href="https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/issues">Request Feature</a>
