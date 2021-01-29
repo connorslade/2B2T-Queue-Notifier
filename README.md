@@ -81,7 +81,7 @@ To get a local copy up and running follow these simple steps.
 
 * [Minecraft](https://www.minecraft.net/en-us/) (Very Good Game)
 * [.NET Core](https://dotnet.microsoft.com/) (To run the Program)
-* [Visual Studio](https://visualstudio.microsoft.com/) (If you want to Edit / Mode the Code)
+* [Visual Studio](https://visualstudio.microsoft.com/) (If you want to Edit / Mod the Code)
 
 ### Installation
 
