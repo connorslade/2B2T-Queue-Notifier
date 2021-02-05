@@ -51,7 +51,6 @@ namespace _2B2T_Queue_Notifier
                 config.Write("tickdelay", "10");
                 config.Write("chat", "Position in queue: ");
                 config.Write("logpath", @"%AppData%\.minecraft\logs\latest.log");
-                ///// ----- D I S C O R D ----- \\\\\
                 config.Write("dowebhook", "false");
                 config.Write("hooklogin", "true");
                 config.Write("hooklogout", "true");
@@ -106,7 +105,8 @@ namespace _2B2T_Queue_Notifier
 
         private void updateVars()
         {
-            try {
+            try
+            {
                 chat = config.Read("chat");
                 timeout = int.Parse(config.Read("timeout"));
                 try { doWebHook = bool.Parse(config.Read("tickdelay")); } catch { doWebHook = false; }
@@ -122,14 +122,15 @@ namespace _2B2T_Queue_Notifier
                 whomnt = config.Read("whomnt");
                 webHook = config.Read("hookuri");
             }
-            catch { MessageBox.Show("ERR reading Config File...");
+            catch
+            {
+                MessageBox.Show("ERR reading Config File...");
                 Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\connorcode\2B2T-Queue-Notifier\");
                 config.Write("setup", "true");
                 config.Write("timeout", "30");
                 config.Write("tickdelay", "10");
                 config.Write("chat", "Position in queue: ");
                 config.Write("logpath", @"%AppData%\.minecraft\logs\latest.log");
-                ///// ----- D I S C O R D ----- \\\\\
                 config.Write("dowebhook", "false");
                 config.Write("hooklogin", "true");
                 config.Write("hooklogout", "true");
