@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:_2B2T_Queue_Notifier"
         mc:Ignorable="d"
         Title="Settings" Height="450" Width="800" ResizeMode="NoResize" Icon="/2b2t.png">
     <Grid>
@@ -13,10 +12,10 @@
                     <Image HorizontalAlignment="Left" Height="150" Margin="10,10,0,0" VerticalAlignment="Top" Width="150" Source="/SigmaLogo.png"/>
                     <TextBlock HorizontalAlignment="Left" Height="124" Margin="174,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="620" FontSize="36"><Run Text="Sigma's 2B2T-Queue-Notifier"/><LineBreak/><Run Text="V0.0 - BETA"/></TextBlock>
                     <Button Content="Ok" HorizontalAlignment="Left" Height="23" Margin="694,345,0,0" VerticalAlignment="Top" Width="70" Click="Save"/>
-                    <Button x:Name="Exit_Copy" Content="Cancel" HorizontalAlignment="Left" Height="23" Margin="619,345,0,0" VerticalAlignment="Top" Width="70" Click="Exit_Click"/>
+                    <Button Content="Cancel" HorizontalAlignment="Left" Height="23" Margin="619,345,0,0" VerticalAlignment="Top" Width="70" Click="Exit_Click"/>
                     <TextBlock HorizontalAlignment="Left" Height="174" Margin="21,166,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="763" FontSize="16"><Run Text="Report any bugs"/><LineBreak/><Run Text="Contact me on Discord at Sigma#8214"/><LineBreak/><Run/><LineBreak/><Run Text="Go to General tab to change some Important settings."/><LineBreak/><Run Text="Go to Discord tab to set up Webhooks."/><LineBreak/><Run/><LineBreak/><Run FontWeight="Bold" Text="For more info on these Settings go             ( Highly Recommended )"/></TextBlock>
                     <Button Content="here." HorizontalAlignment="Left" Margin="141,164,0,0" VerticalAlignment="Top" Background="#FFE5E5E5" BorderBrush="#FFE5E5E5" Foreground="#FF3EA6FD" Cursor="Hand" Click="Button_Click" FontSize="16"/>
-                    <Button x:Name="Exit_Copy1" Content="Reset" HorizontalAlignment="Left" Height="23" Margin="544,345,0,0" VerticalAlignment="Top" Width="70" Click="Reset"/>
+                    <Button Content="Reset" HorizontalAlignment="Left" Height="23" Margin="544,345,0,0" VerticalAlignment="Top" Width="70" Click="Reset"/>
                     <Button Content="here." HorizontalAlignment="Left" Margin="287,292,0,0" VerticalAlignment="Top" Background="#FFE5E5E5" BorderBrush="#FFE5E5E5" Foreground="#FF3EA6FD" Cursor="Hand" Click="Button_Click_2" FontSize="16" FontWeight="Bold"/>
                 </Grid>
             </TabItem>
@@ -33,14 +32,14 @@
                     <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76"><Run Text="Log File Path"/><LineBreak/><Run/></TextBlock>
                     <TextBox x:Name="LogPathFeild" HorizontalAlignment="Left" Height="20" Margin="91,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="306"/>
                     <Button Content="Ok" HorizontalAlignment="Left" Height="23" Margin="694,154,0,0" VerticalAlignment="Top" Width="70" Click="Save" Grid.Row="1"/>
-                    <Button x:Name="Exit" Content="Cancel" HorizontalAlignment="Left" Height="23" Margin="619,154,0,0" VerticalAlignment="Top" Width="70" Click="Exit_Click" Grid.Row="1"/>
+                    <Button Content="Cancel" HorizontalAlignment="Left" Height="23" Margin="619,154,0,0" VerticalAlignment="Top" Width="70" Click="Exit_Click" Grid.Row="1"/>
                     <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76" Text="Tick Delay"/>
                     <Label x:Name="TickLabel" Content="1&#xA;" HorizontalAlignment="Left" Height="25" Margin="141,31,0,0" VerticalAlignment="Top" Width="40"/>
                     <Button Content="+&#xA;" HorizontalAlignment="Left" Height="20" Margin="91,33,0,0" VerticalAlignment="Top" Width="20" Click="PlusTick"/>
                     <Button Content="-" HorizontalAlignment="Left" Height="20" Margin="116,33,0,0" VerticalAlignment="Top" Width="20" Click="LessTick"/>
                     <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76" Text="Chat Regex"/>
                     <TextBox HorizontalAlignment="Left" Height="20" Margin="91,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="306"/>
-                    <Button x:Name="Exit_Copy2" Content="Reset" HorizontalAlignment="Left" Height="23" Margin="544,154,0,0" VerticalAlignment="Top" Width="70" Click="Reset" Grid.Row="1"/>
+                    <Button Content="Reset" HorizontalAlignment="Left" Height="23" Margin="544,154,0,0" VerticalAlignment="Top" Width="70" Click="Reset" Grid.Row="1"/>
                     <TextBox x:Name="ChatRegex" HorizontalAlignment="Left" Height="20" Margin="91,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="306"/>
                 </Grid>
             </TabItem>
@@ -54,20 +53,20 @@
                     <CheckBox x:Name="PozBox" Content="" HorizontalAlignment="Left" Height="15" Margin="91,143,0,0" VerticalAlignment="Top" Width="15"/>
                     <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="112" Text="Send Webhook On" FontWeight="Bold"/>
                     <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76" Text="Webhooks"/>
-                    <CheckBox x:Name="webHooksCheck" Content="" HorizontalAlignment="Left" Height="15" Margin="91,19,0,0" VerticalAlignment="Top" Width="15"/>
+                    <CheckBox x:Name="WebHooksCheck" Content="" HorizontalAlignment="Left" Height="15" Margin="91,19,0,0" VerticalAlignment="Top" Width="15"/>
                     <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76" Text="Hook Uri"/>
                     <TextBox x:Name="WebHookUri" HorizontalAlignment="Left" Height="37" Margin="91,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="424"/>
                     <Image HorizontalAlignment="Left" Height="150" Margin="630,10,0,0" VerticalAlignment="Top" Width="150" Source="/DiscordIcon.png"/>
                     <Button Content="Ok" HorizontalAlignment="Left" Height="23" Margin="694,345,0,0" VerticalAlignment="Top" Width="70" Click="Save"/>
-                    <Button x:Name="Exit_Copy3" Content="Cancel" HorizontalAlignment="Left" Height="23" Margin="619,345,0,0" VerticalAlignment="Top" Width="70" Click="Exit_Click"/>
-                    <Button x:Name="Exit_Copy4" Content="Reset" HorizontalAlignment="Left" Height="23" Margin="544,345,0,0" VerticalAlignment="Top" Width="70" Click="Reset"/>
+                    <Button Content="Cancel" HorizontalAlignment="Left" Height="23" Margin="619,345,0,0" VerticalAlignment="Top" Width="70" Click="Exit_Click"/>
+                    <Button Content="Reset" HorizontalAlignment="Left" Height="23" Margin="544,345,0,0" VerticalAlignment="Top" Width="70" Click="Reset"/>
                     <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="112" Text="Send Mentions On" FontWeight="Bold"/>
                     <TextBlock HorizontalAlignment="Left" Height="18" Margin="11,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="80" Text="Login"/>
                     <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,213,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="87" Text="Logout"/>
                     <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="92" Text="Position"/>
-                    <CheckBox x:Name="LoginBox_Copy" Content="" HorizontalAlignment="Left" Height="15" Margin="91,192,0,0" VerticalAlignment="Top" Width="15"/>
-                    <CheckBox x:Name="LoginBox_Copy1" Content="" HorizontalAlignment="Left" Height="15" Margin="91,214,0,0" VerticalAlignment="Top" Width="15"/>
-                    <CheckBox x:Name="LoginBox_Copy2" Content="" HorizontalAlignment="Left" Height="15" Margin="91,236,0,0" VerticalAlignment="Top" Width="15"/>
+                    <CheckBox x:Name="LoginBoxCopy" Content="" HorizontalAlignment="Left" Height="15" Margin="91,192,0,0" VerticalAlignment="Top" Width="15"/>
+                    <CheckBox x:Name="LoginBoxCopy1" Content="" HorizontalAlignment="Left" Height="15" Margin="91,214,0,0" VerticalAlignment="Top" Width="15"/>
+                    <CheckBox x:Name="LoginBoxCopy2" Content="" HorizontalAlignment="Left" Height="15" Margin="91,236,0,0" VerticalAlignment="Top" Width="15"/>
                     <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,259,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="92" Text="Mention"/>
                     <TextBox x:Name="MntFeild" HorizontalAlignment="Left" Height="20" Margin="91,259,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="306"/>
                 </Grid>

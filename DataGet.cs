@@ -7,11 +7,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace dataGet
+namespace _2B2T_Queue_Notifier
 {
-    internal class DataGet
+    internal static class DataGet
     {
-        public static List<int> getIndex(string path, string chat)
+        public static List<int> GetIndex(string path, string chat)
         {
             try
             {
@@ -20,42 +20,40 @@ namespace dataGet
                 var rg = new Regex(@"\[CHAT\] " + chat);
                 var allInt = new List<int>();
                 var b = new byte[640000];
-                var allText = "";
                 var allTimeList = new List<int>();
-                int totalTime;
 
                 while (text.Read(b, 0, b.Length) > 0)
                 {
-                    allText = data.GetString(b);
+                    var allText = data.GetString(b);
                     var textArray = allText.Split("\n");
                     foreach (var textIndex in textArray)
                     {
                         var match = rg.Match(textIndex);
-                        if (match.Success)
-                        {
-                            allInt.Add(int.Parse(textIndex.Split(chat)[1]));
-                            totalTime = 0;
-                            var textSub = textIndex.Substring(1, 8).Split(':');
-                            totalTime += int.Parse(textSub[0]) * 60 * 60;
-                            totalTime += int.Parse(textSub[1]) * 60;
-                            totalTime += int.Parse(textSub[2]);
-                            allTimeList.Add(totalTime);
-                        }
+                        if (!match.Success)
+                            continue;
+                        allInt.Add(int.Parse(textIndex.Split(chat)[1]));
+                        var totalTime = 0;
+                        var textSub = textIndex.Substring(1, 8).Split(':');
+                        totalTime += int.Parse(textSub[0]) * 60 * 60;
+                        totalTime += int.Parse(textSub[1]) * 60;
+                        totalTime += int.Parse(textSub[2]);
+                        allTimeList.Add(totalTime);
                     }
                 }
-                var Output = new List<int>();
+                var output = new List<int>();
                 try
                 {
-                    Output.Add(allInt[allInt.Count - 1]);
-                    Output.Add(allTimeList[allTimeList.Count - 1]);
-                } catch { }
-                return Output;
+                    output.Add(allInt[^1]);
+                    output.Add(allTimeList[^1]);
+                } catch
+                {
+                    // ignored
+                }
+                return output;
             } catch
             {
-                var Output = new List<int>();
-                Output.Add(0);
-                Output.Add(0);
-                return Output;
+                var output = new List<int> {0, 0};
+                return output;
             }
         }
 
@@ -67,24 +65,22 @@ namespace dataGet
                 var data = new UTF8Encoding(true);
                 var rg = new Regex(@"\[CHAT\] ");
                 var b = new byte[640000];
-                var allText = "";
                 var totalTime = 0;
 
                 while (text.Read(b, 0, b.Length) > 0)
                 {
-                    allText = data.GetString(b);
+                    var allText = data.GetString(b);
                     var textArray = allText.Split("\n");
                     foreach (var textIndex in textArray)
                     {
                         var match = rg.Match(textIndex);
-                        if (match.Success)
-                        {
-                            totalTime = 0;
-                            var textSub = textIndex.Substring(1, 8).Split(':');
-                            totalTime += int.Parse(textSub[0]) * 60 * 60;
-                            totalTime += int.Parse(textSub[1]) * 60;
-                            totalTime += int.Parse(textSub[2]);
-                        }
+                        if (!match.Success)
+                            continue;
+                        totalTime = 0;
+                        var textSub = textIndex.Substring(1, 8).Split(':');
+                        totalTime += int.Parse(textSub[0]) * 60 * 60;
+                        totalTime += int.Parse(textSub[1]) * 60;
+                        totalTime += int.Parse(textSub[2]);
                     }
                 }
                 return totalTime;
@@ -96,96 +92,95 @@ namespace dataGet
 
         public static int NowTime()
         {
-            var S = DateTime.Now.ToString("ss");
-            var M = DateTime.Now.ToString("mm");
-            var H = DateTime.Now.ToString("HH");
-            var totalTime = 0;
-            totalTime += int.Parse(H) * 60 * 60;
-            totalTime += int.Parse(M) * 60;
-            totalTime += int.Parse(S);
+            var s = DateTime.Now.ToString("ss");
+            var m = DateTime.Now.ToString("mm");
+            var h = DateTime.Now.ToString("HH");
+            var totalTime = int.Parse(h) * 60 * 60;
+            totalTime += int.Parse(m) * 60;
+            totalTime += int.Parse(s);
 
             return totalTime;
         }
 
-        public static bool discordWebHook(string WebHook, string Queue, int Cach, string Color, bool enabled, bool doMention, string whomnt)
+        public static bool DiscordWebHook(string WebHook, string Queue, int Cach, string Color, bool enabled, bool doMention, string whomnt)
         {
-            if (int.Parse(Queue) != Cach && enabled)
-                try
+            if (int.Parse(Queue) == Cach || !enabled)
+                return true;
+            try
+            {
+                var mnt = "";
+                if (doMention)
+                    mnt = whomnt;
+                var time = DateTime.Now.ToString("HH:mm:ss • MM/dd/yy");
+                var httpWebRequest = (HttpWebRequest) WebRequest.Create(WebHook);
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
-                    var mnt = "";
-                    if (doMention)
-                        mnt = whomnt;
-                    var time = DateTime.Now.ToString("HH:mm:ss • MM/dd/yy");
-                    var httpWebRequest = (HttpWebRequest) WebRequest.Create(WebHook);
-                    httpWebRequest.ContentType = "application/json";
-                    httpWebRequest.Method = "POST";
+                    var json = "{\"content\":null,\"embeds\":[{\"title\":\"Σ's 2B2T Queue Notifier\",\"description\":\"**Queue Posision:** `" + Queue
+                                                                                                                                              + "`\\n" + mnt +
+                                                                                                                                              "\",\"url\":\"https://github.com/Basicprogrammer10/2B2T-Queue-Notifier\",\"color\":" +
+                                                                                                                                              Color
+                                                                                                                                              + ",\"footer\": {\"text\": \"" +
+                                                                                                                                              time +
+                                                                                                                                              "\"},\"thumbnail\":{\"url\":\"https://i.imgur.com/K1KWFjR.png\"}}]}";
+                    streamWriter.Write(json);
+                }
 
-                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                    {
-                        var json = "{\"content\":null,\"embeds\":[{\"title\":\"Σ's 2B2T Queue Notifier\",\"description\":\"**Queue Posision:** `" + Queue
-                                                                                                                                                  + "`\\n" + mnt +
-                                                                                                                                                  "\",\"url\":\"https://github.com/Basicprogrammer10/2B2T-Queue-Notifier\",\"color\":" +
-                                                                                                                                                  Color
-                                                                                                                                                  + ",\"footer\": {\"text\": \"" +
-                                                                                                                                                  time +
-                                                                                                                                                  "\"},\"thumbnail\":{\"url\":\"https://i.imgur.com/K1KWFjR.png\"}}]}";
-                        streamWriter.Write(json);
-                    }
-
-                    var httpResponse = (HttpWebResponse) httpWebRequest.GetResponse();
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                    {
-                        var result = streamReader.ReadToEnd();
-                    }
-                    return true;
-                } catch { return false; }
-            return true;
+                var httpResponse = (HttpWebResponse) httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException()))
+                {
+                    streamReader.ReadToEnd();
+                }
+                return true;
+            } catch { return false; }
         }
 
         public static bool DiscordMessage(string WebHook, string text, string Color, bool enabled, bool doMention, string whomnt)
         {
-            if (enabled)
-                try
+            if (!enabled)
+                return true;
+            try
+            {
+                var mnt = "";
+                if (doMention)
+                    mnt = whomnt;
+                var time = DateTime.Now.ToString("HH:mm:ss • MM/dd/yy");
+                var httpWebRequest = (HttpWebRequest) WebRequest.Create(WebHook);
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
-                    var mnt = "";
-                    if (doMention)
-                        mnt = whomnt;
-                    var time = DateTime.Now.ToString("HH:mm:ss • MM/dd/yy");
-                    var httpWebRequest = (HttpWebRequest) WebRequest.Create(WebHook);
-                    httpWebRequest.ContentType = "application/json";
-                    httpWebRequest.Method = "POST";
+                    var json = "{\"content\":null,\"embeds\":[{\"title\":\"Σ's 2B2T Queue Notifier\",\"description\":\"" + text
+                                                                                                                         + "\\n" + mnt +
+                                                                                                                         "\",\"url\":\"https://github.com/Basicprogrammer10/2B2T-Queue-Notifier\",\"color\":" +
+                                                                                                                         Color
+                                                                                                                         + ",\"footer\": {\"text\": \"" + time +
+                                                                                                                         "\"},\"thumbnail\":{\"url\":\"https://i.imgur.com/K1KWFjR.png\"}}]}";
+                    streamWriter.Write(json);
+                }
 
-                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                    {
-                        var json = "{\"content\":null,\"embeds\":[{\"title\":\"Σ's 2B2T Queue Notifier\",\"description\":\"" + text
-                                                                                                                             + "\\n" + mnt +
-                                                                                                                             "\",\"url\":\"https://github.com/Basicprogrammer10/2B2T-Queue-Notifier\",\"color\":" +
-                                                                                                                             Color
-                                                                                                                             + ",\"footer\": {\"text\": \"" + time +
-                                                                                                                             "\"},\"thumbnail\":{\"url\":\"https://i.imgur.com/K1KWFjR.png\"}}]}";
-                        streamWriter.Write(json);
-                    }
-
-                    var httpResponse = (HttpWebResponse) httpWebRequest.GetResponse();
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                    {
-                        var result = streamReader.ReadToEnd();
-                    }
-                    return true;
-                } catch { return false; }
-            return true;
+                var httpResponse = (HttpWebResponse) httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException()))
+                {
+                    streamReader.ReadToEnd();
+                }
+                return true;
+            } catch { return false; }
         }
     }
 
 
     internal class IniFile
     {
-        private readonly string EXE = Assembly.GetExecutingAssembly().GetName().Name;
-        private readonly string Path;
+        private readonly string exe = Assembly.GetExecutingAssembly().GetName().Name;
+        private readonly string path;
 
         public IniFile(string IniPath = null)
         {
-            Path = new FileInfo(IniPath ?? EXE + ".ini").FullName;
+            path = new FileInfo(IniPath ?? exe + ".ini").FullName;
         }
 
         [DllImport("kernel32", CharSet = CharSet.Unicode)]
@@ -196,24 +191,14 @@ namespace dataGet
 
         public string Read(string Key, string Section = null)
         {
-            var RetVal = new StringBuilder(255);
-            GetPrivateProfileString(Section ?? EXE, Key, "", RetVal, 255, Path);
-            return RetVal.ToString();
+            var retVal = new StringBuilder(255);
+            GetPrivateProfileString(Section ?? exe, Key, "", retVal, 255, path);
+            return retVal.ToString();
         }
 
         public void Write(string Key, string Value, string Section = null)
         {
-            WritePrivateProfileString(Section ?? EXE, Key, Value, Path);
-        }
-
-        public void DeleteKey(string Key, string Section = null)
-        {
-            Write(Key, null, Section ?? EXE);
-        }
-
-        public void DeleteSection(string Section = null)
-        {
-            Write(null, null, Section ?? EXE);
+            WritePrivateProfileString(Section ?? exe, Key, Value, path);
         }
 
         public bool KeyExists(string Key, string Section = null)

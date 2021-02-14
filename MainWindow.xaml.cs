@@ -4,17 +4,16 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using dataGet;
 
 namespace _2B2T_Queue_Notifier
 {
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
-        public Color BkHv = Color.FromRgb(67, 76, 94);
-        public Color BkLv = Color.FromRgb(45, 51, 63);
+        private readonly Color bkHv = Color.FromRgb(67, 76, 94);
+        private readonly Color bkLv = Color.FromRgb(45, 51, 63);
         private string chat = "Position in queue: ";
 
         private readonly IniFile config =
@@ -22,7 +21,7 @@ namespace _2B2T_Queue_Notifier
 
         private DispatcherTimer dispatcherTimer;
         private bool doWebHook;
-        private int EqFr;
+        private int eqFr;
         private bool hooklogin;
         private bool hooklogout;
         private bool hookpoz;
@@ -33,10 +32,9 @@ namespace _2B2T_Queue_Notifier
         private bool mntlogout;
         private bool mntpoz;
         private string path = Environment.ExpandEnvironmentVariables(@"%AppData%\.minecraft\logs\latest.log");
-        public Color TCF = Color.FromRgb(191, 97, 106);
-        public Color TCL = Color.FromRgb(163, 190, 140);
-        public Color TCM = Color.FromRgb(235, 203, 139);
-        public Color TCN = Color.FromRgb(94, 129, 172);
+        private readonly Color tcf = Color.FromRgb(191, 97, 106);
+        private readonly Color tcl = Color.FromRgb(163, 190, 140);
+        private readonly Color tcm = Color.FromRgb(235, 203, 139);
         private int tickdelay = 10;
         private int timeout = 30;
         private string webHook;
@@ -65,11 +63,11 @@ namespace _2B2T_Queue_Notifier
             }
             else
             {
-                updateVars();
+                UpdateVars();
             }
         }
 
-        private void updateVars()
+        private void UpdateVars()
         {
             try
             {
@@ -110,12 +108,12 @@ namespace _2B2T_Queue_Notifier
 
         private void start_MouseEnter(object sender, MouseEventArgs e)
         {
-            start.Fill = new SolidColorBrush(BkHv);
+            Start.Fill = new SolidColorBrush(bkHv);
         }
 
         private void start_MouseLeave(object sender, MouseEventArgs e)
         {
-            start.Fill = new SolidColorBrush(BkLv);
+            Start.Fill = new SolidColorBrush(bkLv);
         }
 
         private void start_MouseDown(object sender, MouseButtonEventArgs e)
@@ -124,86 +122,82 @@ namespace _2B2T_Queue_Notifier
             win2.Show();
         }
 
-        private void webhookError(bool sucess)
+        private void WebhookError(bool sucess)
         {
-            if (!sucess)
-                hookErr.Visibility = Visibility.Visible;
-            else
-                hookErr.Visibility = Visibility.Hidden;
+            HookErr.Visibility = !sucess ? Visibility.Visible : Visibility.Hidden;
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             try
             {
-                updateVars();
+                UpdateVars();
 
-                var FULL = DataGet.getIndex(path, chat);
+                var full = DataGet.GetIndex(path, chat);
                 var lastChatEvent = DataGet.ChatTime(path);
-                var index = FULL[0];
-                if (index != indexCach && FULL[1] > DataGet.NowTime() - timeout)
+                var index = full[0];
+                if (index != indexCach && full[1] > DataGet.NowTime() - timeout)
                 {
-                    EqFr = 0;
+                    eqFr = 0;
                     MainTime.Text = index.ToString();
                     if (index > 500)
                     {
-                        MainTime.Foreground = new SolidColorBrush(TCF);
+                        MainTime.Foreground = new SolidColorBrush(tcf);
                         if (hookpoz)
-                            webhookError(DataGet.discordWebHook(webHook, index.ToString(), indexCach, "12542314", doWebHook, mntpoz, whomnt));
+                            WebhookError(DataGet.DiscordWebHook(webHook, index.ToString(), indexCach, "12542314", doWebHook, mntpoz, whomnt));
                         indexCach = index;
                     }
                     else if (index > 250 && index < 500)
                     {
-                        MainTime.Foreground = new SolidColorBrush(TCM);
+                        MainTime.Foreground = new SolidColorBrush(tcm);
                         if (hookpoz)
-                            webhookError(DataGet.discordWebHook(webHook, index.ToString(), indexCach, "15453067", doWebHook, mntpoz, whomnt));
+                            WebhookError(DataGet.DiscordWebHook(webHook, index.ToString(), indexCach, "15453067", doWebHook, mntpoz, whomnt));
                         indexCach = index;
                     }
                     else if (index > 0 && index < 250)
                     {
-                        MainTime.Foreground = new SolidColorBrush(TCL);
+                        MainTime.Foreground = new SolidColorBrush(tcl);
                         if (hookpoz)
-                            webhookError(DataGet.discordWebHook(webHook, index.ToString(), indexCach, "10731148", doWebHook, mntpoz, whomnt));
+                            WebhookError(DataGet.DiscordWebHook(webHook, index.ToString(), indexCach, "10731148", doWebHook, mntpoz, whomnt));
                         indexCach = index;
                     }
-                    indexCach = FULL[0];
+                    indexCach = full[0];
                     isIn = true;
                     isLogin = true;
                 }
-                else if (FULL[1] != lastChatEvent && lastChatEvent > DataGet.NowTime() - timeout)
+                else if (full[1] != lastChatEvent && lastChatEvent > DataGet.NowTime() - timeout)
                 {
                     MainTime.Text = "Online!";
-                    MainTime.Foreground = new SolidColorBrush(TCL);
+                    MainTime.Foreground = new SolidColorBrush(tcl);
                     if (hooklogin && isLogin)
-                        webhookError(DataGet.DiscordMessage(webHook, "**Logged In!** :grin:", "9419928", doWebHook, mntlogin, whomnt));
+                        WebhookError(DataGet.DiscordMessage(webHook, "**Logged In!** :grin:", "9419928", doWebHook, mntlogin, whomnt));
                     isIn = true;
                     isLogin = false;
                 }
-                else if (index == indexCach && FULL[1] > DataGet.NowTime() - timeout) { }
+                else if (index == indexCach && full[1] > DataGet.NowTime() - timeout) { }
                 else
                 {
-                    EqFr += tickdelay;
-                    if (EqFr > timeout)
-                    {
-                        MainTime.Text = "…";
-                        MainTime.Foreground = new SolidColorBrush(TCF);
-                        if (hooklogout && isIn)
-                            webhookError(DataGet.DiscordMessage(webHook, "**Logged Out **", "12150125", doWebHook, mntlogout, whomnt));
-                        isIn = false;
-                        isLogin = false;
-                        EqFr = 0;
-                    }
+                    eqFr += tickdelay;
+                    if (eqFr <= timeout)
+                        return;
+                    MainTime.Text = "…";
+                    MainTime.Foreground = new SolidColorBrush(tcf);
+                    if (hooklogout && isIn)
+                        WebhookError(DataGet.DiscordMessage(webHook, "**Logged Out **", "12150125", doWebHook, mntlogout, whomnt));
+                    isIn = false;
+                    isLogin = false;
+                    eqFr = 0;
                 }
             } catch
             {
-                MainTime.Foreground = new SolidColorBrush(TCF);
+                MainTime.Foreground = new SolidColorBrush(tcf);
                 MainTime.Text = "…";
             }
         }
 
         private void Grid_Initialized(object sender, EventArgs e)
         {
-            updateVars();
+            UpdateVars();
             MainTime.Text = "…";
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += dispatcherTimer_Tick;

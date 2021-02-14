@@ -1,48 +1,42 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows;
-using dataGet;
 
 namespace _2B2T_Queue_Notifier
 {
     /// <summary>
     ///     Interaction logic for Settings.xaml
     /// </summary>
-    public partial class Settings : Window
+    public partial class Settings
     {
-        private readonly string chat = "Position in queue: ";
-
         private readonly IniFile config =
             new IniFile(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\connorcode\2B2T-Queue-Notifier\settings.ini");
 
-        private readonly bool doWebHooks;
-        private readonly bool hooklogin;
-        private readonly bool hooklogout;
-        private readonly bool hookpoz;
-        private readonly string LogPath = @"%AppData%\.minecraft\logs\latest.log";
-        private readonly bool mntlogin;
-        private readonly bool mntlogout;
-        private readonly bool mntpoz;
-        private int TickDelayValue = 1;
-        private int timeOutValue = 30;
-        private readonly string webHook = "";
-        private readonly string whomnt;
+        private int tickDelayValue;
+        private int timeOutValue;
 
         public Settings()
         {
+            bool mntpoz;
+            bool mntlogout;
+            bool mntlogin;
+            bool hookpoz;
+            bool hooklogout;
+            bool hooklogin;
+            bool doWebHooks;
             InitializeComponent();
             timeOutValue = int.Parse(config.Read("timeout"));
-            TickDelayValue = int.Parse(config.Read("tickdelay"));
-            LogPath = config.Read("logpath");
-            chat = config.Read("chat");
+            tickDelayValue = int.Parse(config.Read("tickdelay"));
+            var logPath = config.Read("logpath");
+            var chat = config.Read("chat");
 
-            LogPathFeild.Text = LogPath;
+            LogPathFeild.Text = logPath;
             TimeoutLabel.Content = timeOutValue;
-            TickLabel.Content = TickDelayValue;
+            TickLabel.Content = tickDelayValue;
             ChatRegex.Text = chat;
             //DISCORD
-            webHook = config.Read("hookuri");
-            whomnt = config.Read("whomnt");
+            var webHook = config.Read("hookuri");
+            var whomnt = config.Read("whomnt");
             try { doWebHooks = bool.Parse(config.Read("dowebhook")); } catch { doWebHooks = false; }
             try { hookpoz = bool.Parse(config.Read("hookpoz")); } catch { hookpoz = false; }
             try { hooklogin = bool.Parse(config.Read("hooklogin")); } catch { hooklogin = false; }
@@ -51,14 +45,14 @@ namespace _2B2T_Queue_Notifier
             try { mntlogout = bool.Parse(config.Read("mntlogout")); } catch { mntlogout = false; }
             try { mntpoz = bool.Parse(config.Read("mntpoz")); } catch { mntpoz = false; }
 
-            webHooksCheck.IsChecked = doWebHooks;
+            WebHooksCheck.IsChecked = doWebHooks;
             WebHookUri.Text = webHook;
             LoginBox.IsChecked = hooklogin;
             LogoutBox.IsChecked = hooklogout;
             PozBox.IsChecked = hookpoz;
-            LoginBox_Copy.IsChecked = mntlogin;
-            LoginBox_Copy1.IsChecked = mntlogout;
-            LoginBox_Copy2.IsChecked = mntpoz;
+            LoginBoxCopy.IsChecked = mntlogin;
+            LoginBoxCopy1.IsChecked = mntlogout;
+            LoginBoxCopy2.IsChecked = mntpoz;
             MntFeild.Text = whomnt;
         }
 
@@ -83,16 +77,16 @@ namespace _2B2T_Queue_Notifier
 
         private void PlusTick(object sender, RoutedEventArgs e)
         {
-            if (TickDelayValue < 10)
-                TickDelayValue++;
-            TickLabel.Content = TickDelayValue;
+            if (tickDelayValue < 10)
+                tickDelayValue++;
+            TickLabel.Content = tickDelayValue;
         }
 
         private void LessTick(object sender, RoutedEventArgs e)
         {
-            if (TickDelayValue > 1)
-                TickDelayValue--;
-            TickLabel.Content = TickDelayValue;
+            if (tickDelayValue > 1)
+                tickDelayValue--;
+            TickLabel.Content = tickDelayValue;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -108,17 +102,17 @@ namespace _2B2T_Queue_Notifier
         private void Save(object sender, RoutedEventArgs e)
         {
             config.Write("timeout", timeOutValue.ToString());
-            config.Write("tickdelay", TickDelayValue.ToString());
+            config.Write("tickdelay", tickDelayValue.ToString());
             config.Write("logpath", LogPathFeild.Text);
             config.Write("chat", ChatRegex.Text);
-            config.Write("dowebhook", webHooksCheck.IsChecked.ToString());
+            config.Write("dowebhook", WebHooksCheck.IsChecked.ToString());
             config.Write("hookuri", WebHookUri.Text);
             config.Write("hooklogin", LoginBox.IsChecked.ToString());
             config.Write("hooklogout", LogoutBox.IsChecked.ToString());
             config.Write("hookpoz", PozBox.IsChecked.ToString());
-            config.Write("mntlogin", LoginBox_Copy.IsChecked.ToString());
-            config.Write("mntlogout", LoginBox_Copy1.IsChecked.ToString());
-            config.Write("mntpoz", LoginBox_Copy2.IsChecked.ToString());
+            config.Write("mntlogin", LoginBoxCopy.IsChecked.ToString());
+            config.Write("mntlogout", LoginBoxCopy1.IsChecked.ToString());
+            config.Write("mntpoz", LoginBoxCopy2.IsChecked.ToString());
             config.Write("whomnt", MntFeild.Text);
             Close();
         }
