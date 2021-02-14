@@ -47,7 +47,7 @@ namespace _2B2T_Queue_Notifier
         {
             InitializeComponent();
             if (!Config.KeyExists("setup"))
-                Setup.SetDefaultConfig(Config);
+                IniFile.SetDefaultConfig(Config);
             else
                 UpdateVars();
         }
@@ -73,7 +73,7 @@ namespace _2B2T_Queue_Notifier
             } catch
             {
                 MessageBox.Show("ERR reading Config File...");
-                Setup.SetDefaultConfig(Config);
+                IniFile.SetDefaultConfig(Config);
             }
         }
 

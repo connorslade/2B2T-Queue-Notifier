@@ -119,7 +119,7 @@ namespace _2B2T_Queue_Notifier
 
         private void Reset(object sender, RoutedEventArgs e)
         {
-            Setup.SetDefaultConfig(Config);
+            IniFile.SetDefaultConfig(Config);
             Close();
         }
 
