@@ -1,7 +1,4 @@
-﻿//TODO: Do all tests for Release (New System, Run with Minecraft, Web hooks)
-
-using System;
-using System.IO;
+﻿using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -98,6 +95,33 @@ namespace _2B2T_Queue_Notifier
             HookErr.Visibility = !success ? Visibility.Visible : Visibility.Hidden;
         }
 
+        private void OnQueueTick(int Index)
+        {
+            MainTime.Text = Index.ToString();
+
+            if (Index > 500)
+            {
+                MainTime.Foreground = new SolidColorBrush(Tcf);
+                if (HookPosition)
+                    WebhookError(DataGet.DiscordWebHook(WebHook, Index.ToString(), IndexCache, "12542314", DoWebHook, MntPosition, WhoMnt));
+                IndexCache = Index;
+            }
+            else if (Index > 250 && Index < 500)
+            {
+                MainTime.Foreground = new SolidColorBrush(Tcm);
+                if (HookPosition)
+                    WebhookError(DataGet.DiscordWebHook(WebHook, Index.ToString(), IndexCache, "15453067", DoWebHook, MntPosition, WhoMnt));
+                IndexCache = Index;
+            }
+            else if (Index > 0 && Index < 250)
+            {
+                MainTime.Foreground = new SolidColorBrush(Tcl);
+                if (HookPosition)
+                    WebhookError(DataGet.DiscordWebHook(WebHook, Index.ToString(), IndexCache, "10731148", DoWebHook, MntPosition, WhoMnt));
+                IndexCache = Index;
+            }
+        }
+
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             try
@@ -110,28 +134,7 @@ namespace _2B2T_Queue_Notifier
                 if (Index != IndexCache && Full[1] > DataGet.NowTime() - Timeout)
                 {
                     EqFr = 0;
-                    MainTime.Text = Index.ToString();
-                    if (Index > 500)
-                    {
-                        MainTime.Foreground = new SolidColorBrush(Tcf);
-                        if (HookPosition)
-                            WebhookError(DataGet.DiscordWebHook(WebHook, Index.ToString(), IndexCache, "12542314", DoWebHook, MntPosition, WhoMnt));
-                        IndexCache = Index;
-                    }
-                    else if (Index > 250 && Index < 500)
-                    {
-                        MainTime.Foreground = new SolidColorBrush(Tcm);
-                        if (HookPosition)
-                            WebhookError(DataGet.DiscordWebHook(WebHook, Index.ToString(), IndexCache, "15453067", DoWebHook, MntPosition, WhoMnt));
-                        IndexCache = Index;
-                    }
-                    else if (Index > 0 && Index < 250)
-                    {
-                        MainTime.Foreground = new SolidColorBrush(Tcl);
-                        if (HookPosition)
-                            WebhookError(DataGet.DiscordWebHook(WebHook, Index.ToString(), IndexCache, "10731148", DoWebHook, MntPosition, WhoMnt));
-                        IndexCache = Index;
-                    }
+                    OnQueueTick(Index);
                     IndexCache = Full[0];
                     IsIn = true;
                     IsLogin = true;
