@@ -40,7 +40,7 @@ namespace _2B2T_Queue_Notifier
         }
     }
 
-    internal class Setup
+    internal static class Setup
     {
         public static void SetDefaultConfig(IniFile Config)
         {
@@ -51,7 +51,7 @@ namespace _2B2T_Queue_Notifier
             Config.Write("chat", "Position in queue: ");
             Config.Write("logpath", @"%AppData%\.minecraft\logs\latest.log");
             Config.Write("dowebhook", "false");
-            Config.Write("hooklogin", "true");
+            Config.Write("hooklogin", "true");  
             Config.Write("hooklogout", "true");
             Config.Write("hookpoz", "true");
             Config.Write("hookuri", "");
