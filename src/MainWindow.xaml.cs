@@ -90,7 +90,7 @@ namespace _2B2T_Queue_Notifier
             Win2.Show();
         }
 
-        private void WebhookError(bool success)
+        private void WebHookError(bool success)
         {
             HookErr.Visibility = !success ? Visibility.Visible : Visibility.Hidden;
         }
@@ -103,21 +103,21 @@ namespace _2B2T_Queue_Notifier
             {
                 MainTime.Foreground = new SolidColorBrush(Tcf);
                 if (HookPosition)
-                    WebhookError(DataGet.DiscordWebHook(WebHook, Index.ToString(), IndexCache, "12542314", DoWebHook, MntPosition, WhoMnt));
+                    WebHookError(DataGet.DiscordWebHook(WebHook, Index.ToString(), IndexCache, "12542314", DoWebHook, MntPosition, WhoMnt));
                 IndexCache = Index;
             }
             else if (Index > 250 && Index < 500)
             {
                 MainTime.Foreground = new SolidColorBrush(Tcm);
                 if (HookPosition)
-                    WebhookError(DataGet.DiscordWebHook(WebHook, Index.ToString(), IndexCache, "15453067", DoWebHook, MntPosition, WhoMnt));
+                    WebHookError(DataGet.DiscordWebHook(WebHook, Index.ToString(), IndexCache, "15453067", DoWebHook, MntPosition, WhoMnt));
                 IndexCache = Index;
             }
             else if (Index > 0 && Index < 250)
             {
                 MainTime.Foreground = new SolidColorBrush(Tcl);
                 if (HookPosition)
-                    WebhookError(DataGet.DiscordWebHook(WebHook, Index.ToString(), IndexCache, "10731148", DoWebHook, MntPosition, WhoMnt));
+                    WebHookError(DataGet.DiscordWebHook(WebHook, Index.ToString(), IndexCache, "10731148", DoWebHook, MntPosition, WhoMnt));
                 IndexCache = Index;
             }
         }
@@ -144,7 +144,7 @@ namespace _2B2T_Queue_Notifier
                     MainTime.Text = "Online!";
                     MainTime.Foreground = new SolidColorBrush(Tcl);
                     if (HookLogin && IsLogin)
-                        WebhookError(DataGet.DiscordMessage(WebHook, "**Logged In!** :grin:", "9419928", DoWebHook, MntLogin, WhoMnt));
+                        WebHookError(DataGet.DiscordMessage(WebHook, "**Logged In!** :grin:", "9419928", DoWebHook, MntLogin, WhoMnt));
                     IsIn = true;
                     IsLogin = false;
                 }
@@ -157,7 +157,7 @@ namespace _2B2T_Queue_Notifier
                     MainTime.Text = "…";
                     MainTime.Foreground = new SolidColorBrush(Tcf);
                     if (HookLogout && IsIn)
-                        WebhookError(DataGet.DiscordMessage(WebHook, "**Logged Out **", "12150125", DoWebHook, MntLogout, WhoMnt));
+                        WebHookError(DataGet.DiscordMessage(WebHook, "**Logged Out **", "12150125", DoWebHook, MntLogout, WhoMnt));
                     IsIn = false;
                     IsLogin = false;
                     EqFr = 0;
