@@ -1,39 +1,32 @@
-﻿using dataGet;
-using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using dataGet;
 
 namespace _2B2T_Queue_Notifier
 {
     /// <summary>
-    /// Interaction logic for Settings.xaml
+    ///     Interaction logic for Settings.xaml
     /// </summary>
     public partial class Settings : Window
     {
-        private IniFile config = new IniFile(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\connorcode\2B2T-Queue-Notifier\settings.ini");
-        int timeOutValue = 30;
-        int TickDelayValue = 1;
-        string LogPath = @"%AppData%\.minecraft\logs\latest.log";
-        private string chat = "Position in queue: ";
-        bool doWebHooks = false;
-        string webHook = "";
-        bool hooklogin;
-        bool hooklogout;
-        bool hookpoz;
-        private bool mntlogin;
-        private bool mntlogout;
-        private bool mntpoz;
-        private string whomnt;
+        private readonly string chat = "Position in queue: ";
+
+        private readonly IniFile config =
+            new IniFile(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\connorcode\2B2T-Queue-Notifier\settings.ini");
+
+        private readonly bool doWebHooks;
+        private readonly bool hooklogin;
+        private readonly bool hooklogout;
+        private readonly bool hookpoz;
+        private readonly string LogPath = @"%AppData%\.minecraft\logs\latest.log";
+        private readonly bool mntlogin;
+        private readonly bool mntlogout;
+        private readonly bool mntpoz;
+        private int TickDelayValue = 1;
+        private int timeOutValue = 30;
+        private readonly string webHook = "";
+        private readonly string whomnt;
 
         public Settings()
         {
@@ -85,7 +78,7 @@ namespace _2B2T_Queue_Notifier
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void PlusTick(object sender, RoutedEventArgs e)
@@ -110,7 +103,6 @@ namespace _2B2T_Queue_Notifier
                 UseShellExecute = true
             };
             Process.Start(psi);
-
         }
 
         private void Save(object sender, RoutedEventArgs e)
@@ -128,7 +120,7 @@ namespace _2B2T_Queue_Notifier
             config.Write("mntlogout", LoginBox_Copy1.IsChecked.ToString());
             config.Write("mntpoz", LoginBox_Copy2.IsChecked.ToString());
             config.Write("whomnt", MntFeild.Text);
-            this.Close();
+            Close();
         }
 
         private void Reset(object sender, RoutedEventArgs e)
@@ -147,7 +139,7 @@ namespace _2B2T_Queue_Notifier
             config.Write("mntlogout", "false");
             config.Write("mntpoz", "false");
             config.Write("whomnt", "@everyone");
-            this.Close();
+            Close();
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)

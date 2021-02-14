@@ -1,43 +1,45 @@
-﻿using dataGet;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using dataGet;
 
 namespace _2B2T_Queue_Notifier
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IniFile config = new IniFile(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\connorcode\2B2T-Queue-Notifier\settings.ini");
-        private DispatcherTimer dispatcherTimer;
         public Color BkHv = Color.FromRgb(67, 76, 94);
         public Color BkLv = Color.FromRgb(45, 51, 63);
-        public Color TCL = Color.FromRgb(163, 190, 140);
-        public Color TCM = Color.FromRgb(235, 203, 139);
-        public Color TCF = Color.FromRgb(191, 97, 106);
-        public Color TCN = Color.FromRgb(94, 129, 172);
-        private string webHook;
+        private string chat = "Position in queue: ";
+
+        private readonly IniFile config =
+            new IniFile(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\connorcode\2B2T-Queue-Notifier\settings.ini");
+
+        private DispatcherTimer dispatcherTimer;
         private bool doWebHook;
+        private int EqFr;
         private bool hooklogin;
         private bool hooklogout;
         private bool hookpoz;
-        private string path = Environment.ExpandEnvironmentVariables(@"%AppData%\.minecraft\logs\latest.log");
-        private string chat = "Position in queue: ";
-        private int timeout = 30;
-        private int tickdelay = 10;
-        private int indexCach = 0;
+        private int indexCach;
         private bool isIn = true;
         private bool isLogin = true;
-        private int EqFr;
         private bool mntlogin;
         private bool mntlogout;
         private bool mntpoz;
+        private string path = Environment.ExpandEnvironmentVariables(@"%AppData%\.minecraft\logs\latest.log");
+        public Color TCF = Color.FromRgb(191, 97, 106);
+        public Color TCL = Color.FromRgb(163, 190, 140);
+        public Color TCM = Color.FromRgb(235, 203, 139);
+        public Color TCN = Color.FromRgb(94, 129, 172);
+        private int tickdelay = 10;
+        private int timeout = 30;
+        private string webHook;
         private string whomnt;
 
         public MainWindow()
@@ -67,42 +69,6 @@ namespace _2B2T_Queue_Notifier
             }
         }
 
-        #region TopBar
-
-        private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-                this.DragMove();
-        }
-
-        private void Exit_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-                this.Close();
-        }
-
-        private void Mini_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-                WindowState = WindowState.Minimized;
-        }
-
-        private void Pin_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (FullPin.Visibility == Visibility.Hidden)
-            {
-                FullPin.Visibility = Visibility.Visible;
-                this.Topmost = true;
-            }
-            else
-            {
-                FullPin.Visibility = Visibility.Hidden;
-                this.Topmost = false;
-            }
-        }
-
-        #endregion TopBar
-
         private void updateVars()
         {
             try
@@ -121,8 +87,7 @@ namespace _2B2T_Queue_Notifier
                 try { mntpoz = bool.Parse(config.Read("mntpoz")); } catch { mntpoz = false; }
                 whomnt = config.Read("whomnt");
                 webHook = config.Read("hookuri");
-            }
-            catch
+            } catch
             {
                 MessageBox.Show("ERR reading Config File...");
                 Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\connorcode\2B2T-Queue-Notifier\");
@@ -155,20 +120,16 @@ namespace _2B2T_Queue_Notifier
 
         private void start_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Settings win2 = new Settings();
+            var win2 = new Settings();
             win2.Show();
         }
 
         private void webhookError(bool sucess)
         {
             if (!sucess)
-            {
                 hookErr.Visibility = Visibility.Visible;
-            }
             else
-            {
                 hookErr.Visibility = Visibility.Hidden;
-            }
         }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
@@ -177,10 +138,10 @@ namespace _2B2T_Queue_Notifier
             {
                 updateVars();
 
-                List<int> FULL = dataGet.DataGet.getIndex(path, chat);
-                int lastChatEvent = dataGet.DataGet.ChatTime(path);
-                int index = FULL[0];
-                if (index != indexCach && FULL[1] > dataGet.DataGet.NowTime() - timeout)
+                var FULL = DataGet.getIndex(path, chat);
+                var lastChatEvent = DataGet.ChatTime(path);
+                var index = FULL[0];
+                if (index != indexCach && FULL[1] > DataGet.NowTime() - timeout)
                 {
                     EqFr = 0;
                     MainTime.Text = index.ToString();
@@ -209,7 +170,7 @@ namespace _2B2T_Queue_Notifier
                     isIn = true;
                     isLogin = true;
                 }
-                else if (FULL[1] != lastChatEvent && lastChatEvent > dataGet.DataGet.NowTime() - timeout)
+                else if (FULL[1] != lastChatEvent && lastChatEvent > DataGet.NowTime() - timeout)
                 {
                     MainTime.Text = "Online!";
                     MainTime.Foreground = new SolidColorBrush(TCL);
@@ -218,7 +179,7 @@ namespace _2B2T_Queue_Notifier
                     isIn = true;
                     isLogin = false;
                 }
-                else if (index == indexCach && FULL[1] > dataGet.DataGet.NowTime() - timeout) { }
+                else if (index == indexCach && FULL[1] > DataGet.NowTime() - timeout) { }
                 else
                 {
                     EqFr += tickdelay;
@@ -233,8 +194,7 @@ namespace _2B2T_Queue_Notifier
                         EqFr = 0;
                     }
                 }
-            }
-            catch
+            } catch
             {
                 MainTime.Foreground = new SolidColorBrush(TCF);
                 MainTime.Text = "…";
@@ -246,9 +206,45 @@ namespace _2B2T_Queue_Notifier
             updateVars();
             MainTime.Text = "…";
             dispatcherTimer = new DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Tick += dispatcherTimer_Tick;
             dispatcherTimer.Interval = new TimeSpan(0, 0, tickdelay);
             dispatcherTimer.Start();
         }
+
+        #region TopBar
+
+        private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                DragMove();
+        }
+
+        private void Exit_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                Close();
+        }
+
+        private void Mini_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                WindowState = WindowState.Minimized;
+        }
+
+        private void Pin_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (FullPin.Visibility == Visibility.Hidden)
+            {
+                FullPin.Visibility = Visibility.Visible;
+                Topmost = true;
+            }
+            else
+            {
+                FullPin.Visibility = Visibility.Hidden;
+                Topmost = false;
+            }
+        }
+
+        #endregion TopBar
     }
 }
