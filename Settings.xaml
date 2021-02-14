@@ -10,7 +10,7 @@
             <TabItem Header="About">
                 <Grid Background="#FFE5E5E5">
                     <Image HorizontalAlignment="Left" Height="150" Margin="10,10,0,0" VerticalAlignment="Top" Width="150" Source="/SigmaLogo.png"/>
-                    <TextBlock HorizontalAlignment="Left" Height="124" Margin="174,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="620" FontSize="36"><Run Text="Sigma's 2B2T-Queue-Notifier"/><LineBreak/><Run Text="V0.0 - BETA"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Height="124" Margin="174,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="620" FontSize="36"><Run Text="Sigma's 2B2T-Queue-Notifier"/><LineBreak/><Run Text="V1.1"/></TextBlock>
                     <Button Content="Ok" HorizontalAlignment="Left" Height="23" Margin="694,345,0,0" VerticalAlignment="Top" Width="70" Click="Save"/>
                     <Button Content="Cancel" HorizontalAlignment="Left" Height="23" Margin="619,345,0,0" VerticalAlignment="Top" Width="70" Click="Exit_Click"/>
                     <TextBlock HorizontalAlignment="Left" Height="174" Margin="21,166,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="763" FontSize="16"><Run Text="Report any bugs"/><LineBreak/><Run Text="Contact me on Discord at Sigma#8214"/><LineBreak/><Run/><LineBreak/><Run Text="Go to General tab to change some Important settings."/><LineBreak/><Run Text="Go to Discord tab to set up Webhooks."/><LineBreak/><Run/><LineBreak/><Run FontWeight="Bold" Text="For more info on these Settings go             ( Highly Recommended )"/></TextBlock>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿//TODO: Do all tests for Release (New System, Run with Minecraft, Web hooks)
+using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
