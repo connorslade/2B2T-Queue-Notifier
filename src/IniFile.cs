@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -36,6 +37,28 @@ namespace _2B2T_Queue_Notifier
         public bool KeyExists(string Key, string Section = null)
         {
             return Read(Key, Section).Length > 0;
+        }
+    }
+
+    internal class Setup
+    {
+        public static void SetDefaultConfig(IniFile Config)
+        {
+            Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\connorcode\2B2T-Queue-Notifier\");
+            Config.Write("setup", "true");
+            Config.Write("timeout", "30");
+            Config.Write("tickdelay", "10");
+            Config.Write("chat", "Position in queue: ");
+            Config.Write("logpath", @"%AppData%\.minecraft\logs\latest.log");
+            Config.Write("dowebhook", "false");
+            Config.Write("hooklogin", "true");
+            Config.Write("hooklogout", "true");
+            Config.Write("hookpoz", "true");
+            Config.Write("hookuri", "");
+            Config.Write("mntlogin", "false");
+            Config.Write("mntlogout", "false");
+            Config.Write("mntpoz", "false");
+            Config.Write("whomnt", "@everyone");
         }
     }
 }

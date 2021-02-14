@@ -1,4 +1,5 @@
 ﻿//TODO: Do all tests for Release (New System, Run with Minecraft, Web hooks)
+
 using System;
 using System.IO;
 using System.Windows;
@@ -15,10 +16,14 @@ namespace _2B2T_Queue_Notifier
     {
         private readonly Color BkHv = Color.FromRgb(67, 76, 94);
         private readonly Color BkLv = Color.FromRgb(45, 51, 63);
-        private string Chat = "Position in queue: ";
 
         private readonly IniFile Config =
             new IniFile(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\connorcode\2B2T-Queue-Notifier\settings.ini");
+
+        private readonly Color Tcf = Color.FromRgb(191, 97, 106);
+        private readonly Color Tcl = Color.FromRgb(163, 190, 140);
+        private readonly Color Tcm = Color.FromRgb(235, 203, 139);
+        private string Chat = "Position in queue: ";
 
         private DispatcherTimer DispatcherTimer;
         private bool DoWebHook;
@@ -33,9 +38,6 @@ namespace _2B2T_Queue_Notifier
         private bool MntLogout;
         private bool MntPosition;
         private string Path = Environment.ExpandEnvironmentVariables(@"%AppData%\.minecraft\logs\latest.log");
-        private readonly Color Tcf = Color.FromRgb(191, 97, 106);
-        private readonly Color Tcl = Color.FromRgb(163, 190, 140);
-        private readonly Color Tcm = Color.FromRgb(235, 203, 139);
         private int TickDelay = 10;
         private int Timeout = 30;
         private string WebHook;
@@ -45,27 +47,9 @@ namespace _2B2T_Queue_Notifier
         {
             InitializeComponent();
             if (!Config.KeyExists("setup"))
-            {
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\connorcode\2B2T-Queue-Notifier\");
-                Config.Write("setup", "true");
-                Config.Write("timeout", "30");
-                Config.Write("tickdelay", "10");
-                Config.Write("chat", "Position in queue: ");
-                Config.Write("logpath", @"%AppData%\.minecraft\logs\latest.log");
-                Config.Write("dowebhook", "false");
-                Config.Write("hooklogin", "true");
-                Config.Write("hooklogout", "true");
-                Config.Write("hookpoz", "true");
-                Config.Write("hookuri", "");
-                Config.Write("mntlogin", "false");
-                Config.Write("mntlogout", "false");
-                Config.Write("mntpoz", "false");
-                Config.Write("whomnt", "@everyone");
-            }
+                Setup.SetDefaultConfig(Config);
             else
-            {
                 UpdateVars();
-            }
         }
 
         private void UpdateVars()
@@ -89,21 +73,7 @@ namespace _2B2T_Queue_Notifier
             } catch
             {
                 MessageBox.Show("ERR reading Config File...");
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\connorcode\2B2T-Queue-Notifier\");
-                Config.Write("setup", "true");
-                Config.Write("timeout", "30");
-                Config.Write("tickdelay", "10");
-                Config.Write("chat", "Position in queue: ");
-                Config.Write("logpath", @"%AppData%\.minecraft\logs\latest.log");
-                Config.Write("dowebhook", "false");
-                Config.Write("hooklogin", "true");
-                Config.Write("hooklogout", "true");
-                Config.Write("hookpoz", "true");
-                Config.Write("hookuri", "");
-                Config.Write("mntlogin", "false");
-                Config.Write("mntlogout", "false");
-                Config.Write("mntpoz", "false");
-                Config.Write("whomnt", "@everyone");
+                Setup.SetDefaultConfig(Config);
             }
         }
 

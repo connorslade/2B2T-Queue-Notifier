@@ -119,20 +119,7 @@ namespace _2B2T_Queue_Notifier
 
         private void Reset(object sender, RoutedEventArgs e)
         {
-            Config.Write("setup", "true");
-            Config.Write("timeout", "30");
-            Config.Write("tickdelay", "1");
-            Config.Write("chat", "Position in queue: ");
-            Config.Write("logpath", @"%AppData%\.minecraft\logs\latest.log");
-            Config.Write("dowebhook", "false");
-            Config.Write("hooklogin", "true");
-            Config.Write("hooklogout", "true");
-            Config.Write("hookpoz", "true");
-            Config.Write("hookuri", "");
-            Config.Write("mntlogin", "false");
-            Config.Write("mntlogout", "false");
-            Config.Write("mntpoz", "false");
-            Config.Write("whomnt", "@everyone");
+            Setup.SetDefaultConfig(Config);
             Close();
         }
 
