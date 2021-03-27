@@ -58,8 +58,8 @@ namespace _2B2T_Queue_Notifier
             Config.Write("whomnt", "@everyone");
 
             Config.Write("toastpoz", "false");
-            Config.Write("toastlogin", "false");
-            Config.Write("toastlogout", "false");
+            Config.Write("toastlogin", "true");
+            Config.Write("toastlogout", "true");
 
         }
     }
