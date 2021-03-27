@@ -13,10 +13,10 @@
                     <TextBlock HorizontalAlignment="Left" Height="124" Margin="174,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="620" FontSize="36"><Run Text="Sigma's 2B2T-Queue-Notifier"/><LineBreak/><Run Text="V1.2"/></TextBlock>
                     <Button Content="Ok" HorizontalAlignment="Left" Height="23" Margin="694,345,0,0" VerticalAlignment="Top" Width="70" Click="Save"/>
                     <Button Content="Cancel" HorizontalAlignment="Left" Height="23" Margin="619,345,0,0" VerticalAlignment="Top" Width="70" Click="Exit_Click"/>
-                    <TextBlock HorizontalAlignment="Left" Height="174" Margin="21,166,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="763" FontSize="16"><Run Text="Report any bugs"/><LineBreak/><Run Text="Contact me on Discord at Sigma#8214"/><LineBreak/><Run/><LineBreak/><Run Text="Go to General tab to change some Important settings."/><LineBreak/><Run Text="Go to Discord tab to set up Webhooks."/><LineBreak/><Run/><LineBreak/><Run FontWeight="Bold" Text="For more info on these Settings go             ( Highly Recommended )"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Height="174" Margin="21,166,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="763" FontSize="16"><Run Text="Report any bugs"/><LineBreak/><Run Text="Contact me on Discord at Sigma#8214"/><LineBreak/><Run/><LineBreak/><Run Text="Go to General tab to change some Important settings."/><LineBreak/><Run Text="Go to Discord tab to set up Webhooks."/><LineBreak/><Run Text="Go to Toasts   tab to configure notifications"/><LineBreak/><Run/><LineBreak/><Run Text="For more info on these Settings go             ( Highly Recommended )"/></TextBlock>
                     <Button Content="here." HorizontalAlignment="Left" Margin="141,164,0,0" VerticalAlignment="Top" Background="#FFE5E5E5" BorderBrush="#FFE5E5E5" Foreground="#FF3EA6FD" Cursor="Hand" Click="Button_Click" FontSize="16"/>
                     <Button Content="Reset" HorizontalAlignment="Left" Height="23" Margin="544,345,0,0" VerticalAlignment="Top" Width="70" Click="Reset"/>
-                    <Button Content="here." HorizontalAlignment="Left" Margin="287,292,0,0" VerticalAlignment="Top" Background="#FFE5E5E5" BorderBrush="#FFE5E5E5" Foreground="#FF3EA6FD" Cursor="Hand" Click="Button_Click_2" FontSize="16" FontWeight="Bold"/>
+                    <Button Content="here." HorizontalAlignment="Left" Margin="268,314,0,0" VerticalAlignment="Top" Background="#FFE5E5E5" BorderBrush="#FFE5E5E5" Foreground="#FF3EA6FD" Cursor="Hand" Click="Button_Click_2" FontSize="16" FontWeight="Bold"/>
                 </Grid>
             </TabItem>
             <TabItem Header="General">
@@ -69,6 +69,22 @@
                     <CheckBox x:Name="LoginBoxCopy2" Content="" HorizontalAlignment="Left" Height="15" Margin="91,236,0,0" VerticalAlignment="Top" Width="15"/>
                     <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,259,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="92" Text="Mention"/>
                     <TextBox x:Name="MntFeild" HorizontalAlignment="Left" Height="20" Margin="91,259,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="306"/>
+                </Grid>
+
+            </TabItem>
+            <TabItem Header="Toasts">
+                <Grid Background="#FFE5E5E5">
+                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,29,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76" Text="Login"/>
+                    <CheckBox x:Name="LoginBox_Toast" Content="" HorizontalAlignment="Left" Height="15" Margin="91,30,0,0" VerticalAlignment="Top" Width="15"/>
+                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76" Text="Logout"/>
+                    <CheckBox x:Name="LogoutBox_Toast" Content="" HorizontalAlignment="Left" Height="15" Margin="91,48,0,0" VerticalAlignment="Top" Width="15"/>
+                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="76" Text="Position "/>
+                    <CheckBox x:Name="PozBox_Toast" Content="" HorizontalAlignment="Left" Height="15" Margin="91,68,0,0" VerticalAlignment="Top" Width="15"/>
+                    <TextBlock HorizontalAlignment="Left" Height="18" Margin="10,8,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="112" FontWeight="Bold"><Run Text="Send Toast"/><Run Text=" On"/></TextBlock>
+                    <Button Content="Ok" HorizontalAlignment="Left" Height="23" Margin="694,345,0,0" VerticalAlignment="Top" Width="70" Click="Save"/>
+                    <Button Content="Cancel" HorizontalAlignment="Left" Height="23" Margin="619,345,0,0" VerticalAlignment="Top" Width="70" Click="Exit_Click"/>
+                    <Button Content="Reset" HorizontalAlignment="Left" Height="23" Margin="544,345,0,0" VerticalAlignment="Top" Width="70" Click="Reset"/>
+
                 </Grid>
 
             </TabItem>

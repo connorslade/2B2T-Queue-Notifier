@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using Microsoft.Toolkit.Uwp.Notifications;
 
 namespace _2B2T_Queue_Notifier
 {
@@ -95,30 +96,30 @@ namespace _2B2T_Queue_Notifier
             HookErr.Visibility = !success ? Visibility.Visible : Visibility.Hidden;
         }
 
-        private void OnQueueTick(int Index)
+        private void OnQueueTick(int index)
         {
-            MainTime.Text = Index.ToString();
+            MainTime.Text = index.ToString();
 
-            if (Index > 500)
+            if (index > 500)
             {
                 MainTime.Foreground = new SolidColorBrush(Tcf);
                 if (HookPosition)
-                    WebHookError(DataGet.DiscordWebHook(WebHook, Index.ToString(), IndexCache, "12542314", DoWebHook, MntPosition, WhoMnt));
-                IndexCache = Index;
+                    WebHookError(DataGet.DiscordWebHook(WebHook, index.ToString(), IndexCache, "12542314", DoWebHook, MntPosition, WhoMnt));
+                IndexCache = index;
             }
-            else if (Index > 250 && Index < 500)
+            else if (index > 250 && index < 500)
             {
                 MainTime.Foreground = new SolidColorBrush(Tcm);
                 if (HookPosition)
-                    WebHookError(DataGet.DiscordWebHook(WebHook, Index.ToString(), IndexCache, "15453067", DoWebHook, MntPosition, WhoMnt));
-                IndexCache = Index;
+                    WebHookError(DataGet.DiscordWebHook(WebHook, index.ToString(), IndexCache, "15453067", DoWebHook, MntPosition, WhoMnt));
+                IndexCache = index;
             }
-            else if (Index > 0 && Index < 250)
+            else if (index > 0 && index < 250)
             {
                 MainTime.Foreground = new SolidColorBrush(Tcl);
                 if (HookPosition)
-                    WebHookError(DataGet.DiscordWebHook(WebHook, Index.ToString(), IndexCache, "10731148", DoWebHook, MntPosition, WhoMnt));
-                IndexCache = Index;
+                    WebHookError(DataGet.DiscordWebHook(WebHook, index.ToString(), IndexCache, "10731148", DoWebHook, MntPosition, WhoMnt));
+                IndexCache = index;
             }
         }
 

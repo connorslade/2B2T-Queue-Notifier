@@ -24,6 +24,9 @@ namespace _2B2T_Queue_Notifier
             bool HookLogout;
             bool HookLogin;
             bool DoWebHooks;
+            bool ToastLogout;
+            bool ToastLogin;
+            bool ToastPosition;
             InitializeComponent();
             TimeOutValue = int.Parse(Config.Read("timeout"));
             TickDelayValue = int.Parse(Config.Read("tickdelay"));
@@ -45,6 +48,10 @@ namespace _2B2T_Queue_Notifier
             try { MntLogout = bool.Parse(Config.Read("mntlogout")); } catch { MntLogout = false; }
             try { MntPosition = bool.Parse(Config.Read("mntpoz")); } catch { MntPosition = false; }
 
+            try { ToastPosition = bool.Parse(Config.Read("toastpoz")); } catch { ToastPosition = false; }
+            try { ToastLogin = bool.Parse(Config.Read("toastlogin")); } catch { ToastLogin = false; }
+            try { ToastLogout = bool.Parse(Config.Read("toastlogout")); } catch { ToastLogout = false; }
+
             WebHooksCheck.IsChecked = DoWebHooks;
             WebHookUri.Text = WebHook;
             LoginBox.IsChecked = HookLogin;
@@ -54,6 +61,11 @@ namespace _2B2T_Queue_Notifier
             LoginBoxCopy1.IsChecked = MntLogout;
             LoginBoxCopy2.IsChecked = MntPosition;
             MntFeild.Text = WhoMnt;
+
+            PozBox_Toast.IsChecked = ToastPosition;
+            LoginBox_Toast.IsChecked = ToastLogin;
+            LogoutBox_Toast.IsChecked = ToastLogout;
+
         }
 
         private void PlusTimeout(object sender, RoutedEventArgs e)
@@ -114,6 +126,10 @@ namespace _2B2T_Queue_Notifier
             Config.Write("mntlogout", LoginBoxCopy1.IsChecked.ToString());
             Config.Write("mntpoz", LoginBoxCopy2.IsChecked.ToString());
             Config.Write("whomnt", MntFeild.Text);
+
+            Config.Write("toastpoz", PozBox_Toast.IsChecked.ToString());
+            Config.Write("toastlogin",  LoginBox_Toast.IsChecked.ToString());
+            Config.Write("toastlogout", LogoutBox_Toast.IsChecked.ToString());
             Close();
         }
 
