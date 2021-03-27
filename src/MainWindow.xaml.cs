@@ -106,29 +106,30 @@ namespace _2B2T_Queue_Notifier
         {
             MainTime.Text = index.ToString();
 
-            if (HookPosition)
-                new ToastContentBuilder().AddText("⌛ Queue: " + index).Show();
+            if (HookPosition) new ToastContentBuilder().AddText("⌛ Queue: " + index).Show();
 
             if (index > 500)
             {
                 MainTime.Foreground = new SolidColorBrush(Tcf);
-                if (HookPosition)
-                    WebHookError(DataGet.DiscordWebHook(WebHook, index.ToString(), IndexCache, "12542314", DoWebHook, MntPosition, WhoMnt));
+                if (HookPosition) WebHookError(DataGet.DiscordWebHook(WebHook, index.ToString(), IndexCache, "12542314", DoWebHook, MntPosition, WhoMnt));
                 IndexCache = index;
+                return;
             }
-            else if (index > 250 && index < 500)
+            
+            if (index > 250 && index < 500)
             {
                 MainTime.Foreground = new SolidColorBrush(Tcm);
-                if (HookPosition)
-                    WebHookError(DataGet.DiscordWebHook(WebHook, index.ToString(), IndexCache, "15453067", DoWebHook, MntPosition, WhoMnt));
+                if (HookPosition) WebHookError(DataGet.DiscordWebHook(WebHook, index.ToString(), IndexCache, "15453067", DoWebHook, MntPosition, WhoMnt));
                 IndexCache = index;
+                return;
             }
-            else if (index > 0 && index < 250)
+             
+            if (index > 0 && index < 250)
             {
                 MainTime.Foreground = new SolidColorBrush(Tcl);
-                if (HookPosition)
-                    WebHookError(DataGet.DiscordWebHook(WebHook, index.ToString(), IndexCache, "10731148", DoWebHook, MntPosition, WhoMnt));
+                if (HookPosition) WebHookError(DataGet.DiscordWebHook(WebHook, index.ToString(), IndexCache, "10731148", DoWebHook, MntPosition, WhoMnt));
                 IndexCache = index;
+                return;
             }
         }
 
@@ -173,7 +174,6 @@ namespace _2B2T_Queue_Notifier
                 IsIn = false;
                 IsLogin = false;
                 EqFr = 0;
-                
             } catch
             {
                 MainTime.Foreground = new SolidColorBrush(Tcf);
