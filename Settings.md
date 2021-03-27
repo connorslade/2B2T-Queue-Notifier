@@ -4,7 +4,7 @@ This is some Documentation on how to use my 2B2T Queue Notifier thing...<br/>If 
 
 ## CH1: The main Window
 
-![MainWindow](https://i.imgur.com/bC0zdMB.png)
+![Main Window](https://i.imgur.com/bC0zdMB.png)
 
 |#|Info|Description|
 |---|---|---|
@@ -16,7 +16,7 @@ This is some Documentation on how to use my 2B2T Queue Notifier thing...<br/>If 
 
 ## CH2: About Page
 
-![AboutPage](https://i.imgur.com/RSkRkO3.png)
+![About Page](https://i.imgur.com/RSkRkO3.png)
 
 You can get to this page with the settings button (CH1-2)
 |#|Info|Description|
@@ -32,12 +32,12 @@ You can get to this page with the settings button (CH1-2)
 
 ## CH3: General Settings
 
-![GeneralSettings](https://i.imgur.com/sO5iLvw.png)
+![General Settings](https://i.imgur.com/sO5iLvw.png)
 
 |#|Info|Description|
 |---|---|---|
 |1|Timeout|Determines how long a state (In Queue, Online, Offline) must in active for the GUI / webhooks to update with it|
-|2|TickDelay|Time between Updates or delay between when it checks for changes in Queue|
+|2|Tick Delay|Time between Updates or delay between when it checks for changes in Queue|
 |3|Log File|Location of your Minecraft log file (That is how it knows what queue pos you are in)|
 |4|Chat Regex|The String of text before the number in the Chat Message|
 
@@ -57,7 +57,21 @@ You can get to this page with the settings button (CH1-2)
 |8|Adds a Mention on Position|Adds a Mention for Position Webhooks|
 |9|Mention|What to Mention|
 
-## CH5: Extra Stuff
+## CH5: Toasts!
+
+![Toast Settings](https://i.imgur.com/3x2UdBp.png)
+
+|#|Info|Description|
+|---|---|---|
+|1|Login|Send toast when you successfully log in to a server|
+|2|Logout|Sends a toast when you log out / are kicked from server|
+|3|Position|Sends a Toast when you advance in Queue|
+
+Example Toast
+
+![Example Toast](https://i.imgur.com/KcR10VE.png)
+
+## CH6: Extra Stuff
 
 ![Need Help Making a Discord Webhook?](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks)
 
