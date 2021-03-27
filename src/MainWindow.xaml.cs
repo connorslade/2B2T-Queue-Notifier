@@ -40,6 +40,9 @@ namespace _2B2T_Queue_Notifier
         private int Timeout = 30;
         private string WebHook;
         private string WhoMnt;
+        private bool ToastLogout;
+        private bool ToastLogin;
+        private bool ToastPosition;
 
         public MainWindow()
         {
@@ -66,6 +69,9 @@ namespace _2B2T_Queue_Notifier
                 try { MntLogin = bool.Parse(Config.Read("mntlogin")); } catch { MntLogin = false; }
                 try { MntLogout = bool.Parse(Config.Read("mntlogout")); } catch { MntLogout = false; }
                 try { MntPosition = bool.Parse(Config.Read("mntpoz")); } catch { MntPosition = false; }
+                try { ToastPosition = bool.Parse(Config.Read("toastpoz")); } catch { ToastPosition = false; }
+                try { ToastLogin = bool.Parse(Config.Read("toastlogin")); } catch { ToastLogin = false; }
+                try { ToastLogout = bool.Parse(Config.Read("toastlogout")); } catch { ToastLogout = false; }
                 WhoMnt = Config.Read("whomnt");
                 WebHook = Config.Read("hookuri");
             } catch
@@ -99,6 +105,9 @@ namespace _2B2T_Queue_Notifier
         private void OnQueueTick(int index)
         {
             MainTime.Text = index.ToString();
+
+            if (HookPosition)
+                new ToastContentBuilder().AddText("⌛ Queue: " + index).Show();
 
             if (index > 500)
             {
@@ -144,6 +153,8 @@ namespace _2B2T_Queue_Notifier
                 {
                     MainTime.Text = "Online!";
                     MainTime.Foreground = new SolidColorBrush(Tcl);
+                    if (ToastLogin && IsLogin)
+                        new ToastContentBuilder().AddText("✅ You have logged in!").Show();
                     if (HookLogin && IsLogin)
                         WebHookError(DataGet.DiscordMessage(WebHook, "**Logged In!** :grin:", "9419928", DoWebHook, MntLogin, WhoMnt));
                     IsIn = true;
@@ -159,6 +170,8 @@ namespace _2B2T_Queue_Notifier
                     MainTime.Foreground = new SolidColorBrush(Tcf);
                     if (HookLogout && IsIn)
                         WebHookError(DataGet.DiscordMessage(WebHook, "**Logged Out **", "12150125", DoWebHook, MntLogout, WhoMnt));
+                    if (ToastLogout && IsLogin)
+                        new ToastContentBuilder().AddText("❌ Disconnected").AddText("＞︿＜").Show();
                     IsIn = false;
                     IsLogin = false;
                     EqFr = 0;
