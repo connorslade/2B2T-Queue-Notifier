@@ -56,11 +56,9 @@ namespace _2B2T_Queue_Notifier
             Config.Write("mntlogout", "false");
             Config.Write("mntpoz", "false");
             Config.Write("whomnt", "@everyone");
-
             Config.Write("toastpoz", "false");
             Config.Write("toastlogin", "true");
             Config.Write("toastlogout", "true");
-
         }
     }
 }

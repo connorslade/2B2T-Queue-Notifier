@@ -61,11 +61,9 @@ namespace _2B2T_Queue_Notifier
             LoginBoxCopy1.IsChecked = MntLogout;
             LoginBoxCopy2.IsChecked = MntPosition;
             MntFeild.Text = WhoMnt;
-
             PozBox_Toast.IsChecked = ToastPosition;
             LoginBox_Toast.IsChecked = ToastLogin;
             LogoutBox_Toast.IsChecked = ToastLogout;
-
         }
 
         private void PlusTimeout(object sender, RoutedEventArgs e)
