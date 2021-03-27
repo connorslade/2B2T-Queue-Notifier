@@ -137,10 +137,10 @@ namespace _2B2T_Queue_Notifier
             try
             {
                 UpdateVars();
-
                 var Full = DataGet.GetIndex(Path, Chat);
                 var LastChatEvent = DataGet.ChatTime(Path);
                 var Index = Full[0];
+
                 if (Index != IndexCache && Full[1] > DataGet.NowTime() - Timeout)
                 {
                     EqFr = 0;
@@ -148,34 +148,32 @@ namespace _2B2T_Queue_Notifier
                     IndexCache = Full[0];
                     IsIn = true;
                     IsLogin = true;
+                    return;
                 }
-                else if (Full[1] != LastChatEvent && LastChatEvent > DataGet.NowTime() - Timeout)
+
+                if (Full[1] != LastChatEvent && LastChatEvent > DataGet.NowTime() - Timeout)
                 {
                     MainTime.Text = "Online!";
                     MainTime.Foreground = new SolidColorBrush(Tcl);
-                    if (ToastLogin && IsLogin)
-                        new ToastContentBuilder().AddText("✅ You have logged in!").Show();
-                    if (HookLogin && IsLogin)
-                        WebHookError(DataGet.DiscordMessage(WebHook, "**Logged In!** :grin:", "9419928", DoWebHook, MntLogin, WhoMnt));
+                    if (ToastLogin && IsLogin) new ToastContentBuilder().AddText("✅ You have logged in!").Show();
+                    if (HookLogin && IsLogin) WebHookError(DataGet.DiscordMessage(WebHook, "**Logged In!** :grin:", "9419928", DoWebHook, MntLogin, WhoMnt));
                     IsIn = true;
                     IsLogin = false;
+                    return;
                 }
-                else if (Index == IndexCache && Full[1] > DataGet.NowTime() - Timeout) { }
-                else
-                {
-                    EqFr += TickDelay;
-                    if (EqFr <= Timeout)
-                        return;
-                    MainTime.Text = "…";
-                    MainTime.Foreground = new SolidColorBrush(Tcf);
-                    if (HookLogout && IsIn)
-                        WebHookError(DataGet.DiscordMessage(WebHook, "**Logged Out **", "12150125", DoWebHook, MntLogout, WhoMnt));
-                    if (ToastLogout && IsLogin)
-                        new ToastContentBuilder().AddText("❌ Disconnected").AddText("＞︿＜").Show();
-                    IsIn = false;
-                    IsLogin = false;
-                    EqFr = 0;
-                }
+
+                if (Index == IndexCache && Full[1] > DataGet.NowTime() - Timeout) return;
+
+                EqFr += TickDelay;
+                if (EqFr <= Timeout) return;
+                MainTime.Text = "…";
+                MainTime.Foreground = new SolidColorBrush(Tcf);
+                if (HookLogout && IsIn) WebHookError(DataGet.DiscordMessage(WebHook, "**Logged Out **", "12150125", DoWebHook, MntLogout, WhoMnt));
+                if (ToastLogout && IsIn) new ToastContentBuilder().AddText("❌ Disconnected").AddText("＞︿＜").Show();
+                IsIn = false;
+                IsLogin = false;
+                EqFr = 0;
+                
             } catch
             {
                 MainTime.Foreground = new SolidColorBrush(Tcf);
