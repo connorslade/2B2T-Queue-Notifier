@@ -1,0 +1,13 @@
+{
+    "latest": {
+        "version": "2.0.0",
+        "download": "https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/download/2.0.0/2B2T-Queue-Notifier.exe",
+        "date": "3/27/2021"
+    },
+
+    "versions": {
+      "2.0.0": "https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/download/2.0.0/2B2T-Queue-Notifier.exe",
+      "1.2.0": "https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/download/1.2.0/2B2T-Queue-Notifier-V1.2.0.exe",
+      "0.1.0": "https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/download/0.1.0/2B2T-Queue-Notifier_Portable.exe"
+    }
+}
