@@ -62,7 +62,7 @@
 [![Screen Shot](https://i.imgur.com/zDyJ1O6.png)](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier)
 
 A Program I made to display my 2b2t queue on top of other windows and to notify me when I get logged In.<br/>
-It can also interface with Discord Webhooks.
+It can also interface with Discord Webhooks and Toasts.
 
 ### Built With
 
