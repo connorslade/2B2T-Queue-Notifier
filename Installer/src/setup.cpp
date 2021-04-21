@@ -29,9 +29,8 @@ namespace setup {
     }
 
     // Download file from Interwebz
-    void downloadFileFromUri(const std::string &uri, const std::string &fileName) { // add -f to faid silently
-        std::string command = "curl " + uri + " -A EasyMinecraftDeploy -o " + fileName;// + " >nul 2>&1";
-        std::cout << "command-" << command;
+    void downloadFileFromUri(const std::string &uri, const std::string &fileName) {
+        std::string command = "curl " + uri + " -f -A 2B2T-Queue-Installer -o " + fileName + " >nul 2>&1";
         int status = system(command.c_str());
         if (status != 0)
             console::errorPrint("[ FAILED ]", 31, -1);
