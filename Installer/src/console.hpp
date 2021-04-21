@@ -6,5 +6,7 @@ namespace console {
     void debugPrint(const std::string &text, int colorCode, const std::string &stringEnd = "\n");
 
     void errorPrint(const std::string &text, int colorCode, int exitCode = 0);
+
+    void setWindowName(const std::string& name);
 }
 #endif

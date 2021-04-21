@@ -120,27 +120,4 @@ namespace common {
         out.append(buf, 0, stream.gcount());
         return out;
     }
-
-    // Im sorry...
-    std::string getNewVersion(std::string baseUri, const std::string& name) {
-        std::string fileName = ".installer.tmp";
-        std::string command = "curl " + baseUri + " -f -A EasyMinecraftDeploy -o " + fileName + " >nul 2>&1";
-        int status = system(command.c_str());
-        if (status != 0)
-            console::errorPrint("[*] Error Downloading \x1B[34m" + name, 31, -1);
-        std::string manifest = read_file(fileName);
-        remove(fileName.c_str());
-        return manifest;
-    }
-
-    // Does what it says on the tin...
-    std::string downloadUriFromVersionJSON(const std::string& versionJson) {
-        std::vector<std::string> out;
-        std::string output;
-
-        out = tokenize(versionJson, '"');
-        for (int i = 0; i < out.size(); i++) if (out[i] == "download") output = out[i + 2];
-
-        return output;
-    }
 }

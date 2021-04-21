@@ -29,4 +29,12 @@ namespace console {
         debugPrint(text, colorCode);
         if (exitCode != 0) exit(exitCode);
     }
+
+    void setWindowName(const std::string& name) {
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+        char consoleTitle[256];
+        wsprintf(consoleTitle, name.c_str());
+        SetConsoleTitle((LPCTSTR)consoleTitle);
+#endif
+    }
 }

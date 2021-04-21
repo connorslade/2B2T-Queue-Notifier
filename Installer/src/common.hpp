@@ -24,10 +24,6 @@ namespace common {
 
     bool runSystemCommand(const std::string &command);
 
-    auto read_file(std::string path) -> std::string;
-
-    std::string getNewVersion(std::string baseUri, const std::string& name);
-
-    std::string downloadUriFromVersionJSON(const std::string& versionJson);
+    auto read_file(const std::string& path) -> std::string;
 }
 #endif
