@@ -1,7 +1,7 @@
 {
     "latest": {
         "version": "2.0.0",
-        "download": "https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/download/2.0.0/2B2T-Queue-Notifier.exe",
+        "download": "https://raw.githubusercontent.com/Basicprogrammer10/2B2T-Queue-Notifier/master/Installer/2B2T-Queue-Notifie.exe",
         "SHA-256": "ed6dc75fdec4946bf6f918a3a18e62da4937fd7fe332fed35454f020f379bb86",
         "date": "3/27/2021"
     },
