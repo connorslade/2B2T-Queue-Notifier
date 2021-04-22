@@ -8,7 +8,7 @@ namespace setup {
     // Im sorry...
     std::string getNewVersion(std::string baseUri, const std::string &name) {
         std::string fileName = ".installer.tmp";
-        std::string command = "curl " + baseUri + " -f -A EasyMinecraftDeploy -o " + fileName + " >nul 2>&1";
+        std::string command = "curl " + common::cleanUserInput(baseUri) + " -f -A EasyMinecraftDeploy -o " + fileName + " >nul 2>&1";
         int status = system(command.c_str());
         if (status != 0)
             console::errorPrint("[ FAILED ]", 31, -1);
@@ -30,7 +30,9 @@ namespace setup {
 
     // Download file from Interwebz
     void downloadFileFromUri(const std::string &uri, const std::string &fileName) {
-        std::string command = "curl " + uri + " -f -A 2B2T-Queue-Installer -o " + fileName + " >nul 2>&1";
+        std::string newUri = common::cleanUserInput(uri);
+        std::string newFileName = common::cleanUserInput(fileName);
+        std::string command = "curl " + newUri + " -f -A 2B2T-Queue-Installer -o " + newFileName + " >nul 2>&1";
         int status = system(command.c_str());
         if (status != 0)
             console::errorPrint("[ FAILED ]", 31, -1);

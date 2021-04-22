@@ -6,6 +6,9 @@
 #include <chrono>
 #include <thread>
 #include <vector>
+#include <iostream>
+#include <string>
+#include <conio.h>
 
 #include "console.hpp"
 
@@ -119,5 +122,27 @@ namespace common {
         }
         out.append(buf, 0, stream.gcount());
         return out;
+    }
+
+    void waitForKeypress(const std::string& text, int colorCode) {
+        char chk;
+        int j;
+
+        console::debugPrint(text, colorCode, "");
+        chk = getch();
+        j = chk;
+
+        for(int i=1;i<=256;i++) if(i==j) break;
+    }
+
+    std::string stringToLower(std::string data) {
+        std::transform(data.begin(), data.end(), data.begin(), [](unsigned char c){ return std::tolower(c); });
+        return data;
+    }
+
+    bool moveFile(const std::string& oldName, const std::string& newName) {
+        int result = rename(oldName.c_str() , newName.c_str());
+        if (result != 0) return false;
+        return true;
     }
 }

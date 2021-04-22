@@ -25,5 +25,11 @@ namespace common {
     bool runSystemCommand(const std::string &command);
 
     auto read_file(const std::string& path) -> std::string;
+
+    void waitForKeypress(const std::string& text, int colorCode);
+
+    std::string stringToLower(std::string data);
+
+    bool moveFile(const std::string& oldName, const std::string& newName);
 }
 #endif
