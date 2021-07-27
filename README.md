@@ -1,9 +1,8 @@
 
-[![Image](https://img.shields.io/badge/Download-V0.2.0-sucess?style=for-the-badge)](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/) 
+[![Image](https://img.shields.io/badge/Download-V0.2.1-sucess?style=for-the-badge)](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/) 
 [![Image](https://img.shields.io/badge/.NET_Core-V3.1-informational?style=for-the-badge)](https://dotnet.microsoft.com/) 
 ![Image](https://img.shields.io/badge/Windows-10-green?style=for-the-badge) 
-![Image](https://img.shields.io/badge/Contains-Tasty_Spaghetti_Code-orange?style=for-the-badge)
-[![CodeFactor](https://www.codefactor.io/repository/github/basicprogrammer10/2b2t-queue-notifier/badge/master)](https://www.codefactor.io/repository/github/basicprogrammer10/2b2t-queue-notifier/overview/master)
+![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/Basicprogrammer10/2B2T-Queue-Notifier?style=for-the-badge)
 
 <br />
 <p align="center">
@@ -60,6 +59,7 @@
 ## About The Project
 
 [![Screen Shot](https://i.imgur.com/zDyJ1O6.png)](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier)
+![Toasts!](https://i.imgur.com/KcR10VE.png)
 
 A Program I made to display my 2b2t queue on top of other windows and to notify me when I get logged In.<br/>
 It can also interface with Discord Webhooks and Toasts.
