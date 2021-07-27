@@ -76,7 +76,6 @@ namespace _2B2T_Queue_Notifier
                 WebHook = Config.Read("hookuri");
             } catch
             {
-                MessageBox.Show("ERR reading Config File...");
                 IniFile.SetDefaultConfig(Config);
             }
         }
