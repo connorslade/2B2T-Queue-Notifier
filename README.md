@@ -86,7 +86,7 @@ To get a local copy up and running follow these simple steps.
 
 ### Installation
 
-0.  Want to make sure it's safe? You can check the Virus total [here](https://www.virustotal.com/gui/file-analysis/MDM1MjZmMTEyZDg3NjA5ZGQ3M2MxMWIzM2U1ZTI3Nzg6MTYxMzMyMTY1Mw==/detection), you can also check the source code.
+0.  Want to make sure it's safe? You can check the Virus total [here](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/blob/master/VirusTotal.md), you can also check the source code.
 1. Install [.NET Core](https://dotnet.microsoft.com/)
 2. Download the Latest version of 2B2T-Queue-Notifier
 3. Run It!
