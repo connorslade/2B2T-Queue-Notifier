@@ -1,7 +1,13 @@
 use serde_json;
 use serde_json::Value;
+use sha2::Digest;
+use sha2::Sha256;
 use ureq;
 
+use std::fs::OpenOptions;
+use std::io::Read;
+use std::io::Write;
+use std::path::PathBuf;
 use std::process::Command;
 
 #[macro_use]
@@ -75,7 +81,66 @@ fn main() {
         }
 
         color_print!(Color::Magenta, "[*] Downloading x86");
+        let downloads = &version_json["versions"].get(latest_version).unwrap()["downloads"];
+        for i in downloads.as_array().unwrap().iter() {
+            if i["type"] == "x86" {
+                download(
+                    i["uri"].as_str().unwrap(),
+                    i["SHA-256"].as_str().unwrap(),
+                    PathBuf::from("./2B2T-Queue-Notifier.exe"),
+                );
+                break;
+            }
+        }
+        // let downloaded = ureq::get();
         return;
     }
     color_print!(Color::Red, "[*] .NET Core is not installed");
+    color_print!(Color::Magenta, "[*] Downloading Portable");
+    let downloads = &version_json["versions"].get(latest_version).unwrap()["downloads"];
+    for i in downloads.as_array().unwrap().iter() {
+        if i["type"] == "portable" {
+            download(
+                i["uri"].as_str().unwrap(),
+                i["SHA-256"].as_str().unwrap(),
+                PathBuf::from("./2B2T-Queue-Notifier.exe"),
+            );
+            break;
+        }
+    }
+}
+
+fn download(url: &str, hash: &str, path: PathBuf) {
+    let resp = ureq::get(url).call().unwrap();
+
+    let len = resp
+        .header("Content-Length")
+        .and_then(|s| s.parse::<usize>().ok())
+        .unwrap();
+
+    let mut bytes: Vec<u8> = Vec::with_capacity(len);
+    resp.into_reader()
+        .take(10_000_000)
+        .read_to_end(&mut bytes)
+        .unwrap();
+
+    let mut hasher = Sha256::new();
+    hasher.update(&bytes);
+    let local_hash = format!("{:x}", hasher.finalize()).to_lowercase();
+
+    if local_hash != hash.to_lowercase() {
+        color_print!(Color::Red, "[*] Hash Mismatch");
+        color_print!(Color::Red, "[*] Expected: {}", hash);
+        color_print!(Color::Red, "[*] Got:      {}", &local_hash);
+        return;
+    }
+
+    // Save to File
+    let mut file = OpenOptions::new()
+        .write(true)
+        .create(true)
+        .open(path)
+        .unwrap();
+
+    file.write(&bytes).unwrap();
 }
