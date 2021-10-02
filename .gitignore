@@ -359,4 +359,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /src/.idea
 .idea
-Installer/cmake-build-debug
+installer/target
