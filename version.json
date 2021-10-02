@@ -1,15 +1,59 @@
 {
-    "latest": {
-        "version": "2.0.0",
-        "download": "https://2b2t-queue.connorcode.com/assets/downloads/2B2T-Queue-Notifier_Portable.exe",
-        "SHA-256": "ed6dc75fdec4946bf6f918a3a18e62da4937fd7fe332fed35454f020f379bb86",
-        "date": "3/27/2021"
+  "latest": "2.0.1",
+  "versions": {
+    "2.0.1": {
+      "downloads": [
+        {
+          "type": "x86",
+          "uri": "https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/download/2.0.1/2B2T-Queue-Notifier-x86.exe",
+          "SHA-256": "0f72563878c0cfbaa9b9c31f7fbc37a8b474f6415c3d044d67e7ee9aba8a4ac4"
+        },
+        {
+          "type": "x64",
+          "uri": "https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/download/2.0.1/2B2T-Queue-Notifier-x64.exe",
+          "SHA-256": "2906fcd858e6659e2770538b1abf444ed26752e9bf724bfd2c9e1b7b6a05d8ba"
+        },
+        {
+          "type": "portable",
+          "uri": "https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/download/2.0.1/2B2T-Queue-Notifier-Portable.exe",
+          "SHA-256": "65a87a0730bf3df38869b8b17914208ddac2ec936f788f86bfb1e9ed2398a400"
+        }
+      ],
+      "deprecated": false,
+      "date": "07/27/2021"
     },
-
-    "versions": {
-      "2.0.0": "https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/download/2.0.0/2B2T-Queue-Notifier.exe",
-      "1.2.0": "https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/download/1.2.0/2B2T-Queue-Notifier-V1.2.0.exe",
-      "0.1.0": "https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/download/0.1.0/2B2T-Queue-Notifier_Portable.exe"
+    "2.0.0": {
+      "downloads": [
+        {
+          "type": "x86",
+          "uri": "https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/download/2.0.0/2B2T-Queue-Notifier.exe",
+          "SHA-256": "ed6dc75fdec4946bf6f918a3a18e62da4937fd7fe332fed35454f020f379bb86"
+        }
+      ],
+      "deprecated": false,
+      "date": "03/27/2021"
     },
-  "inherit": true
+    "1.2.0": {
+      "downloads": [
+        {
+          "type": "x86",
+          "uri": "https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/download/1.2.0/2B2T-Queue-Notifier-V1.2.0.exe",
+          "SHA-256": "edaacd96d9078654004eef23f67f56695886e821955dd3c23402e8c4523428f4"
+        }
+      ],
+      "deprecated": true,
+      "date": "02/14/2021"
+    },
+    "0.1.0": {
+      "downloads": [
+        {
+          "type": "x86",
+          "uri": "https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/download/0.1.0/2B2T-Queue-Notifier_Portable.exe",
+          "SHA-256": "65637ec39a54bef2c195a6e392c10dce2810fc9e4580ff901ce804c7fb072488"
+        }
+      ],
+      "deprecated": true,
+      "date": "01/28/2021"
+    }
+  }
 }
