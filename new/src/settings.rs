@@ -1,34 +1,73 @@
-use iced::{
-    button, window, Align, Button, Color, Column, Container, Element, Length, Sandbox, Settings,
-    Text,
-};
-
-use super::style;
-use super::VERSION;
-
-struct ToastSettings {
-    send_on_login: bool,
-    send_on_logout: bool,
-    send_on_position_change: bool,
+#[derive(Debug, Clone)]
+pub struct ToastSettings {
+    pub send_on_login: bool,
+    pub send_on_logout: bool,
+    pub send_on_position_change: bool,
 }
 
-struct Config {
-    timeout: u64,
-    tick_delay: u64,
-    log_file_path: String,
-    chat_regex: String,
-    toast_settings: ToastSettings,
+#[derive(Debug, Clone)]
+pub struct Config {
+    pub timeout: u64,
+    pub tick_delay: u64,
+    pub log_file_path: String,
+    pub chat_regex: String,
+    pub toast_settings: ToastSettings,
 }
 
-#[derive(Default)]
-pub struct SettingsWindow {
-    settings: Config,
+#[derive(Debug, Clone)]
+pub enum ConfigUpdate {
+    Timeout(u64),
+    TickDelay(u64),
+    LogFilePath(String),
+    ChatRegex(String),
+
+    send_on_login(bool),
+    send_on_logout(bool),
+    send_on_position_change(bool),
 }
 
-#[derive(Debug, Clone, Copy)]
-pub enum Message {
-    OpenSettings,
-    SetPosition(u32),
+impl Config {
+    pub fn apply_update(&self, update: ConfigUpdate) -> Config {
+        match update {
+            ConfigUpdate::Timeout(timeout) => Config {
+                timeout,
+                ..self.clone()
+            },
+            ConfigUpdate::TickDelay(tick_delay) => Config {
+                tick_delay,
+                ..self.clone()
+            },
+            ConfigUpdate::LogFilePath(log_file_path) => Config {
+                log_file_path,
+                ..self.clone()
+            },
+            ConfigUpdate::ChatRegex(chat_regex) => Config {
+                chat_regex,
+                ..self.clone()
+            },
+            ConfigUpdate::send_on_login(send_on_login) => Config {
+                toast_settings: ToastSettings {
+                    send_on_login,
+                    ..self.toast_settings
+                },
+                ..self.clone()
+            },
+            ConfigUpdate::send_on_logout(send_on_logout) => Config {
+                toast_settings: ToastSettings {
+                    send_on_logout,
+                    ..self.toast_settings
+                },
+                ..self.clone()
+            },
+            ConfigUpdate::send_on_position_change(send_on_position_change) => Config {
+                toast_settings: ToastSettings {
+                    send_on_position_change,
+                    ..self.toast_settings
+                },
+                ..self.clone()
+            },
+        }
+    }
 }
 
 impl Default for Config {
@@ -36,7 +75,9 @@ impl Default for Config {
         Config {
             timeout: 30,
             tick_delay: 10,
-            log_file_path: r"#C:\Users\turtl\Software\MultiMC\instances\1.12.2#".to_string(),
+            log_file_path:
+                r#"C:\Users\turtl\Software\MultiMC\instances\1.12.2\.minecraft\latest.log"#
+                    .to_string(),
             chat_regex: "Position in queue:".to_string(),
             toast_settings: ToastSettings {
                 send_on_login: true,
@@ -44,39 +85,5 @@ impl Default for Config {
                 send_on_position_change: true,
             },
         }
-    }
-}
-
-impl Sandbox for SettingsWindow {
-    type Message = Message;
-
-    fn new() -> Self {
-        SettingsWindow {
-            settings: Config::default(),
-        }
-    }
-
-    fn title(&self) -> String {
-        format!("2B2T-Queue-Notifier {} - Settings", VERSION)
-    }
-
-    fn update(&mut self, message: Self::Message) {}
-
-    fn view(&mut self) -> Element<Message> {
-        let content = Column::new()
-            .padding(20)
-            .push(Text::new("Settings").size(40).color(Color::WHITE))
-            .push(Text::new("Settings").size(20).color(Color::WHITE))
-            .push(Text::new("Settings").size(20).color(Color::WHITE))
-            .push(Text::new("Settings").size(20).color(Color::WHITE))
-            .push(Text::new("Settings").size(20).color(Color::WHITE));
-
-        Container::new(content)
-            .width(Length::Fill)
-            .height(Length::Fill)
-            .center_x()
-            .center_y()
-            .style(style::Theme::Dark)
-            .into()
     }
 }

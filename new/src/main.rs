@@ -2,9 +2,10 @@ use std::env::consts;
 use std::panic;
 use std::process;
 
+use iced::Row;
 use iced::{
-    button, window, Align, Button, Color, Column, Container, Element, Length, Sandbox, Settings,
-    Text,
+    button, slider, text_input, window, Align, Button, Color, Column, Container, Element, Length,
+    Sandbox, Settings, Slider, Text, TextInput,
 };
 use msgbox;
 
@@ -12,6 +13,8 @@ use msgbox;
 mod common;
 mod settings;
 mod style;
+use settings::Config;
+use settings::ConfigUpdate;
 
 pub const VERSION: &str = "α0.0.0";
 
@@ -46,21 +49,29 @@ pub fn main() -> iced::Result {
 struct Queue {
     position: Option<u32>,
     queue_color: Color,
+    config: Config,
+    view: View,
 
     settings_button: button::State,
     debug_button: button::State,
+
+    // Config Stuff
+    timeout_slider: slider::State,
+    tick_delay_slider: slider::State,
+    log_file_path_input: text_input::State,
+    chat_regex_input: text_input::State,
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone)]
 enum Message {
-    OpenSettings,
+    SettingsUpdate(ConfigUpdate),
     SetPosition(u32),
+    OpenSettings,
 }
 
 enum View {
     Queue,
     Settings,
-    Debug,
 }
 
 impl Sandbox for Queue {
@@ -81,8 +92,7 @@ impl Sandbox for Queue {
     fn update(&mut self, message: Message) {
         match message {
             Message::OpenSettings => {
-                // Open a settings window
-                panic!("Settings not implemented yet!");
+                self.view = View::Settings;
             }
 
             Message::SetPosition(position) => {
@@ -93,6 +103,10 @@ impl Sandbox for Queue {
                 self.position = Some(position);
                 self.queue_color = update_color(position);
             }
+
+            Message::SettingsUpdate(config_update) => {
+                self.config = self.config.apply_update(config_update);
+            }
         }
     }
 
@@ -102,32 +116,95 @@ impl Sandbox for Queue {
             bytes: include_bytes!("../assets/fonts/JetBrainsMono-Medium.ttf"),
         };
 
-        let content = Column::new()
-            .padding(20)
-            .align_items(Align::Center)
-            .push(
-                Text::new(match self.position {
-                    Some(position) => position.to_string(),
-                    None => "…".to_string(),
-                })
-                .size(200)
-                .color(self.queue_color)
-                .font(font),
-            )
-            .push(
-                Button::new(
-                    &mut self.settings_button,
-                    Text::new("Settings").size(25).font(font),
+        let content = match self.view {
+            View::Queue => Column::new()
+                .padding(20)
+                .align_items(Align::Center)
+                .push(
+                    Text::new(match self.position {
+                        Some(position) => position.to_string(),
+                        None => "…".to_string(),
+                    })
+                    .size(200)
+                    .color(self.queue_color)
+                    .font(font),
                 )
-                .on_press(Message::OpenSettings),
-            )
-            .push(
-                Button::new(
-                    &mut self.debug_button,
-                    Text::new("Debug").size(25).font(font),
+                .push(
+                    Button::new(
+                        &mut self.settings_button,
+                        Text::new("Settings").size(25).font(font),
+                    )
+                    .on_press(Message::OpenSettings),
                 )
-                .on_press(Message::SetPosition(self.position.unwrap_or(0) + 25)),
-            );
+                .push(
+                    Button::new(
+                        &mut self.debug_button,
+                        Text::new("Debug").size(25).font(font),
+                    )
+                    .on_press(Message::SetPosition(self.position.unwrap_or(0) + 25)),
+                ),
+
+            View::Settings => Column::new()
+                .padding(20)
+                .spacing(20)
+                .push(Text::new("Settings").size(40).color(Color::WHITE))
+                .push(
+                    Row::new()
+                        .spacing(20)
+                        .push(Text::new("Timeout (SEC)").size(25).color(Color::WHITE))
+                        .push(Slider::new(
+                            &mut self.timeout_slider,
+                            0.0..=100.0,
+                            self.config.timeout as f64,
+                            |x| Message::SettingsUpdate(ConfigUpdate::Timeout(x as u64)),
+                        ))
+                        .push(Text::new(format!("[ {:0>3} ]", self.config.timeout))),
+                )
+                .push(
+                    Row::new()
+                        .spacing(20)
+                        .push(Text::new("Tick Delay (SEC)").size(25).color(Color::WHITE))
+                        .push(Slider::new(
+                            &mut self.tick_delay_slider,
+                            0.0..=100.0,
+                            self.config.tick_delay as f64,
+                            |x| Message::SettingsUpdate(ConfigUpdate::TickDelay(x as u64)),
+                        ))
+                        .push(Text::new(format!("[ {:0>3} ]", self.config.tick_delay))),
+                )
+                .push(
+                    Row::new()
+                        .spacing(20)
+                        .push(Text::new("Log File").size(25).color(Color::WHITE))
+                        .push(
+                            TextInput::new(
+                                &mut self.log_file_path_input,
+                                "",
+                                &self.config.log_file_path,
+                                |x| {
+                                    Message::SettingsUpdate(ConfigUpdate::LogFilePath(
+                                        x.to_string(),
+                                    ))
+                                },
+                            )
+                            .style(style::Theme::Dark),
+                        ),
+                )
+                .push(
+                    Row::new()
+                        .spacing(20)
+                        .push(Text::new("Chat Regex").size(25).color(Color::WHITE))
+                        .push(
+                            TextInput::new(
+                                &mut self.chat_regex_input,
+                                "",
+                                &self.config.chat_regex,
+                                |x| Message::SettingsUpdate(ConfigUpdate::ChatRegex(x.to_string())),
+                            )
+                            .style(style::Theme::Dark),
+                        ),
+                ),
+        };
 
         Container::new(content)
             .width(Length::Fill)
@@ -136,6 +213,12 @@ impl Sandbox for Queue {
             .center_y()
             .style(style::Theme::Dark)
             .into()
+    }
+}
+
+impl Default for View {
+    fn default() -> Self {
+        View::Queue
     }
 }
 
@@ -150,3 +233,9 @@ fn update_color(pos: u32) -> Color {
 
     Color::from_rgb8(163, 190, 140)
 }
+
+// Checkbox::new(
+//     self.config.toast_settings.send_on_login,
+//     "Test",
+//     |x| Message::SettingsUpdate(ConfigUpdate::send_on_login(x)),
+// )
