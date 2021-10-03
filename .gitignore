@@ -360,3 +360,4 @@ FodyWeavers.xsd
 /src/.idea
 .idea
 */target
+*/build_data

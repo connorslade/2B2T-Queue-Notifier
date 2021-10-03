@@ -1,13 +1,38 @@
+use std::env::consts;
+use std::panic;
+use std::process;
+
 use iced::{
     button, window, Align, Button, Color, Column, Container, Element, Length, Sandbox, Settings,
     Text,
 };
+use msgbox;
 
+#[macro_use]
+mod common;
+mod settings;
 mod style;
 
-const VERSION: &str = "α0.0.0";
+pub const VERSION: &str = "α0.0.0";
 
 pub fn main() -> iced::Result {
+    panic::set_hook(Box::new(|p| {
+        msgbox::create(
+            "2B2T-Queue-Notifier Error",
+            &format!(
+                "{}\nCompile Time: {}\nPlatform: {} {}\nVersion: {}",
+                p.to_string(),
+                include_str!("../build_data/compile_time"),
+                consts::OS,
+                consts::ARCH,
+                VERSION,
+            ),
+            msgbox::IconType::Error,
+        )
+        .unwrap_or_default();
+        process::exit(-1);
+    }));
+
     Queue::run(Settings {
         window: window::Settings {
             size: (800, 400),
@@ -32,6 +57,12 @@ enum Message {
     SetPosition(u32),
 }
 
+enum View {
+    Queue,
+    Settings,
+    Debug,
+}
+
 impl Sandbox for Queue {
     type Message = Message;
 
@@ -50,7 +81,8 @@ impl Sandbox for Queue {
     fn update(&mut self, message: Message) {
         match message {
             Message::OpenSettings => {
-                println!("Open settings");
+                // Open a settings window
+                panic!("Settings not implemented yet!");
             }
 
             Message::SetPosition(position) => {
