@@ -19,7 +19,7 @@ pub fn main() -> iced::Result {
 
 #[derive(Default)]
 struct Queue {
-    position: u32,
+    position: Option<u32>,
     queue_color: Color,
 
     settings_button: button::State,
@@ -36,7 +36,11 @@ impl Sandbox for Queue {
     type Message = Message;
 
     fn new() -> Self {
-        Self::default()
+        Self {
+            position: None,
+            queue_color: Color::from_rgb8(191, 97, 106),
+            ..Default::default()
+        }
     }
 
     fn title(&self) -> String {
@@ -50,32 +54,47 @@ impl Sandbox for Queue {
             }
 
             Message::SetPosition(position) => {
-                self.position = position;
+                if self.position == Some(position) {
+                    return;
+                }
+
+                self.position = Some(position);
                 self.queue_color = update_color(position);
             }
         }
     }
 
     fn view(&mut self) -> Element<Message> {
+        let font = iced::Font::External {
+            name: "JetBrainsMono-Medium.ttf",
+            bytes: include_bytes!("../assets/fonts/JetBrainsMono-Medium.ttf"),
+        };
+
         let content = Column::new()
             .padding(20)
             .align_items(Align::Center)
             .push(
-                Text::new(format!("{:0>3}", self.position))
-                    .size(200)
-                    .color(self.queue_color)
-                    .font(iced::Font::External {
-                        name: "JetBrainsMono-Regular.ttf",
-                        bytes: include_bytes!("../assets/fonts/JetBrainsMono-Regular.ttf"),
-                    }),
+                Text::new(match self.position {
+                    Some(position) => position.to_string(),
+                    None => "…".to_string(),
+                })
+                .size(200)
+                .color(self.queue_color)
+                .font(font),
             )
             .push(
-                Button::new(&mut self.settings_button, Text::new("Settings"))
-                    .on_press(Message::OpenSettings),
+                Button::new(
+                    &mut self.settings_button,
+                    Text::new("Settings").size(25).font(font),
+                )
+                .on_press(Message::OpenSettings),
             )
             .push(
-                Button::new(&mut self.debug_button, Text::new("Debug"))
-                    .on_press(Message::SetPosition(self.position + 100)),
+                Button::new(
+                    &mut self.debug_button,
+                    Text::new("Debug").size(25).font(font),
+                )
+                .on_press(Message::SetPosition(self.position.unwrap_or(0) + 25)),
             );
 
         Container::new(content)
