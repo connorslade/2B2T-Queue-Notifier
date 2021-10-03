@@ -4,6 +4,7 @@ use iced::text_input;
 
 mod dark;
 
+#[derive(Debug, Clone, Copy)]
 pub enum Theme {
     Dark,
 }

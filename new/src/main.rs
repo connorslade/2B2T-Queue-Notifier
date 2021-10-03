@@ -59,6 +59,7 @@ pub fn main() -> iced::Result {
 #[derive(Default)]
 struct Queue {
     position: Option<u32>,
+    theme: style::Theme,
     queue_color: Color,
     config: Config,
     view: View,
@@ -152,12 +153,12 @@ impl Sandbox for Queue {
                 )
                 .push(
                     Button::new(&mut self.settings_button, Text::new("Settings").size(25))
-                        .style(style::Theme::Dark)
+                        .style(self.theme)
                         .on_press(Message::OpenSettings),
                 )
                 .push(
                     Button::new(&mut self.debug_button, Text::new("Debug").size(25))
-                        .style(style::Theme::Dark)
+                        .style(self.theme)
                         .on_press(Message::SetPosition(self.position.unwrap_or(0) + 25)),
                 ),
 
@@ -204,7 +205,7 @@ impl Sandbox for Queue {
                                     ))
                                 },
                             )
-                            .style(style::Theme::Dark),
+                            .style(self.theme),
                         ),
                 )
                 .push(
@@ -218,7 +219,7 @@ impl Sandbox for Queue {
                                 &self.config.chat_regex,
                                 |x| Message::SettingsUpdate(ConfigUpdate::ChatRegex(x.to_string())),
                             )
-                            .style(style::Theme::Dark),
+                            .style(self.theme),
                         ),
                 )
                 .push(
@@ -227,17 +228,17 @@ impl Sandbox for Queue {
                         .push(
                             Button::new(&mut self.save_button, Text::new("Save").size(25))
                                 .on_press(Message::ConfigSave)
-                                .style(style::Theme::Dark),
+                                .style(self.theme),
                         )
                         .push(
                             Button::new(&mut self.reset_button, Text::new("Reset").size(25))
                                 .on_press(Message::ConfigReset)
-                                .style(style::Theme::Dark),
+                                .style(self.theme),
                         )
                         .push(
                             Button::new(&mut self.exit_button, Text::new("Cancel").size(25))
                                 .on_press(Message::ConfigExit)
-                                .style(style::Theme::Dark),
+                                .style(self.theme),
                         ),
                 ),
         };
@@ -247,7 +248,7 @@ impl Sandbox for Queue {
             .height(Length::Fill)
             .center_x()
             .center_y()
-            .style(style::Theme::Dark)
+            .style(self.theme)
             .into()
     }
 }
