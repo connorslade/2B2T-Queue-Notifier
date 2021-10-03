@@ -1,7 +1,8 @@
-use iced::{container, text_input, Background, Color};
+use iced::{button, container, text_input, Background, Color, Vector};
 
 pub struct Container;
 pub struct TextInput;
+pub struct Button;
 
 impl container::StyleSheet for Container {
     fn style(&self) -> container::Style {
@@ -37,5 +38,18 @@ impl text_input::StyleSheet for TextInput {
 
     fn selection_color(&self) -> Color {
         Color::from_rgb(0.8, 0.8, 1.0)
+    }
+}
+
+impl button::StyleSheet for Button {
+    fn active(&self) -> button::Style {
+        button::Style {
+            background: Some(Background::Color(Color::from_rgb8(33, 37, 46))),
+            text_color: Color::from_rgb8(242, 245, 252),
+            border_radius: 5.0,
+            border_width: 1.0,
+            border_color: Color::from_rgb8(33, 37, 46),
+            shadow_offset: Vector::new(0.5, 1.0),
+        }
     }
 }

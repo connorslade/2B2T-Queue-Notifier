@@ -21,9 +21,9 @@ pub enum ConfigUpdate {
     LogFilePath(String),
     ChatRegex(String),
 
-    send_on_login(bool),
-    send_on_logout(bool),
-    send_on_position_change(bool),
+    SendOnLogin(bool),
+    SendOnLogout(bool),
+    SendOnPositionChange(bool),
 }
 
 impl Config {
@@ -45,21 +45,21 @@ impl Config {
                 chat_regex,
                 ..self.clone()
             },
-            ConfigUpdate::send_on_login(send_on_login) => Config {
+            ConfigUpdate::SendOnLogin(send_on_login) => Config {
                 toast_settings: ToastSettings {
                     send_on_login,
                     ..self.toast_settings
                 },
                 ..self.clone()
             },
-            ConfigUpdate::send_on_logout(send_on_logout) => Config {
+            ConfigUpdate::SendOnLogout(send_on_logout) => Config {
                 toast_settings: ToastSettings {
                     send_on_logout,
                     ..self.toast_settings
                 },
                 ..self.clone()
             },
-            ConfigUpdate::send_on_position_change(send_on_position_change) => Config {
+            ConfigUpdate::SendOnPositionChange(send_on_position_change) => Config {
                 toast_settings: ToastSettings {
                     send_on_position_change,
                     ..self.toast_settings

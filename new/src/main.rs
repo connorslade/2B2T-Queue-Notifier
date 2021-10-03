@@ -25,9 +25,10 @@ pub fn main() -> iced::Result {
         msgbox::create(
             "2B2T-Queue-Notifier Error",
             &format!(
-                "{}\nCompile Time: {}\nPlatform: {} {}\nVersion: {}",
+                "{}\n{}\nCompile Time: {}\nPlatform: {} {}\nVersion: {}",
                 p.to_string(),
-                include_str!("../build_data/compile_time"),
+                env!("GIT_INFO"),
+                env!("COMPILE_TIME"),
                 consts::OS,
                 consts::ARCH,
                 VERSION,
@@ -68,6 +69,7 @@ struct Queue {
     // Config Stuff
     save_button: button::State,
     exit_button: button::State,
+    reset_button: button::State,
 
     timeout_slider: slider::State,
     tick_delay_slider: slider::State,
@@ -82,6 +84,7 @@ enum Message {
     OpenSettings,
     ConfigSave,
     ConfigExit,
+    ConfigReset,
 }
 
 enum View {
@@ -149,10 +152,12 @@ impl Sandbox for Queue {
                 )
                 .push(
                     Button::new(&mut self.settings_button, Text::new("Settings").size(25))
+                        .style(style::Theme::Dark)
                         .on_press(Message::OpenSettings),
                 )
                 .push(
                     Button::new(&mut self.debug_button, Text::new("Debug").size(25))
+                        .style(style::Theme::Dark)
                         .on_press(Message::SetPosition(self.position.unwrap_or(0) + 25)),
                 ),
 
@@ -220,12 +225,19 @@ impl Sandbox for Queue {
                     Row::new()
                         .spacing(10)
                         .push(
-                            Button::new(&mut self.save_button, Text::new("Save"))
-                                .on_press(Message::ConfigSave),
+                            Button::new(&mut self.save_button, Text::new("Save").size(25))
+                                .on_press(Message::ConfigSave)
+                                .style(style::Theme::Dark),
                         )
                         .push(
-                            Button::new(&mut self.exit_button, Text::new("Exit"))
-                                .on_press(Message::ConfigExit),
+                            Button::new(&mut self.reset_button, Text::new("Reset").size(25))
+                                .on_press(Message::ConfigReset)
+                                .style(style::Theme::Dark),
+                        )
+                        .push(
+                            Button::new(&mut self.exit_button, Text::new("Cancel").size(25))
+                                .on_press(Message::ConfigExit)
+                                .style(style::Theme::Dark),
                         ),
                 ),
         };
