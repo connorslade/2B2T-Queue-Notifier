@@ -7,6 +7,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install Stuff
+        run: sudo apt install libxkbcommon-dev
+
       - name: Build
         working-directory: ./new
         run: cargo build
