@@ -2,15 +2,17 @@ use std::env::consts;
 use std::panic;
 use std::process;
 
-use iced::Row;
 use iced::{
     button, slider, text_input, window, Align, Button, Color, Column, Container, Element, Length,
-    Sandbox, Settings, Slider, Text, TextInput,
+    Row, Sandbox, Settings, Slider, Text, TextInput,
 };
+use image;
+use image::GenericImageView;
 use msgbox;
 
 #[macro_use]
 mod common;
+mod assets;
 mod settings;
 mod style;
 use settings::Config;
@@ -36,11 +38,19 @@ pub fn main() -> iced::Result {
         process::exit(-1);
     }));
 
+    let icon = image::load_from_memory(assets::ICON).unwrap();
+
     Queue::run(Settings {
         window: window::Settings {
             size: (800, 400),
+            min_size: Some((600, 300)),
+            icon: Some(
+                window::Icon::from_rgba(icon.to_rgba8().into_raw(), icon.width(), icon.height())
+                    .unwrap(),
+            ),
             ..Default::default()
         },
+        default_font: Some(assets::MAIN_FONT_RAW),
         ..Settings::default()
     })
 }
@@ -56,6 +66,9 @@ struct Queue {
     debug_button: button::State,
 
     // Config Stuff
+    save_button: button::State,
+    exit_button: button::State,
+
     timeout_slider: slider::State,
     tick_delay_slider: slider::State,
     log_file_path_input: text_input::State,
@@ -67,6 +80,8 @@ enum Message {
     SettingsUpdate(ConfigUpdate),
     SetPosition(u32),
     OpenSettings,
+    ConfigSave,
+    ConfigExit,
 }
 
 enum View {
@@ -107,15 +122,18 @@ impl Sandbox for Queue {
             Message::SettingsUpdate(config_update) => {
                 self.config = self.config.apply_update(config_update);
             }
+
+            Message::ConfigExit => {
+                self.view = View::Queue;
+            }
+
+            _ => {
+                panic!("Unhandled Event: {:?}", message);
+            }
         }
     }
 
     fn view(&mut self) -> Element<Message> {
-        let font = iced::Font::External {
-            name: "JetBrainsMono-Medium.ttf",
-            bytes: include_bytes!("../assets/fonts/JetBrainsMono-Medium.ttf"),
-        };
-
         let content = match self.view {
             View::Queue => Column::new()
                 .padding(20)
@@ -127,21 +145,15 @@ impl Sandbox for Queue {
                     })
                     .size(200)
                     .color(self.queue_color)
-                    .font(font),
+                    .font(assets::QUEUE_FONT),
                 )
                 .push(
-                    Button::new(
-                        &mut self.settings_button,
-                        Text::new("Settings").size(25).font(font),
-                    )
-                    .on_press(Message::OpenSettings),
+                    Button::new(&mut self.settings_button, Text::new("Settings").size(25))
+                        .on_press(Message::OpenSettings),
                 )
                 .push(
-                    Button::new(
-                        &mut self.debug_button,
-                        Text::new("Debug").size(25).font(font),
-                    )
-                    .on_press(Message::SetPosition(self.position.unwrap_or(0) + 25)),
+                    Button::new(&mut self.debug_button, Text::new("Debug").size(25))
+                        .on_press(Message::SetPosition(self.position.unwrap_or(0) + 25)),
                 ),
 
             View::Settings => Column::new()
@@ -202,6 +214,18 @@ impl Sandbox for Queue {
                                 |x| Message::SettingsUpdate(ConfigUpdate::ChatRegex(x.to_string())),
                             )
                             .style(style::Theme::Dark),
+                        ),
+                )
+                .push(
+                    Row::new()
+                        .spacing(10)
+                        .push(
+                            Button::new(&mut self.save_button, Text::new("Save"))
+                                .on_press(Message::ConfigSave),
+                        )
+                        .push(
+                            Button::new(&mut self.exit_button, Text::new("Exit"))
+                                .on_press(Message::ConfigExit),
                         ),
                 ),
         };
