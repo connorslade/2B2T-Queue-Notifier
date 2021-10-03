@@ -4,6 +4,8 @@
 ![Image](https://img.shields.io/badge/Windows-10-green?style=for-the-badge) 
 ![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/Basicprogrammer10/2B2T-Queue-Notifier?style=for-the-badge)
 
+**- Cross Platform Remake In Progress -**
+
 <br />
 <p align="center">
   <a href="https://2b2t-queue.connorcode.com/">
