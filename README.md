@@ -1,13 +1,14 @@
 
-[![Image](https://img.shields.io/badge/Download-V0.2.1-sucess?style=for-the-badge)](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/) 
+[![Image](https://img.shields.io/badge/Download-V2.0.1-sucess?style=for-the-badge)](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/) 
 [![Image](https://img.shields.io/badge/.NET_Core-V3.1-informational?style=for-the-badge)](https://dotnet.microsoft.com/) 
 ![Image](https://img.shields.io/badge/Windows-10-green?style=for-the-badge) 
 ![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/Basicprogrammer10/2B2T-Queue-Notifier?style=for-the-badge)
-
-**- Cross Platform Remake In Progress -**
+![Lines of code](https://img.shields.io/tokei/lines/github/Basicprogrammer10/2B2T-Queue-Notifier?style=for-the-badge)
 
 <br />
 <p align="center">
+  **- Cross Platform Remake In Progress -**
+  <br>
   <a href="https://2b2t-queue.connorcode.com/">
     <img src="https://b2t-queue.web.app/assets/images/2b2t.png" alt="Logo" width="30%" />
   </a>
