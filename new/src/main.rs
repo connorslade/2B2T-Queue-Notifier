@@ -6,7 +6,7 @@ use std::process;
 use home::home_dir;
 use iced::{
     button, slider, text_input, window, Align, Button, Checkbox, Color, Column, Container, Element,
-    Length, Row, Sandbox, Settings, Slider, Text, TextInput,
+    Length, Radio, Row, Sandbox, Settings, Slider, Text, TextInput,
 };
 use image;
 use image::GenericImageView;
@@ -20,8 +20,10 @@ mod style;
 use settings::Config;
 use settings::ConfigUpdate;
 use style::TextColor;
+use style::Theme;
 
 pub const VERSION: &str = "α3.0.0";
+pub const CFG_PATH: &str = ".2B2T-Queue-Notifier/config.cfg";
 
 pub fn main() -> iced::Result {
     panic::set_hook(Box::new(|p| {
@@ -86,10 +88,11 @@ struct Queue {
 enum Message {
     SettingsUpdate(ConfigUpdate),
     SetPosition(u32),
+    UpdateTheme(Theme),
     OpenSettings,
+    ConfigReset,
     ConfigSave,
     ConfigExit,
-    ConfigReset,
 }
 
 enum View {
@@ -101,17 +104,18 @@ impl Sandbox for Queue {
     type Message = Message;
 
     fn new() -> Self {
-        let config_path = home_dir()
-            .unwrap()
-            .join(Path::new(".2B2T-Queue-Notifier\\config.cfg"));
+        let config_path = home_dir().unwrap().join(Path::new(CFG_PATH));
 
-        let config = match Config::load(config_path) {
+        let config = match Config::load(config_path.clone()) {
             Some(config) => {
                 println!("[*] Successfully Read Config");
                 config
             }
             None => {
-                println!("[*] Config File Not Found. Using Defaults");
+                match config_path.exists() {
+                    false => println!("[*] Config File Not Found. Using Defaults"),
+                    true => println!("[*] Error Parsing Config File. Using Defaults"),
+                }
                 Config::default()
             }
         };
@@ -129,6 +133,7 @@ impl Sandbox for Queue {
     }
 
     fn update(&mut self, message: Message) {
+        #[allow(unreachable_patterns)]
         match message {
             Message::OpenSettings => {
                 self.view = View::Settings;
@@ -143,8 +148,18 @@ impl Sandbox for Queue {
                 self.queue_color = update_color(position);
             }
 
+            Message::UpdateTheme(theme) => {
+                self.theme = theme;
+            }
+
             Message::SettingsUpdate(config_update) => {
                 self.config = self.config.apply_update(config_update);
+            }
+
+            Message::ConfigSave => {
+                self.config
+                    .save(home_dir().unwrap().join(Path::new(CFG_PATH)));
+                self.view = View::Queue;
             }
 
             Message::ConfigExit => {
@@ -188,7 +203,7 @@ impl Sandbox for Queue {
 
             View::Settings => Column::new()
                 .padding(20)
-                .spacing(20)
+                .spacing(17)
                 .push(
                     Text::new("Settings")
                         .size(40)
@@ -309,6 +324,22 @@ impl Sandbox for Queue {
                             .width(Length::FillPortion(1))
                             .style(self.theme),
                         ),
+                )
+                .push(
+                    Row::new()
+                        .spacing(20)
+                        .push(
+                            Text::new("Theme")
+                                .size(25)
+                                .color(self.theme.text_color())
+                                .width(Length::Fill),
+                        )
+                        .push(Radio::new(Theme::Dark, "Dark", Some(self.theme), |x| {
+                            Message::UpdateTheme(x)
+                        }))
+                        .push(Radio::new(Theme::Light, "Light", Some(self.theme), |x| {
+                            Message::UpdateTheme(x)
+                        })),
                 )
                 .push(
                     Row::new()

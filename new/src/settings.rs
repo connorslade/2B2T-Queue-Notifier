@@ -1,3 +1,4 @@
+use std::fs;
 use std::fs::OpenOptions;
 use std::io::Read;
 use std::path::Path;
@@ -5,6 +6,8 @@ use std::path::PathBuf;
 
 use directories::BaseDirs;
 use simple_config_parser::config;
+
+use super::VERSION;
 
 #[derive(Debug, Clone)]
 pub struct ToastSettings {
@@ -34,6 +37,7 @@ pub enum ConfigUpdate {
     SendOnPositionChange(bool),
 }
 
+// TODO: Base64 encode the config file values
 impl Config {
     pub fn load(path: PathBuf) -> Option<Config> {
         if !path.exists() {
@@ -77,21 +81,12 @@ impl Config {
 
     pub fn save(&self, path: PathBuf) {
         // Make folder
-        std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+        fs::create_dir_all(path.parent().unwrap()).unwrap();
 
-        // Open file
-        let mut file = OpenOptions::new()
-            .write(true)
-            .create(true)
-            .open(path)
-            .unwrap();
-
-        // write!(
-        //     file,
-        //     "; 2B2T-Queue-Notifier V{} Config\ntimeout = {}\tick_delay = {}",
-        //     VERSION, self.timeout, self.tick_delay
-        // )
-        // .unwrap();
+        fs::write(path, format!(
+            "; 2B2T-Queue-Notifier V{} Config\ntimeout = {}\ntick_delay = {}\nlog_file_path = {}\nchat_regex = {}\ntoast_send_on_login = {}\ntoast_send_on_logout = {}\ntoast_send_on_position_change = {}\n",
+            VERSION, self.timeout, self.tick_delay, self.log_file_path, self.chat_regex, self.toast_settings.send_on_login, self.toast_settings.send_on_logout, self.toast_settings.send_on_position_change
+        )).unwrap();
     }
 
     pub fn apply_update(&self, update: ConfigUpdate) -> Config {

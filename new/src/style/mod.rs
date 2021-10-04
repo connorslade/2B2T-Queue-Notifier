@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use iced::button;
 use iced::checkbox;
 use iced::container;
@@ -10,10 +12,23 @@ pub trait TextColor {
     fn text_color(&self) -> iced::Color;
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Theme {
     Light,
     Dark,
+}
+
+impl Theme {
+    pub const ALL: [Theme; 2] = [Theme::Light, Theme::Dark];
+}
+
+impl Display for Theme {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            &Theme::Dark => f.write_str("Dark"),
+            &Theme::Light => f.write_str("Light"),
+        }
+    }
 }
 
 impl Default for Theme {
