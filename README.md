@@ -7,7 +7,7 @@
 
 <br />
 <p align="center">
-  **- Cross Platform Remake In Progress -**
+  <strong>- Cross Platform Remake In Progress -</strong>
   <br>
   <a href="https://2b2t-queue.connorcode.com/">
     <img src="https://b2t-queue.web.app/assets/images/2b2t.png" alt="Logo" width="30%" />
@@ -141,20 +141,15 @@ Project Website: [https://2b2t-queue.connorcode.com](https://2b2t-queue.connorco
 
 Project Link: [https://github.com/Basicprogrammer10/2B2T-Queue-Notifier](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier)
 
-## To-Do
+## To-Do (For the Remake)
 
 - [X] Read / Parse Log File
-- [X] Update GUI with data from log file
+- [ ] Update GUI with data from log file
 - [X] Finish GUI
-- [X] Detect When Logged in
-- [X] Detect when game Closed / Not in server
+- [ ] Detect When Logged in
+- [ ] Detect when game Closed / Not in server
 - [X] Add Settings Page
-- [X] Add About Page
-- [X] Send Toasts
-- [X] Integrate With Discord Webhooks
-- [X] Finish About Page
+- [ ] Send Toasts
+- [ ] Integrate With Discord Webhooks
 - [X] Finish Settings Page
-- [X] Save Settings
-- [ ] Emails?
-- [ ] Push Notifications?
-- [ ] **M O R E**
+- [ ] Save Settings
