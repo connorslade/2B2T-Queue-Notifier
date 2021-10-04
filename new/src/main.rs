@@ -18,10 +18,11 @@ mod style;
 use settings::Config;
 use settings::ConfigUpdate;
 
-pub const VERSION: &str = "α0.0.0";
+pub const VERSION: &str = "α3.0.0";
 
 pub fn main() -> iced::Result {
     panic::set_hook(Box::new(|p| {
+        eprintln!("{}", p);
         msgbox::create(
             "2B2T-Queue-Notifier Error",
             &format!(

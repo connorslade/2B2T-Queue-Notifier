@@ -5,10 +5,10 @@ authors = ["Connor Slade <connor@connorcode.com>"]
 edition = "2018"
 
 [dependencies]
+image = { version = "0.23.14", default-features = false , features = ["ico"] }
 iced = { version = "0.3", features = ["smol"] }
 notify-rust = "4"
 msgbox = "0.6.1"
-image = "0.23.14"
 
 [build-dependencies]
 chrono = "0.4.19"
