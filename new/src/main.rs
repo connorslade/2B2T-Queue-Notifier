@@ -3,8 +3,8 @@ use std::panic;
 use std::process;
 
 use iced::{
-    button, slider, text_input, window, Align, Button, Color, Column, Container, Element, Length,
-    Row, Sandbox, Settings, Slider, Text, TextInput,
+    button, slider, text_input, window, Align, Button, Checkbox, Color, Column, Container, Element,
+    Length, Row, Sandbox, Settings, Slider, Text, TextInput,
 };
 use image;
 use image::GenericImageView;
@@ -17,6 +17,7 @@ mod settings;
 mod style;
 use settings::Config;
 use settings::ConfigUpdate;
+use style::TextColor;
 
 pub const VERSION: &str = "α3.0.0";
 
@@ -45,7 +46,7 @@ pub fn main() -> iced::Result {
     Queue::run(Settings {
         window: window::Settings {
             size: (800, 400),
-            min_size: Some((600, 300)),
+            min_size: Some((800, 400)),
             icon: Some(
                 window::Icon::from_rgba(icon.to_rgba8().into_raw(), icon.width(), icon.height())
                     .unwrap(),
@@ -166,35 +167,62 @@ impl Sandbox for Queue {
             View::Settings => Column::new()
                 .padding(20)
                 .spacing(20)
-                .push(Text::new("Settings").size(40).color(Color::WHITE))
+                .push(
+                    Text::new("Settings")
+                        .size(40)
+                        .color(self.theme.text_color()),
+                )
                 .push(
                     Row::new()
                         .spacing(20)
-                        .push(Text::new("Timeout (SEC)").size(25).color(Color::WHITE))
-                        .push(Slider::new(
-                            &mut self.timeout_slider,
-                            0.0..=100.0,
-                            self.config.timeout as f64,
-                            |x| Message::SettingsUpdate(ConfigUpdate::Timeout(x as u64)),
-                        ))
+                        .push(
+                            Text::new("Timeout (SEC)")
+                                .size(25)
+                                .color(self.theme.text_color())
+                                .width(Length::FillPortion(1)),
+                        )
+                        .push(
+                            Slider::new(
+                                &mut self.timeout_slider,
+                                0.0..=100.0,
+                                self.config.timeout as f64,
+                                |x| Message::SettingsUpdate(ConfigUpdate::Timeout(x as u64)),
+                            )
+                            .width(Length::FillPortion(4))
+                            .style(self.theme),
+                        )
                         .push(Text::new(format!("[ {:0>3} ]", self.config.timeout))),
                 )
                 .push(
                     Row::new()
                         .spacing(20)
-                        .push(Text::new("Tick Delay (SEC)").size(25).color(Color::WHITE))
-                        .push(Slider::new(
-                            &mut self.tick_delay_slider,
-                            0.0..=100.0,
-                            self.config.tick_delay as f64,
-                            |x| Message::SettingsUpdate(ConfigUpdate::TickDelay(x as u64)),
-                        ))
+                        .push(
+                            Text::new("Tick Delay (SEC)")
+                                .size(25)
+                                .color(self.theme.text_color())
+                                .width(Length::FillPortion(1)),
+                        )
+                        .push(
+                            Slider::new(
+                                &mut self.tick_delay_slider,
+                                0.0..=100.0,
+                                self.config.tick_delay as f64,
+                                |x| Message::SettingsUpdate(ConfigUpdate::TickDelay(x as u64)),
+                            )
+                            .width(Length::FillPortion(4))
+                            .style(self.theme),
+                        )
                         .push(Text::new(format!("[ {:0>3} ]", self.config.tick_delay))),
                 )
                 .push(
                     Row::new()
                         .spacing(20)
-                        .push(Text::new("Log File").size(25).color(Color::WHITE))
+                        .push(
+                            Text::new("Log File")
+                                .size(25)
+                                .color(self.theme.text_color())
+                                .width(Length::FillPortion(1)),
+                        )
                         .push(
                             TextInput::new(
                                 &mut self.log_file_path_input,
@@ -206,13 +234,19 @@ impl Sandbox for Queue {
                                     ))
                                 },
                             )
+                            .width(Length::FillPortion(4))
                             .style(self.theme),
                         ),
                 )
                 .push(
                     Row::new()
                         .spacing(20)
-                        .push(Text::new("Chat Regex").size(25).color(Color::WHITE))
+                        .push(
+                            Text::new("Chat Regex")
+                                .size(25)
+                                .color(self.theme.text_color())
+                                .width(Length::FillPortion(1)),
+                        )
                         .push(
                             TextInput::new(
                                 &mut self.chat_regex_input,
@@ -220,6 +254,37 @@ impl Sandbox for Queue {
                                 &self.config.chat_regex,
                                 |x| Message::SettingsUpdate(ConfigUpdate::ChatRegex(x.to_string())),
                             )
+                            .width(Length::FillPortion(4))
+                            .style(self.theme),
+                        ),
+                )
+                .push(
+                    Row::new()
+                        .spacing(10)
+                        .push(Text::new("Toasts").size(25).width(Length::FillPortion(2)))
+                        .push(
+                            Checkbox::new(self.config.toast_settings.send_on_login, "Login", |x| {
+                                Message::SettingsUpdate(ConfigUpdate::SendOnLogin(x))
+                            })
+                            .width(Length::FillPortion(1))
+                            .style(self.theme),
+                        )
+                        .push(
+                            Checkbox::new(
+                                self.config.toast_settings.send_on_logout,
+                                "Logout",
+                                |x| Message::SettingsUpdate(ConfigUpdate::SendOnLogout(x)),
+                            )
+                            .width(Length::FillPortion(1))
+                            .style(self.theme),
+                        )
+                        .push(
+                            Checkbox::new(
+                                self.config.toast_settings.send_on_position_change,
+                                "Position Change",
+                                |x| Message::SettingsUpdate(ConfigUpdate::SendOnPositionChange(x)),
+                            )
+                            .width(Length::FillPortion(1))
                             .style(self.theme),
                         ),
                 )
@@ -271,9 +336,3 @@ fn update_color(pos: u32) -> Color {
 
     Color::from_rgb8(163, 190, 140)
 }
-
-// Checkbox::new(
-//     self.config.toast_settings.send_on_login,
-//     "Test",
-//     |x| Message::SettingsUpdate(ConfigUpdate::send_on_login(x)),
-// )

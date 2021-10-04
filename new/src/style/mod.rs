@@ -1,11 +1,18 @@
 use iced::button;
+use iced::checkbox;
 use iced::container;
+use iced::slider;
 use iced::text_input;
 
 mod dark;
 
+pub trait TextColor {
+    fn text_color(&self) -> iced::Color;
+}
+
 #[derive(Debug, Clone, Copy)]
 pub enum Theme {
+    Light,
     Dark,
 }
 
@@ -15,10 +22,20 @@ impl Default for Theme {
     }
 }
 
+impl TextColor for Theme {
+    fn text_color(&self) -> iced::Color {
+        match self {
+            Theme::Light => iced::Color::from_rgb8(0, 0, 0),
+            Theme::Dark => iced::Color::from_rgb8(255, 255, 255),
+        }
+    }
+}
+
 impl From<Theme> for Box<dyn container::StyleSheet> {
     fn from(theme: Theme) -> Self {
         match theme {
             Theme::Dark => dark::Container.into(),
+            Theme::Light => Default::default(),
         }
     }
 }
@@ -27,6 +44,7 @@ impl From<Theme> for Box<dyn text_input::StyleSheet> {
     fn from(theme: Theme) -> Self {
         match theme {
             Theme::Dark => dark::TextInput.into(),
+            Theme::Light => Default::default(),
         }
     }
 }
@@ -35,6 +53,25 @@ impl From<Theme> for Box<dyn button::StyleSheet> {
     fn from(theme: Theme) -> Self {
         match theme {
             Theme::Dark => dark::Button.into(),
+            Theme::Light => Default::default(),
+        }
+    }
+}
+
+impl From<Theme> for Box<dyn slider::StyleSheet> {
+    fn from(theme: Theme) -> Self {
+        match theme {
+            Theme::Dark => dark::Slider.into(),
+            Theme::Light => Default::default(),
+        }
+    }
+}
+
+impl From<Theme> for Box<dyn checkbox::StyleSheet> {
+    fn from(theme: Theme) -> Self {
+        match theme {
+            Theme::Dark => dark::Checkbox.into(),
+            Theme::Light => Default::default(),
         }
     }
 }
