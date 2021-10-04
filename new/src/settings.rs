@@ -94,7 +94,7 @@ impl Config {
         //     "; 2B2T-Queue-Notifier V{} Config\ntimeout = {}\tick_delay = {}",
         //     VERSION, self.timeout, self.tick_delay
         // )
-        .unwrap();
+        // .unwrap();
     }
 
     pub fn apply_update(&self, update: ConfigUpdate) -> Config {
