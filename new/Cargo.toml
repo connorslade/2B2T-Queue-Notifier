@@ -1,7 +1,7 @@
 [package]
 authors = ["Connor Slade <connor@connorcode.com>"]
 edition = "2018"
-name = "queue_notifier"
+name = "_2b2t_queue_notifier"
 version = "3.0.0"
 
 [dependencies]

@@ -105,15 +105,15 @@ impl Sandbox for Queue {
             .unwrap()
             .join(Path::new(".2B2T-Queue-Notifier\\config.cfg"));
 
-        let config = match Config::load(config_path){
+        let config = match Config::load(config_path) {
             Some(config) => {
                 println!("[*] Successfully Read Config");
                 config
-            },
+            }
             None => {
                 println!("[*] Config File Not Found. Using Defaults");
                 Config::default()
-            },
+            }
         };
 
         Self {

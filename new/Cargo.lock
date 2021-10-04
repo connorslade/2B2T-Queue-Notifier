@@ -3,6 +3,21 @@
 version = 3
 
 [[package]]
+name = "_2b2t_queue_notifier"
+version = "3.0.0"
+dependencies = [
+ "chrono",
+ "directories",
+ "home",
+ "iced",
+ "image",
+ "msgbox",
+ "notify-rust",
+ "simple_config_parser",
+ "winres",
+]
+
+[[package]]
 name = "ab_glyph"
 version = "0.2.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2615,21 +2630,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b9f5105d4fdaab20335ca9565e106a5d9b82b6219b5ba735731124ac6711d23d"
 dependencies = [
  "unicode-xid 0.2.2",
-]
-
-[[package]]
-name = "queue_notifier"
-version = "3.0.0"
-dependencies = [
- "chrono",
- "directories",
- "home",
- "iced",
- "image",
- "msgbox",
- "notify-rust",
- "simple_config_parser",
- "winres",
 ]
 
 [[package]]

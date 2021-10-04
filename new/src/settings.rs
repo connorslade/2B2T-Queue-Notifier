@@ -1,13 +1,10 @@
 use std::fs::OpenOptions;
 use std::io::Read;
-use std::io::Write;
 use std::path::Path;
 use std::path::PathBuf;
 
 use directories::BaseDirs;
 use simple_config_parser::config;
-
-use super::VERSION;
 
 #[derive(Debug, Clone)]
 pub struct ToastSettings {
@@ -142,7 +139,7 @@ impl Config {
 
 impl Default for Config {
     fn default() -> Self {
-        // Get Minecraft Path
+        // Get Default Minecraft Log File Path
         #[cfg(target_os = "windows")]
         let log_path = BaseDirs::new()
             .unwrap()
@@ -159,7 +156,7 @@ impl Default for Config {
         let log_path = BaseDirs::new()
             .unwrap()
             .data_dir()
-            .join(Path::new("/.minecraft/logs/latest.log"));
+            .join(Path::new(".minecraft/logs/latest.log"));
 
         Config {
             timeout: 30,
