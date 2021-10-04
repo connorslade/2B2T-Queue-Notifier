@@ -1,14 +1,17 @@
 [package]
-name = "new"
-version = "0.1.0"
 authors = ["Connor Slade <connor@connorcode.com>"]
 edition = "2018"
+name = "queue_notifier"
+version = "3.0.0"
 
 [dependencies]
-image = { version = "0.23.14", default-features = false , features = ["ico"] }
-iced = { version = "0.3", features = ["smol"] }
-notify-rust = "4"
+directories = "4.0.1"
+home = "0.5.3"
+iced = {version = "0.3", features = ["smol"]}
+image = {version = "0.23.14", default-features = false, features = ["ico"]}
 msgbox = "0.6.1"
+notify-rust = "4"
+simple_config_parser = "0.1.6"
 
 [build-dependencies]
 chrono = "0.4.19"

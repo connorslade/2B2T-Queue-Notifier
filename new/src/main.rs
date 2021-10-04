@@ -1,7 +1,9 @@
 use std::env::consts;
 use std::panic;
+use std::path::Path;
 use std::process;
 
+use home::home_dir;
 use iced::{
     button, slider, text_input, window, Align, Button, Checkbox, Color, Column, Container, Element,
     Length, Row, Sandbox, Settings, Slider, Text, TextInput,
@@ -99,9 +101,25 @@ impl Sandbox for Queue {
     type Message = Message;
 
     fn new() -> Self {
+        let config_path = home_dir()
+            .unwrap()
+            .join(Path::new(".2B2T-Queue-Notifier\\config.cfg"));
+
+        let config = match Config::load(config_path){
+            Some(config) => {
+                println!("[*] Successfully Read Config");
+                config
+            },
+            None => {
+                println!("[*] Config File Not Found. Using Defaults");
+                Config::default()
+            },
+        };
+
         Self {
             position: None,
             queue_color: Color::from_rgb8(191, 97, 106),
+            config,
             ..Default::default()
         }
     }
@@ -131,6 +149,10 @@ impl Sandbox for Queue {
 
             Message::ConfigExit => {
                 self.view = View::Queue;
+            }
+
+            Message::ConfigReset => {
+                self.config = Config::default();
             }
 
             _ => {
