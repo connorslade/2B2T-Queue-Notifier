@@ -8,9 +8,7 @@ use iced::{
     button, slider, text_input, window, Align, Button, Checkbox, Color, Column, Container, Element,
     Length, Radio, Row, Sandbox, Settings, Slider, Text, TextInput,
 };
-use image;
 use image::GenericImageView;
-use msgbox;
 
 #[macro_use]
 mod common;
@@ -149,6 +147,16 @@ impl Sandbox for Queue {
 
             Message::UpdateTheme(theme) => {
                 self.config.theme = theme;
+
+                // :P
+                if theme == Theme::Light {
+                    msgbox::create(
+                        "you have a problem",
+                        "light mode... really?",
+                        msgbox::IconType::Info,
+                    )
+                    .unwrap();
+                }
             }
 
             Message::SettingsUpdate(config_update) => {
@@ -264,11 +272,7 @@ impl Sandbox for Queue {
                                 &mut self.log_file_path_input,
                                 "",
                                 &self.config.log_file_path,
-                                |x| {
-                                    Message::SettingsUpdate(ConfigUpdate::LogFilePath(
-                                        x.to_string(),
-                                    ))
-                                },
+                                |x| Message::SettingsUpdate(ConfigUpdate::LogFilePath(x)),
                             )
                             .width(Length::FillPortion(4))
                             .style(self.config.theme),
@@ -288,7 +292,7 @@ impl Sandbox for Queue {
                                 &mut self.chat_regex_input,
                                 "",
                                 &self.config.chat_regex,
-                                |x| Message::SettingsUpdate(ConfigUpdate::ChatRegex(x.to_string())),
+                                |x| Message::SettingsUpdate(ConfigUpdate::ChatRegex(x)),
                             )
                             .width(Length::FillPortion(4))
                             .style(self.config.theme),

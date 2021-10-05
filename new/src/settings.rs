@@ -7,9 +7,8 @@ use std::path::PathBuf;
 use directories::BaseDirs;
 use simple_config_parser::config;
 
-use crate::style::Theme;
-
 use super::style;
+use super::style::Theme;
 use super::VERSION;
 
 #[derive(Debug, Clone)]

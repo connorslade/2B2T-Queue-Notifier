@@ -100,7 +100,7 @@ impl checkbox::StyleSheet for Checkbox {
     fn active(&self, _is_checked: bool) -> checkbox::Style {
         checkbox::Style {
             background: Background::Color(Color::from_rgb8(41, 46, 57)),
-            checkmark_color: Color::WHITE.into(),
+            checkmark_color: Color::WHITE,
             border_radius: 5.0,
             border_width: 1.0,
             border_color: Color::from_rgb8(33, 37, 46),

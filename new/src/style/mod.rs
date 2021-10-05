@@ -25,16 +25,16 @@ impl Theme {
         match str.to_lowercase().as_str() {
             "light" => Some(Theme::Light),
             "dark" => Some(Theme::Dark),
-            _ => None
+            _ => None,
         }
     }
 }
 
 impl Display for Theme {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            &Theme::Dark => f.write_str("Dark"),
-            &Theme::Light => f.write_str("Light"),
+        match *self {
+            Theme::Dark => f.write_str("Dark"),
+            Theme::Light => f.write_str("Light"),
         }
     }
 }
