@@ -20,6 +20,14 @@ pub enum Theme {
 
 impl Theme {
     pub const ALL: [Theme; 2] = [Theme::Light, Theme::Dark];
+
+    pub fn from_string(str: String) -> Option<Theme> {
+        match str.to_lowercase().as_str() {
+            "light" => Some(Theme::Light),
+            "dark" => Some(Theme::Dark),
+            _ => None
+        }
+    }
 }
 
 impl Display for Theme {

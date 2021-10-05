@@ -7,6 +7,9 @@ use std::path::PathBuf;
 use directories::BaseDirs;
 use simple_config_parser::config;
 
+use crate::style::Theme;
+
+use super::style;
 use super::VERSION;
 
 #[derive(Debug, Clone)]
@@ -23,6 +26,7 @@ pub struct Config {
     pub log_file_path: String,
     pub chat_regex: String,
     pub toast_settings: ToastSettings,
+    pub theme: style::Theme,
 }
 
 #[derive(Debug, Clone)]
@@ -37,7 +41,6 @@ pub enum ConfigUpdate {
     SendOnPositionChange(bool),
 }
 
-// TODO: Base64 encode the config file values
 impl Config {
     pub fn load(path: PathBuf) -> Option<Config> {
         if !path.exists() {
@@ -76,6 +79,7 @@ impl Config {
                 send_on_logout: cfg.get_bool("toast_send_on_logout")?,
                 send_on_position_change: cfg.get_bool("toast_send_on_position_change")?,
             },
+            theme: Theme::from_string(cfg.get("theme")?)?,
         })
     }
 
@@ -84,8 +88,8 @@ impl Config {
         fs::create_dir_all(path.parent().unwrap()).unwrap();
 
         fs::write(path, format!(
-            "; 2B2T-Queue-Notifier V{} Config\ntimeout = {}\ntick_delay = {}\nlog_file_path = {}\nchat_regex = {}\ntoast_send_on_login = {}\ntoast_send_on_logout = {}\ntoast_send_on_position_change = {}\n",
-            VERSION, self.timeout, self.tick_delay, self.log_file_path, self.chat_regex, self.toast_settings.send_on_login, self.toast_settings.send_on_logout, self.toast_settings.send_on_position_change
+            "; 2B2T-Queue-Notifier V{} Config\ntheme = {}\ntimeout = {}\ntick_delay = {}\nlog_file_path = {}\nchat_regex = {}\ntoast_send_on_login = {}\ntoast_send_on_logout = {}\ntoast_send_on_position_change = {}\n",
+            VERSION, self.theme, self.timeout, self.tick_delay, self.log_file_path, self.chat_regex, self.toast_settings.send_on_login, self.toast_settings.send_on_logout, self.toast_settings.send_on_position_change
         )).unwrap();
     }
 
@@ -163,6 +167,7 @@ impl Default for Config {
                 send_on_logout: true,
                 send_on_position_change: true,
             },
+            theme: style::Theme::Dark,
         }
     }
 }

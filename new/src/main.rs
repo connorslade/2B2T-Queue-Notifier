@@ -65,7 +65,6 @@ pub fn main() -> iced::Result {
 #[derive(Default)]
 struct Queue {
     position: Option<u32>,
-    theme: style::Theme,
     queue_color: Color,
     config: Config,
     view: View,
@@ -149,7 +148,7 @@ impl Sandbox for Queue {
             }
 
             Message::UpdateTheme(theme) => {
-                self.theme = theme;
+                self.config.theme = theme;
             }
 
             Message::SettingsUpdate(config_update) => {
@@ -192,12 +191,12 @@ impl Sandbox for Queue {
                 )
                 .push(
                     Button::new(&mut self.settings_button, Text::new("Settings").size(25))
-                        .style(self.theme)
+                        .style(self.config.theme)
                         .on_press(Message::OpenSettings),
                 )
                 .push(
                     Button::new(&mut self.debug_button, Text::new("Debug").size(25))
-                        .style(self.theme)
+                        .style(self.config.theme)
                         .on_press(Message::SetPosition(self.position.unwrap_or(0) + 25)),
                 ),
 
@@ -207,7 +206,7 @@ impl Sandbox for Queue {
                 .push(
                     Text::new("Settings")
                         .size(40)
-                        .color(self.theme.text_color()),
+                        .color(self.config.theme.text_color()),
                 )
                 .push(
                     Row::new()
@@ -215,7 +214,7 @@ impl Sandbox for Queue {
                         .push(
                             Text::new("Timeout (SEC)")
                                 .size(25)
-                                .color(self.theme.text_color())
+                                .color(self.config.theme.text_color())
                                 .width(Length::FillPortion(1)),
                         )
                         .push(
@@ -226,7 +225,7 @@ impl Sandbox for Queue {
                                 |x| Message::SettingsUpdate(ConfigUpdate::Timeout(x as u64)),
                             )
                             .width(Length::FillPortion(4))
-                            .style(self.theme),
+                            .style(self.config.theme),
                         )
                         .push(Text::new(format!("[ {:0>3} ]", self.config.timeout))),
                 )
@@ -236,7 +235,7 @@ impl Sandbox for Queue {
                         .push(
                             Text::new("Tick Delay (SEC)")
                                 .size(25)
-                                .color(self.theme.text_color())
+                                .color(self.config.theme.text_color())
                                 .width(Length::FillPortion(1)),
                         )
                         .push(
@@ -247,7 +246,7 @@ impl Sandbox for Queue {
                                 |x| Message::SettingsUpdate(ConfigUpdate::TickDelay(x as u64)),
                             )
                             .width(Length::FillPortion(4))
-                            .style(self.theme),
+                            .style(self.config.theme),
                         )
                         .push(Text::new(format!("[ {:0>3} ]", self.config.tick_delay))),
                 )
@@ -257,7 +256,7 @@ impl Sandbox for Queue {
                         .push(
                             Text::new("Log File")
                                 .size(25)
-                                .color(self.theme.text_color())
+                                .color(self.config.theme.text_color())
                                 .width(Length::FillPortion(1)),
                         )
                         .push(
@@ -272,7 +271,7 @@ impl Sandbox for Queue {
                                 },
                             )
                             .width(Length::FillPortion(4))
-                            .style(self.theme),
+                            .style(self.config.theme),
                         ),
                 )
                 .push(
@@ -281,7 +280,7 @@ impl Sandbox for Queue {
                         .push(
                             Text::new("Chat Regex")
                                 .size(25)
-                                .color(self.theme.text_color())
+                                .color(self.config.theme.text_color())
                                 .width(Length::FillPortion(1)),
                         )
                         .push(
@@ -292,7 +291,7 @@ impl Sandbox for Queue {
                                 |x| Message::SettingsUpdate(ConfigUpdate::ChatRegex(x.to_string())),
                             )
                             .width(Length::FillPortion(4))
-                            .style(self.theme),
+                            .style(self.config.theme),
                         ),
                 )
                 .push(
@@ -304,7 +303,7 @@ impl Sandbox for Queue {
                                 Message::SettingsUpdate(ConfigUpdate::SendOnLogin(x))
                             })
                             .width(Length::FillPortion(1))
-                            .style(self.theme),
+                            .style(self.config.theme),
                         )
                         .push(
                             Checkbox::new(
@@ -313,7 +312,7 @@ impl Sandbox for Queue {
                                 |x| Message::SettingsUpdate(ConfigUpdate::SendOnLogout(x)),
                             )
                             .width(Length::FillPortion(1))
-                            .style(self.theme),
+                            .style(self.config.theme),
                         )
                         .push(
                             Checkbox::new(
@@ -322,7 +321,7 @@ impl Sandbox for Queue {
                                 |x| Message::SettingsUpdate(ConfigUpdate::SendOnPositionChange(x)),
                             )
                             .width(Length::FillPortion(1))
-                            .style(self.theme),
+                            .style(self.config.theme),
                         ),
                 )
                 .push(
@@ -331,15 +330,21 @@ impl Sandbox for Queue {
                         .push(
                             Text::new("Theme")
                                 .size(25)
-                                .color(self.theme.text_color())
+                                .color(self.config.theme.text_color())
                                 .width(Length::Fill),
                         )
-                        .push(Radio::new(Theme::Dark, "Dark", Some(self.theme), |x| {
-                            Message::UpdateTheme(x)
-                        }))
-                        .push(Radio::new(Theme::Light, "Light", Some(self.theme), |x| {
-                            Message::UpdateTheme(x)
-                        })),
+                        .push(Radio::new(
+                            Theme::Dark,
+                            "Dark",
+                            Some(self.config.theme),
+                            |x| Message::UpdateTheme(x),
+                        ))
+                        .push(Radio::new(
+                            Theme::Light,
+                            "Light",
+                            Some(self.config.theme),
+                            |x| Message::UpdateTheme(x),
+                        )),
                 )
                 .push(
                     Row::new()
@@ -347,17 +352,17 @@ impl Sandbox for Queue {
                         .push(
                             Button::new(&mut self.save_button, Text::new("Save").size(25))
                                 .on_press(Message::ConfigSave)
-                                .style(self.theme),
+                                .style(self.config.theme),
                         )
                         .push(
                             Button::new(&mut self.reset_button, Text::new("Reset").size(25))
                                 .on_press(Message::ConfigReset)
-                                .style(self.theme),
+                                .style(self.config.theme),
                         )
                         .push(
                             Button::new(&mut self.exit_button, Text::new("Cancel").size(25))
                                 .on_press(Message::ConfigExit)
-                                .style(self.theme),
+                                .style(self.config.theme),
                         ),
                 ),
         };
@@ -367,7 +372,7 @@ impl Sandbox for Queue {
             .height(Length::Fill)
             .center_x()
             .center_y()
-            .style(self.theme)
+            .style(self.config.theme)
             .into()
     }
 }
