@@ -152,4 +152,5 @@ Project Link: [https://github.com/Basicprogrammer10/2B2T-Queue-Notifier](https:/
 - [ ] Send Toasts
 - [ ] Integrate With Discord Webhooks
 - [X] Finish Settings Page
-- [ ] Save Settings
+- [X] Save Settings
+- [X] Pick Themes
