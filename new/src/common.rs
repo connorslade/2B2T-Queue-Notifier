@@ -11,4 +11,3 @@ pub fn update_color(pos: u32) -> Color {
 
     Color::from_rgb8(163, 190, 140)
 }
-

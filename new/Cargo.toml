@@ -12,11 +12,11 @@ iced_futures = "0.3.0"
 iced_native = "0.4.0"
 
 # Other...
+chrono = "0.4.19"
 directories = "4.0.1"
 home = "0.5.3"
 image = {version = "0.23.14", default-features = false, features = ["ico"]}
 msgbox = "0.6.1"
-notify-rust = "4"
 regex = "1.5.4"
 simple_config_parser = "0.1.6"
 

@@ -1,4 +1,3 @@
-use std::fs;
 use std::panic;
 use std::path::Path;
 
@@ -7,10 +6,10 @@ use iced::{
     button, executor, slider, text_input, time, Align, Application, Button, Checkbox, Clipboard,
     Color, Column, Command, Container, Element, Length, Radio, Row, Slider, Text, TextInput,
 };
-use regex::Regex;
 
 use super::assets;
 use super::common;
+use super::queue;
 use super::settings::Config;
 use super::settings::ConfigUpdate;
 use super::style::TextColor;
@@ -132,29 +131,15 @@ impl Application for Queue {
             }
 
             Message::Tick => {
-                let file = fs::read_to_string(self.config.log_file_path.clone()).unwrap();
-                let chat_regex =
-                    Regex::new("\\[..:..:..\\] \\[Client thread/INFO\\]: \\[CHAT\\]").unwrap();
-                let queue_regex = Regex::new(&self.config.chat_regex).unwrap();
-                let mut new_pos = None;
-                for line in file.lines() {
-                    if !chat_regex.is_match(line) {
-                        continue;
-                    }
+                let new_pos = queue::check(
+                    self.config.log_file_path.clone(),
+                    self.config.chat_regex.clone(),
+                );
 
-                    if queue_regex.is_match(line) {
-                        new_pos = queue_regex
-                            .split(line)
-                            .nth(1)
-                            .unwrap_or_default()
-                            .trim()
-                            .parse()
-                            .ok();
-                    }
+                if self.position != new_pos {
+                    self.position = new_pos;
+                    self.queue_color = common::update_color(self.position.unwrap());
                 }
-
-                self.position = new_pos;
-                self.queue_color = common::update_color(new_pos.unwrap_or(500));
             }
 
             _ => {

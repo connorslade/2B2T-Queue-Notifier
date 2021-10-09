@@ -9,6 +9,7 @@ use image::GenericImageView;
 mod common;
 mod application;
 mod assets;
+mod queue;
 mod settings;
 mod style;
 use application::Queue;
