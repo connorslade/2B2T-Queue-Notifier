@@ -5,13 +5,20 @@ name = "_2b2t_queue_notifier"
 version = "3.0.0"
 
 [dependencies]
+
+# UI with iced
+iced = {version = "0.3", features = ["smol"]}
+iced_native = "0.4.0"
+iced_futures = "0.3.0"
+
+# Other...
 directories = "4.0.1"
 home = "0.5.3"
-iced = {version = "0.3", features = ["smol"]}
 image = {version = "0.23.14", default-features = false, features = ["ico"]}
 msgbox = "0.6.1"
 notify-rust = "4"
 simple_config_parser = "0.1.6"
+regex = "1.5.4"
 
 [build-dependencies]
 chrono = "0.4.19"

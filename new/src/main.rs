@@ -1,14 +1,17 @@
 use std::env::consts;
+use std::fs;
 use std::panic;
 use std::path::Path;
 use std::process;
 
 use home::home_dir;
 use iced::{
-    button, slider, text_input, window, Align, Button, Checkbox, Color, Column, Container, Element,
-    Length, Radio, Row, Sandbox, Settings, Slider, Text, TextInput,
+    button, executor, slider, text_input, window, Align, Application, Button, Checkbox, Clipboard,
+    Color, Column, Command, Container, Element, Length, Radio, Row, Settings, Slider, Text,
+    TextInput,
 };
 use image::GenericImageView;
+use regex::Regex;
 
 #[macro_use]
 mod common;
@@ -24,6 +27,8 @@ pub const VERSION: &str = "α3.0.0";
 pub const CFG_PATH: &str = ".2B2T-Queue-Notifier/config.cfg";
 
 pub fn main() -> iced::Result {
+    println!("[*] 2B2T Queue Notifier {}", VERSION);
+
     panic::set_hook(Box::new(|p| {
         eprintln!("{}", p);
         msgbox::create(
@@ -69,6 +74,7 @@ struct Queue {
 
     settings_button: button::State,
     debug_button: button::State,
+    test_button: button::State,
 
     // Config Stuff
     save_button: button::State,
@@ -90,6 +96,8 @@ enum Message {
     ConfigReset,
     ConfigSave,
     ConfigExit,
+
+    Test,
 }
 
 enum View {
@@ -97,10 +105,12 @@ enum View {
     Settings,
 }
 
-impl Sandbox for Queue {
+impl Application for Queue {
+    type Executor = executor::Default;
     type Message = Message;
+    type Flags = ();
 
-    fn new() -> Self {
+    fn new(_flags: ()) -> (Queue, Command<Message>) {
         let config_path = home_dir().unwrap().join(Path::new(CFG_PATH));
 
         let config = match Config::load(config_path.clone()) {
@@ -117,19 +127,22 @@ impl Sandbox for Queue {
             }
         };
 
-        Self {
-            position: None,
-            queue_color: Color::from_rgb8(191, 97, 106),
-            config,
-            ..Default::default()
-        }
+        (
+            Self {
+                position: None,
+                queue_color: Color::from_rgb8(191, 97, 106),
+                config,
+                ..Default::default()
+            },
+            Command::none(),
+        )
     }
 
     fn title(&self) -> String {
         format!("2B2T-Queue-Notifier {}", VERSION)
     }
 
-    fn update(&mut self, message: Message) {
+    fn update(&mut self, message: Message, _clipboard: &mut Clipboard) -> Command<Message> {
         #[allow(unreachable_patterns)]
         match message {
             Message::OpenSettings => {
@@ -138,7 +151,7 @@ impl Sandbox for Queue {
 
             Message::SetPosition(position) => {
                 if self.position == Some(position) {
-                    return;
+                    return Command::none();
                 }
 
                 self.position = Some(position);
@@ -177,10 +190,37 @@ impl Sandbox for Queue {
                 self.config = Config::default();
             }
 
+            Message::Test => {
+                let file = fs::read_to_string(self.config.log_file_path.clone()).unwrap();
+                let chat_regex =
+                    Regex::new("\\[..:..:..\\] \\[Client thread/INFO\\]: \\[CHAT\\]").unwrap();
+                let queue_regex = Regex::new(&self.config.chat_regex).unwrap();
+                let mut new_pos = None;
+                for line in file.lines() {
+                    if !chat_regex.is_match(line) {
+                        continue;
+                    }
+
+                    if queue_regex.is_match(line) {
+                        new_pos = queue_regex
+                            .split(line)
+                            .nth(1)
+                            .unwrap_or_default()
+                            .trim()
+                            .parse()
+                            .ok();
+                    }
+                }
+
+                self.position = new_pos;
+                self.queue_color = update_color(new_pos.unwrap_or(500));
+            }
+
             _ => {
                 panic!("Unhandled Event: {:?}", message);
             }
-        }
+        };
+        Command::none()
     }
 
     fn view(&mut self) -> Element<Message> {
@@ -206,6 +246,11 @@ impl Sandbox for Queue {
                     Button::new(&mut self.debug_button, Text::new("Debug").size(25))
                         .style(self.config.theme)
                         .on_press(Message::SetPosition(self.position.unwrap_or(0) + 25)),
+                )
+                .push(
+                    Button::new(&mut self.test_button, Text::new("Test").size(25))
+                        .on_press(Message::Test)
+                        .style(self.config.theme),
                 ),
 
             View::Settings => Column::new()
