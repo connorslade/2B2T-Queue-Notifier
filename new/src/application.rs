@@ -138,7 +138,7 @@ impl Application for Queue {
 
                 if self.position != new_pos {
                     self.position = new_pos;
-                    self.queue_color = common::update_color(self.position.unwrap());
+                    self.queue_color = common::update_color(self.position.unwrap_or(500));
                 }
             }
 
