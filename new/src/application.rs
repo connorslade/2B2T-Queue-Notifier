@@ -8,8 +8,6 @@ use iced::{
 };
 
 use regex::Regex;
-#[cfg(windows)]
-use winrt_notification::{Duration, Sound, Toast};
 
 use super::assets;
 use super::common;
@@ -138,19 +136,6 @@ impl Application for Queue {
                 self.config = Config::default();
             }
 
-            Message::Test => {
-                #[cfg(windows)]
-                Toast::new(Toast::POWERSHELL_APP_ID)
-                    .title("⌛ Queue: 10")
-                    .sound(Some(Sound::Default))
-                    .duration(Duration::Short)
-                    .show()
-                    .expect("couldn't toast toast");
-
-                #[cfg(not(windows))]
-                Notification::new().summary("⌛ Queue: 10").show().unwrap();
-            }
-
             Message::Tick => {
                 let new_pos =
                     queue::check(&self.config.log_file_path, self.config.chat_regex.clone());
@@ -158,6 +143,12 @@ impl Application for Queue {
                 if self.position != new_pos {
                     self.position = new_pos;
                     self.queue_color = common::update_color(self.position.unwrap_or(500));
+
+                    if let Some(i) = self.position {
+                        if self.config.toast_settings.send_on_position_change {
+                            common::send_basic_toast(&format!("⏰ Queue: {}", i));
+                        }
+                    }
                 }
             }
 
