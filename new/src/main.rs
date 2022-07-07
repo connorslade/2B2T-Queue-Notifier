@@ -27,7 +27,7 @@ pub fn main() -> iced::Result {
             "2B2T-Queue-Notifier Error",
             &format!(
                 "{}\n{}\nCompile Time: {}\nPlatform: {} {}\nVersion: {}",
-                p.to_string(),
+                p,
                 env!("GIT_INFO"),
                 env!("COMPILE_TIME"),
                 consts::OS,

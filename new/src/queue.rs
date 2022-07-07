@@ -3,34 +3,41 @@ use std::fs;
 
 use chrono::Local;
 use chrono::NaiveTime;
+use lazy_static::lazy_static;
 
-pub fn check(path: String, queue_regex: String) -> Option<u32> {
-    let file = fs::read_to_string(path).unwrap();
-    let chat_regex = Regex::new("\\[..:..:..\\] \\[Client thread/INFO\\]: \\[CHAT\\]").unwrap();
-    let queue_regex = Regex::new(&queue_regex).unwrap();
-    let mut new_pos = None;
-    for line in file.lines() {
-        if !chat_regex.is_match(line) {
-            continue;
-        }
+lazy_static! {
+    static ref CHAT_REGEX: Regex =
+        Regex::new("\\[..:..:..\\] \\[Client thread/INFO\\]: \\[CHAT\\]").unwrap();
+}
 
-        if queue_regex.is_match(line) {
-            let valid = check_time_validity(line);
-            if !valid {
-                continue;
-            }
-
-            new_pos = queue_regex
-                .split(line)
-                .nth(1)
-                .unwrap_or_default()
-                .trim()
-                .parse()
-                .ok();
+pub fn check(path: &str, queue_regex: Regex) -> Option<u32> {
+    let file = fs::read_to_string(&path).unwrap();
+    let file_meta = fs::metadata(&path).unwrap();
+    if let Ok(i) = file_meta.modified() {
+        if i.elapsed().unwrap().as_secs() > 60 * 60 * 24 {
+            return None;
         }
     }
 
-    new_pos
+    for line in file.lines().rev() {
+        if !CHAT_REGEX.is_match(line) {
+            continue;
+        }
+
+        if let Some(i) = queue_regex.captures(line) {
+            if !check_time_validity(line) {
+                return None;
+            }
+
+            let num = i.get(1).unwrap().as_str();
+            let num = num
+                .parse()
+                .unwrap_or_else(|_| panic!("Invalid number for queue posision: `{}`", num));
+            return Some(num);
+        }
+    }
+
+    None
 }
 
 fn check_time_validity(line: &str) -> bool {
@@ -38,5 +45,5 @@ fn check_time_validity(line: &str) -> bool {
     let now = Local::now();
     let time = NaiveTime::parse_from_str(time, "%H:%M:%S").unwrap();
     let diff = now.time().signed_duration_since(time);
-    diff.num_seconds() <= 10
+    diff.num_seconds() >= 0 && diff.num_seconds() <= 10
 }

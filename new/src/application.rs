@@ -7,6 +7,10 @@ use iced::{
     Color, Column, Command, Container, Element, Length, Radio, Row, Slider, Text, TextInput,
 };
 
+use regex::Regex;
+#[cfg(windows)]
+use winrt_notification::{Duration, Sound, Toast};
+
 use super::assets;
 use super::common;
 use super::queue;
@@ -26,6 +30,7 @@ pub struct Queue {
 
     // Ui elements
     settings_button: button::State,
+    test_button: button::State,
 
     // Config Stuff
     save_button: button::State,
@@ -47,6 +52,9 @@ pub enum Message {
     ConfigSave,
     ConfigExit,
     Tick,
+
+    Test,
+    None,
 }
 
 enum View {
@@ -130,17 +138,30 @@ impl Application for Queue {
                 self.config = Config::default();
             }
 
+            Message::Test => {
+                #[cfg(windows)]
+                Toast::new(Toast::POWERSHELL_APP_ID)
+                    .title("⌛ Queue: 10")
+                    .sound(Some(Sound::Default))
+                    .duration(Duration::Short)
+                    .show()
+                    .expect("couldn't toast toast");
+
+                #[cfg(not(windows))]
+                Notification::new().summary("⌛ Queue: 10").show().unwrap();
+            }
+
             Message::Tick => {
-                let new_pos = queue::check(
-                    self.config.log_file_path.clone(),
-                    self.config.chat_regex.clone(),
-                );
+                let new_pos =
+                    queue::check(&self.config.log_file_path, self.config.chat_regex.clone());
 
                 if self.position != new_pos {
                     self.position = new_pos;
                     self.queue_color = common::update_color(self.position.unwrap_or(500));
                 }
             }
+
+            Message::None => {}
 
             _ => {
                 panic!("Unhandled Event: {:?}", message);
@@ -171,6 +192,11 @@ impl Application for Queue {
                     Button::new(&mut self.settings_button, Text::new("Settings").size(25))
                         .style(self.config.theme)
                         .on_press(Message::OpenSettings),
+                )
+                .push(
+                    Button::new(&mut self.test_button, Text::new("Test").size(25))
+                        .style(self.config.theme)
+                        .on_press(Message::Test),
                 ),
             View::Settings => Column::new()
                 .padding(20)
@@ -255,8 +281,19 @@ impl Application for Queue {
                             TextInput::new(
                                 &mut self.chat_regex_input,
                                 "",
-                                &self.config.chat_regex,
-                                |x| Message::SettingsUpdate(ConfigUpdate::ChatRegex(x)),
+                                self.config.chat_regex.as_str(),
+                                |x| match Regex::new(&x) {
+                                    Ok(i) => Message::SettingsUpdate(ConfigUpdate::ChatRegex(i)),
+                                    Err(_) => {
+                                        msgbox::create(
+                                            "you have a problem",
+                                            "light mode... really?",
+                                            msgbox::IconType::Info,
+                                        )
+                                        .unwrap();
+                                        Message::None
+                                    }
+                                },
                             )
                             .width(Length::FillPortion(4))
                             .style(self.config.theme),
@@ -305,13 +342,13 @@ impl Application for Queue {
                             Theme::Dark,
                             "Dark",
                             Some(self.config.theme),
-                            |x| Message::UpdateTheme(x),
+                            Message::UpdateTheme,
                         ))
                         .push(Radio::new(
                             Theme::Light,
                             "Light",
                             Some(self.config.theme),
-                            |x| Message::UpdateTheme(x),
+                            Message::UpdateTheme,
                         )),
                 )
                 .push(

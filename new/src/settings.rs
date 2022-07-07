@@ -5,6 +5,7 @@ use std::path::Path;
 use std::path::PathBuf;
 
 use directories::BaseDirs;
+use regex::Regex;
 use simple_config_parser::config;
 
 use super::style;
@@ -23,7 +24,7 @@ pub struct Config {
     pub timeout: u64,
     pub tick_delay: u64,
     pub log_file_path: String,
-    pub chat_regex: String,
+    pub chat_regex: Regex,
     pub toast_settings: ToastSettings,
     pub theme: style::Theme,
 }
@@ -33,7 +34,7 @@ pub enum ConfigUpdate {
     Timeout(u64),
     TickDelay(u64),
     LogFilePath(String),
-    ChatRegex(String),
+    ChatRegex(Regex),
 
     SendOnLogin(bool),
     SendOnLogout(bool),
@@ -71,7 +72,7 @@ impl Config {
                 Err(_) => return None,
             },
             log_file_path: cfg.get("log_file_path")?,
-            chat_regex: cfg.get("chat_regex")?,
+            chat_regex: Regex::new(&cfg.get("chat_regex")?).expect("Invalid chat regex"),
 
             toast_settings: ToastSettings {
                 send_on_login: cfg.get_bool("toast_send_on_login")?,
@@ -160,7 +161,7 @@ impl Default for Config {
             timeout: 30,
             tick_delay: 10,
             log_file_path: log_path.to_str().unwrap().to_string(),
-            chat_regex: "Position in queue:".to_string(),
+            chat_regex: Regex::new("Position in queue: (\\d*)").unwrap(),
             toast_settings: ToastSettings {
                 send_on_login: true,
                 send_on_logout: true,

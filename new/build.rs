@@ -5,12 +5,12 @@ use chrono::Local;
 fn main() {
     println!(
         "cargo:rustc-env=COMPILE_TIME={}",
-        Local::now().format("%Y-%m-%d %H:%M:%S").to_string()
+        Local::now().format("%Y-%m-%d %H:%M:%S")
     );
 
     let commit_hash = quick_cmd("git", &["rev-parse", "HEAD"]);
     let branch = quick_cmd("git", &["branch", "--show-current"]);
-    let dirty = quick_cmd("git", &["status", "--porcelain"]) != "";
+    let dirty = !quick_cmd("git", &["status", "--porcelain"]).is_empty();
     println!(
         "cargo:rustc-env=GIT_INFO={} {}{}",
         commit_hash,
