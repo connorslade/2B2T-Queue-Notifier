@@ -151,8 +151,16 @@ impl Application for Queue {
                 self.position = new_pos;
 
                 match new_pos {
-                    queue::Queue::Offline => {}
-                    queue::Queue::Online => {}
+                    queue::Queue::Offline => {
+                        if self.config.toast_settings.send_on_logout {
+                            common::send_basic_toast("❌ Disconnected\n＞︿＜")
+                        }
+                    }
+                    queue::Queue::Online => {
+                        if self.config.toast_settings.send_on_login {
+                            common::send_basic_toast("✅ You have logged in!")
+                        }
+                    }
                     queue::Queue::Queue(i) => {
                         if self.config.toast_settings.send_on_position_change {
                             common::send_basic_toast(&format!("⏰ Queue: {}", i));

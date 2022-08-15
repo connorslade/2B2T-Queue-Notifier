@@ -8,3 +8,5 @@ pub const QUEUE_FONT: Font = Font::External {
 };
 
 pub const ICON: &[u8] = include_bytes!("../assets/icon/icon.ico");
+
+pub const IGNORED_MESSAGES: [&str; 1] = ["Queued for server main."];
