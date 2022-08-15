@@ -3,7 +3,6 @@ use std::panic;
 use std::process;
 
 use iced::{window, Application, Settings};
-use image::GenericImageView;
 
 #[macro_use]
 mod common;

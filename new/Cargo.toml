@@ -8,24 +8,24 @@ version = "3.0.0"
 
 # UI with iced
 iced = {version = "0.3", features = ["smol"]}
-iced_futures = "0.3.0"
-iced_native = "0.4.0"
+iced_futures = "0.4.1"
+iced_native = "0.5.1"
 
 # Other...
 chrono = "0.4.19"
 directories = "4.0.1"
 home = "0.5.3"
-image = {version = "0.23.14", default-features = false, features = ["ico"]}
+image = {version = "0.24.3", default-features = false, features = ["ico"]}
 lazy_static = "1.4.0"
-msgbox = "0.6.1"
+msgbox = "0.7.0"
 regex = "1.5.4"
-simple_config_parser = "0.1.6"
+simple_config_parser = "1.0.0"
 
 [target.'cfg(windows)'.dependencies]
-windows = {version = "0.38.0", features = ["Win32_UI_Shell"]}
-winrt-notification = "0.4.0"
+windows = {version = "0.39.0", features = ["Win32_UI_Shell"]}
+winrt-notification = "0.5.1"
 
-# [target.'cfg(not(windows))'.dependencies]
+[target.'cfg(not(windows))'.dependencies]
 notify-rust = "4"
 
 [build-dependencies]

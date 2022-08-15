@@ -6,7 +6,7 @@ use std::path::PathBuf;
 
 use directories::BaseDirs;
 use regex::Regex;
-use simple_config_parser::config;
+use simple_config_parser as scp;
 
 use super::style;
 use super::style::Theme;
@@ -56,30 +56,20 @@ impl Config {
             Err(_) => return None,
         };
 
-        let mut cfg = config::Config::new(None);
-        match cfg.parse(&data.replace('\r', "")) {
-            Ok(_) => {}
-            Err(_) => return None,
-        };
+        let cfg = scp::Config::new().text(data).ok()?;
 
         Some(Config {
-            timeout: match cfg.get("timeout")?.parse() {
-                Ok(timeout) => timeout,
-                Err(_) => return None,
-            },
-            tick_delay: match cfg.get("tick_delay")?.parse() {
-                Ok(tick_delay) => tick_delay,
-                Err(_) => return None,
-            },
-            log_file_path: cfg.get("log_file_path")?,
-            chat_regex: Regex::new(&cfg.get("chat_regex")?).expect("Invalid chat regex"),
+            timeout: cfg.get("timeout").ok()?,
+            tick_delay: cfg.get("tick_delay").ok()?,
+            log_file_path: cfg.get("log_file_path").ok()?,
+            chat_regex: Regex::new(&cfg.get_str("chat_regex").ok()?).expect("Invalid chat regex"),
 
             toast_settings: ToastSettings {
-                send_on_login: cfg.get_bool("toast_send_on_login")?,
-                send_on_logout: cfg.get_bool("toast_send_on_logout")?,
-                send_on_position_change: cfg.get_bool("toast_send_on_position_change")?,
+                send_on_login: cfg.get("toast_send_on_login").ok()?,
+                send_on_logout: cfg.get("toast_send_on_logout").ok()?,
+                send_on_position_change: cfg.get("toast_send_on_position_change").ok()?,
             },
-            theme: Theme::from_string(cfg.get("theme")?)?,
+            theme: Theme::from_string(cfg.get("theme").ok()?)?,
         })
     }
 

@@ -1,10 +1,6 @@
 use std::fmt::Display;
 
-use iced::button;
-use iced::checkbox;
-use iced::container;
-use iced::slider;
-use iced::text_input;
+use iced::{button, checkbox, container, rule, slider, text_input};
 
 mod dark;
 
@@ -94,6 +90,15 @@ impl From<Theme> for Box<dyn checkbox::StyleSheet> {
     fn from(theme: Theme) -> Self {
         match theme {
             Theme::Dark => dark::Checkbox.into(),
+            Theme::Light => Default::default(),
+        }
+    }
+}
+
+impl From<Theme> for Box<dyn rule::StyleSheet> {
+    fn from(theme: Theme) -> Self {
+        match theme {
+            Theme::Dark => dark::Rule.into(),
             Theme::Light => Default::default(),
         }
     }

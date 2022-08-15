@@ -1,5 +1,5 @@
 use iced::{
-    button, checkbox, container, slider, slider::Handle, slider::HandleShape, text_input,
+    button, checkbox, container, rule::{self, FillMode}, slider, slider::Handle, slider::HandleShape, text_input,
     Background, Color, Vector,
 };
 
@@ -8,6 +8,7 @@ pub struct TextInput;
 pub struct Button;
 pub struct Slider;
 pub struct Checkbox;
+pub struct Rule;
 
 impl container::StyleSheet for Container {
     fn style(&self) -> container::Style {
@@ -111,6 +112,17 @@ impl checkbox::StyleSheet for Checkbox {
         checkbox::Style {
             background: Background::Color(Color::from_rgb8(48, 54, 66)),
             ..self.active(is_checked)
+        }
+    }
+}
+
+impl rule::StyleSheet for Rule {
+    fn style(&self) -> rule::Style {
+        rule::Style {
+            color: Color::from_rgb8(33, 37, 46),
+            width: 1,
+            radius: 0.0,
+            fill_mode: FillMode::Percent(90.0),
         }
     }
 }

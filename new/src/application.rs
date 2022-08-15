@@ -2,9 +2,11 @@ use std::panic;
 use std::path::Path;
 
 use home::home_dir;
+use iced::Space;
 use iced::{
-    button, executor, slider, text_input, time, Align, Application, Button, Checkbox, Clipboard,
-    Color, Column, Command, Container, Element, Length, Radio, Row, Slider, Text, TextInput,
+    button, executor, scrollable, slider, text_input, time, Align, Application, Button, Checkbox,
+    Clipboard, Color, Column, Command, Container, Element, Length, Radio, Row, Rule, Scrollable,
+    Slider, Text, TextInput,
 };
 
 use regex::Regex;
@@ -31,6 +33,8 @@ pub struct Queue {
     test_button: button::State,
 
     // Config Stuff
+    old_config: Option<Config>,
+    config_scroller: scrollable::State,
     save_button: button::State,
     exit_button: button::State,
     reset_button: button::State,
@@ -51,7 +55,6 @@ pub enum Message {
     ConfigExit,
     Tick,
 
-    Test,
     None,
 }
 
@@ -98,10 +101,10 @@ impl Application for Queue {
     }
 
     fn update(&mut self, message: Message, _clipboard: &mut Clipboard) -> Command<Message> {
-        #[allow(unreachable_patterns)]
         match message {
             Message::OpenSettings => {
                 self.view = View::Settings;
+                self.old_config = Some(self.config.clone());
             }
 
             Message::UpdateTheme(theme) => {
@@ -130,6 +133,9 @@ impl Application for Queue {
 
             Message::ConfigExit => {
                 self.view = View::Queue;
+                if let Some(i) = self.old_config.take() {
+                    self.config = i;
+                }
             }
 
             Message::ConfigReset => {
@@ -153,10 +159,6 @@ impl Application for Queue {
             }
 
             Message::None => {}
-
-            _ => {
-                panic!("Unhandled Event: {:?}", message);
-            }
         };
         Command::none()
     }
@@ -166,210 +168,247 @@ impl Application for Queue {
     }
 
     fn view(&mut self) -> Element<Message> {
-        let content = match self.view {
-            View::Queue => Column::new()
-                .padding(20)
-                .align_items(Align::Center)
-                .push(
-                    Text::new(match self.position {
-                        Some(position) => position.to_string(),
-                        None => "…".to_string(),
-                    })
-                    .size(200)
-                    .color(self.queue_color)
-                    .font(assets::QUEUE_FONT),
-                )
-                .push(
-                    Button::new(&mut self.settings_button, Text::new("Settings").size(25))
-                        .style(self.config.theme)
-                        .on_press(Message::OpenSettings),
-                )
-                .push(
-                    Button::new(&mut self.test_button, Text::new("Test").size(25))
-                        .style(self.config.theme)
-                        .on_press(Message::Test),
-                ),
-            View::Settings => Column::new()
-                .padding(20)
-                .spacing(17)
-                .push(
-                    Text::new("Settings")
-                        .size(40)
-                        .color(self.config.theme.text_color()),
-                )
-                .push(
-                    Row::new()
-                        .spacing(20)
-                        .push(
-                            Text::new("Timeout (SEC)")
-                                .size(25)
-                                .color(self.config.theme.text_color())
-                                .width(Length::FillPortion(1)),
-                        )
-                        .push(
-                            Slider::new(
-                                &mut self.timeout_slider,
-                                0.0..=100.0,
-                                self.config.timeout as f64,
-                                |x| Message::SettingsUpdate(ConfigUpdate::Timeout(x as u64)),
-                            )
-                            .width(Length::FillPortion(4))
-                            .style(self.config.theme),
-                        )
-                        .push(Text::new(format!("[ {:0>3} ]", self.config.timeout))),
-                )
-                .push(
-                    Row::new()
-                        .spacing(20)
-                        .push(
-                            Text::new("Tick Delay (SEC)")
-                                .size(25)
-                                .color(self.config.theme.text_color())
-                                .width(Length::FillPortion(1)),
-                        )
-                        .push(
-                            Slider::new(
-                                &mut self.tick_delay_slider,
-                                0.0..=100.0,
-                                self.config.tick_delay as f64,
-                                |x| Message::SettingsUpdate(ConfigUpdate::TickDelay(x as u64)),
-                            )
-                            .width(Length::FillPortion(4))
-                            .style(self.config.theme),
-                        )
-                        .push(Text::new(format!("[ {:0>3} ]", self.config.tick_delay))),
-                )
-                .push(
-                    Row::new()
-                        .spacing(20)
-                        .push(
-                            Text::new("Log File")
-                                .size(25)
-                                .color(self.config.theme.text_color())
-                                .width(Length::FillPortion(1)),
-                        )
-                        .push(
-                            TextInput::new(
-                                &mut self.log_file_path_input,
-                                "",
-                                &self.config.log_file_path,
-                                |x| Message::SettingsUpdate(ConfigUpdate::LogFilePath(x)),
-                            )
-                            .width(Length::FillPortion(4))
-                            .style(self.config.theme),
-                        ),
-                )
-                .push(
-                    Row::new()
-                        .spacing(20)
-                        .push(
-                            Text::new("Chat Regex")
-                                .size(25)
-                                .color(self.config.theme.text_color())
-                                .width(Length::FillPortion(1)),
-                        )
-                        .push(
-                            TextInput::new(
-                                &mut self.chat_regex_input,
-                                "",
-                                self.config.chat_regex.as_str(),
-                                |x| match Regex::new(&x) {
-                                    Ok(i) => Message::SettingsUpdate(ConfigUpdate::ChatRegex(i)),
-                                    Err(_) => {
-                                        msgbox::create(
-                                            "you have a problem",
-                                            "light mode... really?",
-                                            msgbox::IconType::Info,
-                                        )
-                                        .unwrap();
-                                        Message::None
-                                    }
-                                },
-                            )
-                            .width(Length::FillPortion(4))
-                            .style(self.config.theme),
-                        ),
-                )
-                .push(
-                    Row::new()
-                        .spacing(10)
-                        .push(Text::new("Toasts").size(25).width(Length::FillPortion(2)))
-                        .push(
-                            Checkbox::new(self.config.toast_settings.send_on_login, "Login", |x| {
-                                Message::SettingsUpdate(ConfigUpdate::SendOnLogin(x))
-                            })
-                            .width(Length::FillPortion(1))
-                            .style(self.config.theme),
-                        )
-                        .push(
-                            Checkbox::new(
-                                self.config.toast_settings.send_on_logout,
-                                "Logout",
-                                |x| Message::SettingsUpdate(ConfigUpdate::SendOnLogout(x)),
-                            )
-                            .width(Length::FillPortion(1))
-                            .style(self.config.theme),
-                        )
-                        .push(
-                            Checkbox::new(
-                                self.config.toast_settings.send_on_position_change,
-                                "Position Change",
-                                |x| Message::SettingsUpdate(ConfigUpdate::SendOnPositionChange(x)),
-                            )
-                            .width(Length::FillPortion(1))
-                            .style(self.config.theme),
-                        ),
-                )
-                .push(
-                    Row::new()
-                        .spacing(20)
-                        .push(
-                            Text::new("Theme")
-                                .size(25)
-                                .color(self.config.theme.text_color())
-                                .width(Length::Fill),
-                        )
-                        .push(Radio::new(
-                            Theme::Dark,
-                            "Dark",
-                            Some(self.config.theme),
-                            Message::UpdateTheme,
-                        ))
-                        .push(Radio::new(
-                            Theme::Light,
-                            "Light",
-                            Some(self.config.theme),
-                            Message::UpdateTheme,
-                        )),
-                )
-                .push(
-                    Row::new()
-                        .spacing(10)
-                        .push(
-                            Button::new(&mut self.save_button, Text::new("Save").size(25))
-                                .on_press(Message::ConfigSave)
-                                .style(self.config.theme),
-                        )
-                        .push(
-                            Button::new(&mut self.reset_button, Text::new("Reset").size(25))
-                                .on_press(Message::ConfigReset)
-                                .style(self.config.theme),
-                        )
-                        .push(
-                            Button::new(&mut self.exit_button, Text::new("Cancel").size(25))
-                                .on_press(Message::ConfigExit)
-                                .style(self.config.theme),
-                        ),
-                ),
-        };
-
-        Container::new(content)
+        match self.view {
+            View::Queue => Container::new(
+                Column::new()
+                    .padding(20)
+                    .align_items(Align::Center)
+                    .push(
+                        Text::new(match self.position {
+                            Some(position) => position.to_string(),
+                            None => "…".to_string(),
+                        })
+                        .size(200)
+                        .color(self.queue_color)
+                        .font(assets::QUEUE_FONT),
+                    )
+                    .push(
+                        Button::new(&mut self.settings_button, Text::new("Settings").size(25))
+                            .style(self.config.theme)
+                            .on_press(Message::OpenSettings),
+                    ),
+            )
             .width(Length::Fill)
             .height(Length::Fill)
             .center_x()
-            .center_y()
-            .style(self.config.theme)
-            .into()
+            .center_y(),
+            View::Settings => Container::new(
+                Column::new()
+                    .padding(20)
+                    .spacing(10)
+                    .push(
+                        Text::new("Settings")
+                            .size(40)
+                            .color(self.config.theme.text_color()),
+                    )
+                    .push(
+                        Scrollable::new(&mut self.config_scroller)
+                            .spacing(10)
+                            .push(
+                                Row::new()
+                                    .spacing(20)
+                                    .push(
+                                        Text::new("Timeout (SEC)")
+                                            .size(25)
+                                            .color(self.config.theme.text_color())
+                                            .width(Length::FillPortion(1)),
+                                    )
+                                    .push(
+                                        Slider::new(
+                                            &mut self.timeout_slider,
+                                            0.0..=100.0,
+                                            self.config.timeout as f64,
+                                            |x| {
+                                                Message::SettingsUpdate(ConfigUpdate::Timeout(
+                                                    x as u64,
+                                                ))
+                                            },
+                                        )
+                                        .width(Length::FillPortion(4))
+                                        .style(self.config.theme),
+                                    )
+                                    .push(Text::new(format!("[ {:0>3} ]", self.config.timeout))),
+                            )
+                            .push(
+                                Row::new()
+                                    .spacing(20)
+                                    .push(
+                                        Text::new("Tick Delay (SEC)")
+                                            .size(25)
+                                            .color(self.config.theme.text_color())
+                                            .width(Length::FillPortion(1)),
+                                    )
+                                    .push(
+                                        Slider::new(
+                                            &mut self.tick_delay_slider,
+                                            0.0..=100.0,
+                                            self.config.tick_delay as f64,
+                                            |x| {
+                                                Message::SettingsUpdate(ConfigUpdate::TickDelay(
+                                                    x as u64,
+                                                ))
+                                            },
+                                        )
+                                        .width(Length::FillPortion(4))
+                                        .style(self.config.theme),
+                                    )
+                                    .push(Text::new(format!("[ {:0>3} ]", self.config.tick_delay))),
+                            )
+                            .push(
+                                Row::new()
+                                    .spacing(20)
+                                    .push(
+                                        Text::new("Log File")
+                                            .size(25)
+                                            .color(self.config.theme.text_color())
+                                            .width(Length::FillPortion(1)),
+                                    )
+                                    .push(
+                                        TextInput::new(
+                                            &mut self.log_file_path_input,
+                                            "",
+                                            &self.config.log_file_path,
+                                            |x| {
+                                                Message::SettingsUpdate(ConfigUpdate::LogFilePath(
+                                                    x,
+                                                ))
+                                            },
+                                        )
+                                        .width(Length::FillPortion(4))
+                                        .style(self.config.theme),
+                                    ),
+                            )
+                            .push(
+                                Row::new()
+                                    .spacing(20)
+                                    .push(
+                                        Text::new("Chat Regex")
+                                            .size(25)
+                                            .color(self.config.theme.text_color())
+                                            .width(Length::FillPortion(1)),
+                                    )
+                                    .push(
+                                        TextInput::new(
+                                            &mut self.chat_regex_input,
+                                            "",
+                                            self.config.chat_regex.as_str(),
+                                            |x| match Regex::new(&x) {
+                                                Ok(i) => Message::SettingsUpdate(
+                                                    ConfigUpdate::ChatRegex(i),
+                                                ),
+                                                Err(_) => {
+                                                    msgbox::create(
+                                                        "you have a problem",
+                                                        "light mode... really?",
+                                                        msgbox::IconType::Info,
+                                                    )
+                                                    .unwrap();
+                                                    Message::None
+                                                }
+                                            },
+                                        )
+                                        .width(Length::FillPortion(4))
+                                        .style(self.config.theme),
+                                    ),
+                            )
+                            .push(Rule::horizontal(16).style(self.config.theme))
+                            .push(
+                                Row::new()
+                                    .spacing(10)
+                                    .push(
+                                        Text::new("Toasts").size(25).width(Length::FillPortion(2)),
+                                    )
+                                    .push(
+                                        Checkbox::new(
+                                            self.config.toast_settings.send_on_login,
+                                            "Login",
+                                            |x| {
+                                                Message::SettingsUpdate(ConfigUpdate::SendOnLogin(
+                                                    x,
+                                                ))
+                                            },
+                                        )
+                                        .width(Length::FillPortion(1))
+                                        .style(self.config.theme),
+                                    )
+                                    .push(
+                                        Checkbox::new(
+                                            self.config.toast_settings.send_on_logout,
+                                            "Logout",
+                                            |x| {
+                                                Message::SettingsUpdate(ConfigUpdate::SendOnLogout(
+                                                    x,
+                                                ))
+                                            },
+                                        )
+                                        .width(Length::FillPortion(1))
+                                        .style(self.config.theme),
+                                    )
+                                    .push(
+                                        Checkbox::new(
+                                            self.config.toast_settings.send_on_position_change,
+                                            "Position Change",
+                                            |x| {
+                                                Message::SettingsUpdate(
+                                                    ConfigUpdate::SendOnPositionChange(x),
+                                                )
+                                            },
+                                        )
+                                        .width(Length::FillPortion(1))
+                                        .style(self.config.theme),
+                                    ),
+                            )
+                            .push(Rule::horizontal(16).style(self.config.theme))
+                            .push(
+                                Row::new()
+                                    .spacing(20)
+                                    .push(
+                                        Text::new("Theme")
+                                            .size(25)
+                                            .color(self.config.theme.text_color())
+                                            .width(Length::Fill),
+                                    )
+                                    .push(Radio::new(
+                                        Theme::Dark,
+                                        "Dark",
+                                        Some(self.config.theme),
+                                        Message::UpdateTheme,
+                                    ))
+                                    .push(Radio::new(
+                                        Theme::Light,
+                                        "Light",
+                                        Some(self.config.theme),
+                                        Message::UpdateTheme,
+                                    )),
+                            ),
+                    )
+                    .push(Space::new(Length::Fill, Length::Fill))
+                    .push(
+                        Row::new()
+                            .spacing(10)
+                            .push(
+                                Button::new(&mut self.save_button, Text::new("Save").size(25))
+                                    .on_press(Message::ConfigSave)
+                                    .style(self.config.theme),
+                            )
+                            .push(
+                                Button::new(&mut self.reset_button, Text::new("Reset").size(25))
+                                    .on_press(Message::ConfigReset)
+                                    .style(self.config.theme),
+                            )
+                            .push(
+                                Button::new(&mut self.exit_button, Text::new("Cancel").size(25))
+                                    .on_press(Message::ConfigExit)
+                                    .style(self.config.theme),
+                            ),
+                    ),
+            )
+            .width(Length::Fill)
+            .height(Length::Fill)
+            .center_x(),
+        }
+        .style(self.config.theme)
+        .into()
     }
 }
 
