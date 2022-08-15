@@ -1,3 +1,4 @@
+use std::fmt::Display;
 use std::fs;
 use std::fs::OpenOptions;
 use std::io::Read;
@@ -74,13 +75,39 @@ impl Config {
     }
 
     pub fn save(&self, path: PathBuf) {
-        // Make folder
-        fs::create_dir_all(path.parent().unwrap()).unwrap();
+        println!("[*] Saving Config");
 
-        fs::write(path, format!(
-            "; 2B2T-Queue-Notifier V{} Config\ntheme = {}\nonline_timeout = {}\ntimeout = {}\nlog_file_path = {}\nchat_regex = {}\ntoast_send_on_login = {}\ntoast_send_on_logout = {}\ntoast_send_on_position_change = {}\n",
-            VERSION, self.theme, self.online_timeout, self.timeout, self.log_file_path, self.chat_regex, self.toast_settings.send_on_login, self.toast_settings.send_on_logout, self.toast_settings.send_on_position_change
-        )).unwrap();
+        fs::create_dir_all(path.parent().unwrap()).unwrap();
+        let configs: Vec<(&str, Box<dyn Display>)> = vec![
+            ("theme", Box::new(self.theme)),
+            ("online_timeout", Box::new(self.online_timeout)),
+            ("timeout", Box::new(self.timeout)),
+            ("log_file_path", Box::new(self.log_file_path.to_string())),
+            ("chat_regex", Box::new(self.chat_regex.to_string())),
+            (
+                "toast_send_on_login",
+                Box::new(self.toast_settings.send_on_login),
+            ),
+            (
+                "toast_send_on_logout",
+                Box::new(self.toast_settings.send_on_logout),
+            ),
+            (
+                "toast_send_on_position_change",
+                Box::new(self.toast_settings.send_on_position_change),
+            ),
+        ];
+        let config = configs
+            .iter()
+            .map(|(cfg, val)| format!("{} = {}", cfg, val))
+            .collect::<Vec<_>>()
+            .join("\n");
+
+        fs::write(
+            path,
+            format!("; 2B2T-Queue-Notifier V{} Config\n{}", VERSION, config),
+        )
+        .unwrap();
     }
 
     pub fn apply_update(&self, update: ConfigUpdate) -> Config {

@@ -5,13 +5,13 @@ use std::process;
 use iced::{window, Application, Settings};
 
 #[macro_use]
-mod common;
 mod application;
-mod assets;
+mod misc;
 mod queue;
 mod settings;
 mod style;
 use application::Queue;
+use misc::{assets, common};
 
 pub const VERSION: &str = "α3.0.0";
 pub const CFG_PATH: &str = ".2B2T-Queue-Notifier/config.cfg";
