@@ -47,7 +47,6 @@ fn main() {
         .arg("--list-runtimes")
         .output()
         .unwrap();
-    // println!("{:?}", dotnet_core_installed);
 
     if dotnet_core_installed.status.success() {
         color_print!(Color::Magenta, "[*] .NET Core is installed");
@@ -80,10 +79,10 @@ fn main() {
             );
         }
 
-        color_print!(Color::Magenta, "[*] Downloading x86");
+        color_print!(Color::Magenta, "[*] Downloading x64");
         let downloads = &version_json["versions"].get(latest_version).unwrap()["downloads"];
         for i in downloads.as_array().unwrap().iter() {
-            if i["type"] == "x86" {
+            if i["type"] == "x64" {
                 download(
                     i["uri"].as_str().unwrap(),
                     i["SHA-256"].as_str().unwrap(),
@@ -92,7 +91,6 @@ fn main() {
                 break;
             }
         }
-        // let downloaded = ureq::get();
         return;
     }
     color_print!(Color::Red, "[*] .NET Core is not installed");
