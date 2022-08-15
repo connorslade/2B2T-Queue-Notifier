@@ -1,7 +1,6 @@
-
-[![Image](https://img.shields.io/badge/Download-V2.0.1-sucess?style=for-the-badge)](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/) 
-[![Image](https://img.shields.io/badge/.NET_Core-V3.1-informational?style=for-the-badge)](https://dotnet.microsoft.com/) 
-![Image](https://img.shields.io/badge/Windows-10-green?style=for-the-badge) 
+[![Image](https://img.shields.io/badge/Download-V2.1.0-sucess?style=for-the-badge)](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/releases/)
+[![Image](https://img.shields.io/badge/.NET_Core-V3.1-informational?style=for-the-badge)](https://dotnet.microsoft.com/)
+![Image](https://img.shields.io/badge/Windows-10-green?style=for-the-badge)
 ![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/Basicprogrammer10/2B2T-Queue-Notifier?style=for-the-badge)
 ![Lines of code](https://img.shields.io/tokei/lines/github/Basicprogrammer10/2B2T-Queue-Notifier?style=for-the-badge)
 
@@ -29,7 +28,6 @@
   </p>
 </p>
 
-
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Table of Contents</summary>
@@ -56,9 +54,8 @@
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
 [![Screen Shot](https://i.imgur.com/zDyJ1O6.png)](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier)
@@ -69,48 +66,46 @@ It can also interface with Discord Webhooks and Toasts.
 
 ### Built With
 
-* [C#](https://docs.microsoft.com/en-us/dotnet/csharp/)
-* [.NET Core](https://dotnet.microsoft.com/)
-* [Visual Studio](https://visualstudio.microsoft.com/)
-* [Too Much Time](http://no-life.urbanup.com/12088813)
-
-
+- [C#](https://docs.microsoft.com/en-us/dotnet/csharp/)
+- [.NET Core](https://dotnet.microsoft.com/)
+- [Visual Studio](https://visualstudio.microsoft.com/)
+- [Too Much Time](http://no-life.urbanup.com/12088813)
 
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
-* [Minecraft](https://www.minecraft.net/en-us/) (Very Good Game)
-* [.NET Core](https://dotnet.microsoft.com/) (To run the Program)
-* [Visual Studio](https://visualstudio.microsoft.com/) (If you want to Edit / Mod the Code)
+- [Minecraft](https://www.minecraft.net/en-us/) (Very Good Game)
+- [.NET Core](https://dotnet.microsoft.com/) (To run the Program)
+- [Visual Studio](https://visualstudio.microsoft.com/) (If you want to Edit / Mod the Code)
 
 ### Installation
 
-0.  Want to make sure it's safe? You can check the Virus total [here](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/blob/master/VirusTotal.md), you can also check the source code.
-1. Install [.NET Core](https://dotnet.microsoft.com/)
-2. Download the Latest version of 2B2T-Queue-Notifier
-3. Run It!
+1. Want to make sure it's safe? You can check the Virus total info under the release section, you can also check the source code.
+2. Install [.NET Core](https://dotnet.microsoft.com/)
+3. Download the Latest version of 2B2T-Queue-Notifier
+4. Run It!
 
 <!-- USAGE EXAMPLES -->
+
 ## Usage
 
 If you need help setting this up or want to know what all the settings do then check **![this](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/blob/master/Settings.md)** out! **(Highly Recommended)**
 
 **Contact me** on Discord at `Sigma#8214` if you still need help.
 
-
-
 <!-- ROADMAP -->
+
 ## Roadmap
 
 See the [open issues](https://github.com/github_username/repo_name/issues) for a list of proposed features (and known issues).
 
-
-
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**. You can read the Code of Conduct [here](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/blob/master/CODE_OF_CONDUCT.md)
@@ -121,16 +116,14 @@ Contributions are what make the open source community such an amazing place to l
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-
-
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the GNU General Public License v3.0. See [`LICENSE`](https://github.com/Basicprogrammer10/2B2T-Queue-Notifier/blob/master/LICENSE) for more information.
 
-
-
 <!-- CONTACT -->
+
 ## Contact
 
 Discord - `Sigma#8214`
@@ -143,14 +136,14 @@ Project Link: [https://github.com/Basicprogrammer10/2B2T-Queue-Notifier](https:/
 
 ## To-Do (For the Remake)
 
-- [X] Read / Parse Log File
+- [x] Read / Parse Log File
 - [ ] Update GUI with data from log file
-- [X] Finish GUI
+- [x] Finish GUI
 - [ ] Detect When Logged in
 - [ ] Detect when game Closed / Not in server
-- [X] Add Settings Page
+- [x] Add Settings Page
 - [ ] Send Toasts
 - [ ] Integrate With Discord Webhooks
-- [X] Finish Settings Page
-- [X] Save Settings
-- [X] Pick Themes
+- [x] Finish Settings Page
+- [x] Save Settings
+- [x] Pick Themes
