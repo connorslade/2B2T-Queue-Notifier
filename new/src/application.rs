@@ -1,4 +1,3 @@
-use std::panic;
 use std::path::Path;
 
 use home::home_dir;
@@ -23,14 +22,13 @@ use super::VERSION;
 
 #[derive(Default)]
 pub struct Queue {
-    position: Option<u32>,
+    position: queue::Queue,
     queue_color: Color,
     config: Config,
     view: View,
 
     // Ui elements
     settings_button: button::State,
-    test_button: button::State,
 
     // Config Stuff
     old_config: Option<Config>,
@@ -40,7 +38,7 @@ pub struct Queue {
     reset_button: button::State,
 
     timeout_slider: slider::State,
-    tick_delay_slider: slider::State,
+    online_timeout_slider: slider::State,
     log_file_path_input: text_input::State,
     chat_regex_input: text_input::State,
 }
@@ -87,7 +85,7 @@ impl Application for Queue {
 
         (
             Self {
-                position: None,
+                position: queue::Queue::Offline,
                 queue_color: Color::from_rgb8(191, 97, 106),
                 config,
                 ..Default::default()
@@ -143,14 +141,19 @@ impl Application for Queue {
             }
 
             Message::Tick => {
-                let new_pos =
-                    queue::check(&self.config.log_file_path, self.config.chat_regex.clone());
+                let new_pos = queue::check(&self.config);
 
-                if self.position != new_pos {
-                    self.position = new_pos;
-                    self.queue_color = common::update_color(self.position.unwrap_or(500));
+                if self.position == new_pos {
+                    return Command::none();
+                }
 
-                    if let Some(i) = self.position {
+                self.queue_color = common::update_color(new_pos);
+                self.position = new_pos;
+
+                match new_pos {
+                    queue::Queue::Offline => {}
+                    queue::Queue::Online => {}
+                    queue::Queue::Queue(i) => {
                         if self.config.toast_settings.send_on_position_change {
                             common::send_basic_toast(&format!("⏰ Queue: {}", i));
                         }
@@ -175,8 +178,9 @@ impl Application for Queue {
                     .align_items(Align::Center)
                     .push(
                         Text::new(match self.position {
-                            Some(position) => position.to_string(),
-                            None => "…".to_string(),
+                            queue::Queue::Offline => "…".to_owned(),
+                            queue::Queue::Online => "Online".to_owned(),
+                            queue::Queue::Queue(i) => i.to_string(),
                         })
                         .size(200)
                         .color(self.queue_color)
@@ -208,7 +212,7 @@ impl Application for Queue {
                                 Row::new()
                                     .spacing(20)
                                     .push(
-                                        Text::new("Timeout (SEC)")
+                                        Text::new("Timeout")
                                             .size(25)
                                             .color(self.config.theme.text_color())
                                             .width(Length::FillPortion(1)),
@@ -233,26 +237,29 @@ impl Application for Queue {
                                 Row::new()
                                     .spacing(20)
                                     .push(
-                                        Text::new("Tick Delay (SEC)")
+                                        Text::new("Online Timeout")
                                             .size(25)
                                             .color(self.config.theme.text_color())
                                             .width(Length::FillPortion(1)),
                                     )
                                     .push(
                                         Slider::new(
-                                            &mut self.tick_delay_slider,
+                                            &mut self.online_timeout_slider,
                                             0.0..=100.0,
-                                            self.config.tick_delay as f64,
+                                            self.config.online_timeout as f64,
                                             |x| {
-                                                Message::SettingsUpdate(ConfigUpdate::TickDelay(
-                                                    x as u64,
-                                                ))
+                                                Message::SettingsUpdate(
+                                                    ConfigUpdate::OnlineTimeout(x as u64),
+                                                )
                                             },
                                         )
                                         .width(Length::FillPortion(4))
                                         .style(self.config.theme),
                                     )
-                                    .push(Text::new(format!("[ {:0>3} ]", self.config.tick_delay))),
+                                    .push(Text::new(format!(
+                                        "[ {:0>3} ]",
+                                        self.config.online_timeout
+                                    ))),
                             )
                             .push(
                                 Row::new()

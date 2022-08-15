@@ -1,6 +1,10 @@
 use iced::{
-    button, checkbox, container, rule::{self, FillMode}, slider, slider::Handle, slider::HandleShape, text_input,
-    Background, Color, Vector,
+    button, checkbox, container,
+    rule::{self, FillMode},
+    slider,
+    slider::Handle,
+    slider::HandleShape,
+    text_input, Background, Color, Vector,
 };
 
 pub struct Container;

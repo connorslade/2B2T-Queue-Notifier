@@ -4,16 +4,24 @@ use notify_rust::Notification;
 #[cfg(windows)]
 use winrt_notification::{Duration, Sound, Toast};
 
-pub fn update_color(pos: u32) -> Color {
-    if pos >= 500 {
-        return Color::from_rgb8(191, 97, 106);
-    }
+use crate::queue::Queue;
 
-    if pos >= 250 {
-        return Color::from_rgb8(235, 203, 139);
-    }
+pub fn update_color(pos: Queue) -> Color {
+    match pos {
+        Queue::Offline => Color::from_rgb8(191, 97, 106),
+        Queue::Online => Color::from_rgb8(163, 190, 140),
+        Queue::Queue(i) => {
+            if i >= 500 {
+                return Color::from_rgb8(191, 97, 106);
+            }
 
-    Color::from_rgb8(163, 190, 140)
+            if i >= 250 {
+                return Color::from_rgb8(235, 203, 139);
+            }
+
+            Color::from_rgb8(163, 190, 140)
+        }
+    }
 }
 
 pub fn send_basic_toast(test: &str) {

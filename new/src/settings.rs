@@ -21,8 +21,8 @@ pub struct ToastSettings {
 
 #[derive(Debug, Clone)]
 pub struct Config {
+    pub online_timeout: u64,
     pub timeout: u64,
-    pub tick_delay: u64,
     pub log_file_path: String,
     pub chat_regex: Regex,
     pub toast_settings: ToastSettings,
@@ -31,8 +31,8 @@ pub struct Config {
 
 #[derive(Debug, Clone)]
 pub enum ConfigUpdate {
+    OnlineTimeout(u64),
     Timeout(u64),
-    TickDelay(u64),
     LogFilePath(String),
     ChatRegex(Regex),
 
@@ -59,8 +59,8 @@ impl Config {
         let cfg = scp::Config::new().text(data).ok()?;
 
         Some(Config {
+            online_timeout: cfg.get("online_timeout").ok()?,
             timeout: cfg.get("timeout").ok()?,
-            tick_delay: cfg.get("tick_delay").ok()?,
             log_file_path: cfg.get("log_file_path").ok()?,
             chat_regex: Regex::new(&cfg.get_str("chat_regex").ok()?).expect("Invalid chat regex"),
 
@@ -78,19 +78,19 @@ impl Config {
         fs::create_dir_all(path.parent().unwrap()).unwrap();
 
         fs::write(path, format!(
-            "; 2B2T-Queue-Notifier V{} Config\ntheme = {}\ntimeout = {}\ntick_delay = {}\nlog_file_path = {}\nchat_regex = {}\ntoast_send_on_login = {}\ntoast_send_on_logout = {}\ntoast_send_on_position_change = {}\n",
-            VERSION, self.theme, self.timeout, self.tick_delay, self.log_file_path, self.chat_regex, self.toast_settings.send_on_login, self.toast_settings.send_on_logout, self.toast_settings.send_on_position_change
+            "; 2B2T-Queue-Notifier V{} Config\ntheme = {}\nonline_timeout = {}\ntimeout = {}\nlog_file_path = {}\nchat_regex = {}\ntoast_send_on_login = {}\ntoast_send_on_logout = {}\ntoast_send_on_position_change = {}\n",
+            VERSION, self.theme, self.online_timeout, self.timeout, self.log_file_path, self.chat_regex, self.toast_settings.send_on_login, self.toast_settings.send_on_logout, self.toast_settings.send_on_position_change
         )).unwrap();
     }
 
     pub fn apply_update(&self, update: ConfigUpdate) -> Config {
         match update {
-            ConfigUpdate::Timeout(timeout) => Config {
-                timeout,
+            ConfigUpdate::OnlineTimeout(online_timeout) => Config {
+                online_timeout,
                 ..self.clone()
             },
-            ConfigUpdate::TickDelay(tick_delay) => Config {
-                tick_delay,
+            ConfigUpdate::Timeout(timeout) => Config {
+                timeout,
                 ..self.clone()
             },
             ConfigUpdate::LogFilePath(log_file_path) => Config {
@@ -148,8 +148,8 @@ impl Default for Config {
             .join(Path::new(".minecraft/logs/latest.log"));
 
         Config {
-            timeout: 30,
-            tick_delay: 10,
+            online_timeout: 30,
+            timeout: 10,
             log_file_path: log_path.to_str().unwrap().to_string(),
             chat_regex: Regex::new("Position in queue: (\\d*)").unwrap(),
             toast_settings: ToastSettings {

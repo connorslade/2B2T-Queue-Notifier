@@ -137,12 +137,12 @@ Project Link: [https://github.com/Basicprogrammer10/2B2T-Queue-Notifier](https:/
 ## To-Do (For the Remake)
 
 - [x] Read / Parse Log File
-- [ ] Update GUI with data from log file
+- [x] Update GUI with data from log file
 - [x] Finish GUI
-- [ ] Detect When Logged in
-- [ ] Detect when game Closed / Not in server
+- [x] Detect When Logged in
+- [x] Detect when game Closed / Not in server
 - [x] Add Settings Page
-- [ ] Send Toasts
+- [x] Send Toasts
 - [ ] Integrate With Discord Webhooks
 - [x] Finish Settings Page
 - [x] Save Settings
