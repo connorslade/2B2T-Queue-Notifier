@@ -6,6 +6,13 @@ use winrt_notification::{Duration, Sound, Toast};
 
 use crate::queue::Queue;
 
+pub fn tir<T>(test: bool, a: T, b: T) -> T {
+    if test {
+        return a;
+    }
+    return b;
+}
+
 pub fn update_color(pos: Queue) -> Color {
     match pos {
         Queue::Offline => Color::from_rgb8(191, 97, 106),

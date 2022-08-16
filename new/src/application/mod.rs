@@ -34,6 +34,7 @@ pub struct Queue {
 
     timeout_slider: slider::State,
     online_timeout_slider: slider::State,
+    position_change_slider: slider::State,
     log_file_path_input: text_input::State,
     chat_regex_input: text_input::State,
 }

@@ -18,6 +18,7 @@ pub struct ToastSettings {
     pub send_on_login: bool,
     pub send_on_logout: bool,
     pub send_on_position_change: bool,
+    pub position_change_start: u32,
 }
 
 #[derive(Debug, Clone)]
@@ -40,6 +41,7 @@ pub enum ConfigUpdate {
     SendOnLogin(bool),
     SendOnLogout(bool),
     SendOnPositionChange(bool),
+    PositionChangeStart(u32),
 }
 
 impl Config {
@@ -69,6 +71,7 @@ impl Config {
                 send_on_login: cfg.get("toast_send_on_login").ok()?,
                 send_on_logout: cfg.get("toast_send_on_logout").ok()?,
                 send_on_position_change: cfg.get("toast_send_on_position_change").ok()?,
+                position_change_start: cfg.get("position_change_start").ok()?,
             },
             theme: Theme::from_string(cfg.get("theme").ok()?)?,
         })
@@ -95,6 +98,10 @@ impl Config {
             (
                 "toast_send_on_position_change",
                 Box::new(self.toast_settings.send_on_position_change),
+            ),
+            (
+                "position_change_start",
+                Box::new(self.toast_settings.position_change_start),
             ),
         ];
         let config = configs
@@ -149,6 +156,13 @@ impl Config {
                 },
                 ..self.clone()
             },
+            ConfigUpdate::PositionChangeStart(position_change_start) => Config {
+                toast_settings: ToastSettings {
+                    position_change_start,
+                    ..self.toast_settings
+                },
+                ..self.clone()
+            },
         }
     }
 }
@@ -183,6 +197,7 @@ impl Default for Config {
                 send_on_login: true,
                 send_on_logout: true,
                 send_on_position_change: true,
+                position_change_start: 25,
             },
             theme: style::Theme::Dark,
         }

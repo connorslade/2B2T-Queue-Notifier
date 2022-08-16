@@ -1,12 +1,13 @@
 use iced::{
-    Align, Button, Checkbox, Column, Container, Length, Radio, Row, Rule, Scrollable, Slider,
-    Space, Text, TextInput,
+    Align, Button, Checkbox, Column, Container, Length, Radio, Row, Rule, Scrollable, Slider, Text,
+    TextInput,
 };
+use iced_native::widget::Widget;
 use regex::Regex;
 
 use super::{Message, Queue};
 use crate::{
-    misc::assets,
+    misc::{assets, common},
     queue,
     settings::ConfigUpdate,
     style::{TextColor, Theme},
@@ -136,10 +137,10 @@ pub fn settings(this: &mut Queue) -> Container<Message> {
                                         Ok(i) => {
                                             Message::SettingsUpdate(ConfigUpdate::ChatRegex(i))
                                         }
-                                        Err(_) => {
+                                        Err(e) => {
                                             msgbox::create(
-                                                "you have a problem",
-                                                "light mode... really?",
+                                                "Regex Error",
+                                                e.to_string().as_str(),
                                                 msgbox::IconType::Info,
                                             )
                                             .unwrap();
@@ -188,6 +189,39 @@ pub fn settings(this: &mut Queue) -> Container<Message> {
                                 .style(this.config.theme),
                             ),
                     )
+                    .push(
+                        Row::new()
+                            .spacing(20)
+                            .push(
+                                Text::new("Pos Change")
+                                    .size(25)
+                                    .color(this.config.theme.text_color())
+                                    .width(Length::FillPortion(1)),
+                            )
+                            .push(
+                                Slider::new(
+                                    &mut this.position_change_slider,
+                                    0.0..=100.0,
+                                    this.config.toast_settings.position_change_start as f64,
+                                    |x| {
+                                        Message::SettingsUpdate(ConfigUpdate::PositionChangeStart(
+                                            x as u32,
+                                        ))
+                                    },
+                                )
+                                .width(Length::FillPortion(4))
+                                .style(this.config.theme),
+                            )
+                            .push(Text::new(common::tir(
+                                this.config.toast_settings.position_change_start > 0,
+                                format!(
+                                    "[ {:0>3} ]",
+                                    this.config.toast_settings.position_change_start
+                                )
+                                .as_str(),
+                                "[ ALL ]",
+                            ))),
+                    )
                     .push(Rule::horizontal(16).style(this.config.theme))
                     .push(
                         Row::new()
@@ -212,7 +246,7 @@ pub fn settings(this: &mut Queue) -> Container<Message> {
                             )),
                     ),
             )
-            .push(Space::new(Length::Fill, Length::Fill))
+            // .push(Space::new(Length::Fill, Length::Fill))
             .push(
                 Row::new()
                     .spacing(10)
