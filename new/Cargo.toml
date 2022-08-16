@@ -20,6 +20,9 @@ lazy_static = "1.4.0"
 msgbox = "0.7.0"
 regex = "1.5.4"
 simple_config_parser = "1.0.0"
+native-dialog = "0.6.3"
+open = "3.0.2"
+urlencoding = "2.1.0"
 
 [target.'cfg(windows)'.dependencies]
 windows = {version = "0.39.0", features = ["Win32_UI_Shell"]}

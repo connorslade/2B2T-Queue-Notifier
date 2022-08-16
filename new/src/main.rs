@@ -1,12 +1,11 @@
 use std::env::consts;
-use std::panic;
-use std::process;
 
 use iced::{window, Application, Settings};
 
 #[macro_use]
 mod application;
 mod misc;
+mod panic;
 mod queue;
 mod settings;
 mod style;
@@ -20,24 +19,7 @@ pub fn main() -> iced::Result {
     println!("[*] 2B2T Queue Notifier {}", VERSION);
 
     // Set Panic Handler
-    panic::set_hook(Box::new(|p| {
-        eprintln!("{}", p);
-        msgbox::create(
-            "2B2T-Queue-Notifier Error",
-            &format!(
-                "{}\n{}\nCompile Time: {}\nPlatform: {} {}\nVersion: {}",
-                p,
-                env!("GIT_INFO"),
-                env!("COMPILE_TIME"),
-                consts::OS,
-                consts::ARCH,
-                VERSION,
-            ),
-            msgbox::IconType::Error,
-        )
-        .unwrap_or_default();
-        process::exit(-1);
-    }));
+    panic::set_handler();
 
     // Load Window Icon
     let icon = image::load_from_memory(assets::ICON).unwrap();
