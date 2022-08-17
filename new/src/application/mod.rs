@@ -1,10 +1,12 @@
 use std::path::Path;
 
+use directories::BaseDirs;
 use home::home_dir;
 use iced::{
     button, executor, scrollable, slider, text_input, time, Application, Clipboard, Color, Command,
     Element,
 };
+use native_dialog::FileDialog;
 
 use super::{
     common, queue,
@@ -36,6 +38,7 @@ pub struct Queue {
     online_timeout_slider: slider::State,
     position_change_slider: slider::State,
     log_file_path_input: text_input::State,
+    log_file_picker_button: button::State,
     chat_regex_input: text_input::State,
 }
 
@@ -44,12 +47,18 @@ pub enum Message {
     SettingsUpdate(ConfigUpdate),
     UpdateTheme(Theme),
     OpenSettings,
+    OpenDialog(Dialog),
     ConfigReset,
     ConfigSave,
     ConfigExit,
     Tick,
 
     None,
+}
+
+#[derive(Debug, Clone)]
+pub enum Dialog {
+    LogFilePicker,
 }
 
 enum View {
@@ -100,6 +109,19 @@ impl Application for Queue {
                 self.view = View::Settings;
                 self.old_config = Some(self.config.clone());
             }
+
+            Message::OpenDialog(dialog) => match dialog {
+                Dialog::LogFilePicker => {
+                    let dialog = FileDialog::new()
+                        .set_location(Path::new(&BaseDirs::new().unwrap().data_dir()))
+                        .show_open_single_file()
+                        .expect("Error opening dialog");
+
+                    if let Some(i) = dialog {
+                        self.config.log_file_path = i.to_string_lossy().to_string();
+                    }
+                }
+            },
 
             Message::UpdateTheme(theme) => {
                 self.config.theme = theme;

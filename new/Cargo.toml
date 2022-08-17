@@ -7,7 +7,7 @@ version = "3.0.0"
 [dependencies]
 
 # UI with iced
-iced = {version = "0.3", features = ["smol"]}
+iced = {version = "0.3", features = ["smol", "debug"]}
 iced_futures = "0.4.1"
 iced_native = "0.5.1"
 
@@ -20,7 +20,7 @@ lazy_static = "1.4.0"
 msgbox = "0.7.0"
 regex = "1.5.4"
 simple_config_parser = "1.0.0"
-native-dialog = "0.6.3"
+native-dialog = { version = "0.6.3", features = ["windows_dpi_awareness", "windows_visual_styles"] }
 open = "3.0.2"
 urlencoding = "2.1.0"
 

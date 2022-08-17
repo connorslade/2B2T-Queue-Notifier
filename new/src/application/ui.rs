@@ -1,11 +1,10 @@
 use iced::{
     Align, Button, Checkbox, Column, Container, Length, Radio, Row, Rule, Scrollable, Slider, Text,
-    TextInput,
+    TextInput, VerticalAlignment, HorizontalAlignment,
 };
-use iced_native::widget::Widget;
 use regex::Regex;
 
-use super::{Message, Queue};
+use super::{Dialog, Message, Queue};
 use crate::{
     misc::{assets, common},
     queue,
@@ -101,7 +100,7 @@ pub fn settings(this: &mut Queue) -> Container<Message> {
                     )
                     .push(
                         Row::new()
-                            .spacing(20)
+                            .spacing(10)
                             .push(
                                 Text::new("Log File")
                                     .size(25)
@@ -116,6 +115,18 @@ pub fn settings(this: &mut Queue) -> Container<Message> {
                                     |x| Message::SettingsUpdate(ConfigUpdate::LogFilePath(x)),
                                 )
                                 .width(Length::FillPortion(4))
+                                .style(this.config.theme),
+                            )
+                            .push(
+                                Button::new(
+                                    &mut this.log_file_picker_button,
+                                    Text::new("...")
+                                        .vertical_alignment(VerticalAlignment::Center)
+                                        .horizontal_alignment(HorizontalAlignment::Center),
+                                )
+                                .width(Length::FillPortion(1))
+                                .height(Length::Units(20))
+                                .on_press(Message::OpenDialog(Dialog::LogFilePicker))
                                 .style(this.config.theme),
                             ),
                     )
