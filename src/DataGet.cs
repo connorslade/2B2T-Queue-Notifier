@@ -15,7 +15,7 @@ namespace _2B2T_Queue_Notifier
             {
                 var Text = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                 var Data = new UTF8Encoding(true);
-                var Rg = new Regex(@"\[CHAT\] (\\n)*" + chat);
+                var Rg = new Regex(@"\[CHAT\].*" + chat);
                 var AllInt = new List<int>();
                 var B = new byte[640000];
                 var AllTimeList = new List<int>();
@@ -29,7 +29,7 @@ namespace _2B2T_Queue_Notifier
                         var Match = Rg.Match(TextIndex);
                         if (!Match.Success)
                             continue;
-                        AllInt.Add(int.Parse(TextIndex.Split(chat)[1].Split("\\n")[0]));
+                        AllInt.Add(int.Parse(Rg.Split(TextIndex)[1].Split(@"\n")[0]));
                         var TotalTime = 0;
                         var TextSub = TextIndex.Substring(1, 8).Split(':');
                         TotalTime += int.Parse(TextSub[0]) * 60 * 60;
