@@ -10,7 +10,7 @@ use crate::settings::Config;
 
 lazy_static! {
     static ref CHAT_REGEX: Regex =
-        Regex::new("\\[..:..:..\\] \\[Client thread/INFO\\]: \\[CHAT\\] (.*)").unwrap();
+        Regex::new("\\[..:..:..\\] \\[Client thread/INFO\\].*: \\[CHAT\\] (.*)").unwrap();
 }
 
 #[derive(PartialEq, Eq, Debug, Default, Clone, Copy)]
